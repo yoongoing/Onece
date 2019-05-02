@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_back"
     tools:context=".MainActivity">
 
 
@@ -11,52 +12,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="10"
+
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:paddingLeft="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="117dp"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="3"
+            android:paddingLeft="30dp"
+            android:paddingTop ="30dp"
             android:paddingRight="10dp"
-            android:layout_weight="5"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/login_onece" />
 
         <EditText
             android:id="@+id/editText4"
             android:layout_width="wrap_content"
             android:layout_height="73dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:ems="10"
             android:hint="@string/name"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingTop="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/editText5"
+            app:layout_constraintBottom_toTopOf="@+id/editText4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="o" />
-
-        <EditText
-            android:id="@+id/editText5"
-            android:layout_width="wrap_content"
-            android:layout_height="11dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="63dp"
-            android:layout_marginBottom="63dp"
-            android:layout_weight="2"
-            android:ems="10"
-            android:hint="@string/birthday"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
-            app:layout_constraintStart_toStartOf="@+id/editText4"
-            app:layout_constraintTop_toBottomOf="@+id/editText4"
             tools:targetApi="o" />
 
         <CheckBox
@@ -67,13 +52,13 @@
             android:layout_marginEnd="50dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="40dp"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:text="@string/checkBox_name"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.746"
-            app:layout_constraintStart_toEndOf="@+id/editText5"
-            app:layout_constraintTop_toBottomOf="@+id/editText5" />
+            app:layout_constraintStart_toEndOf="@+id/editText4"
+            app:layout_constraintTop_toBottomOf="@+id/editText4" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,7 +77,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox"
+            android:layout_marginRight="50dp" />
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
