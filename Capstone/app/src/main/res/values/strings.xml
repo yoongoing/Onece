@@ -4,4 +4,5 @@
     <string name="button_name">회원가입</string>
     <string name="button2_name">확인</string>
     <string name="checkBox_name">회원정보 저장</string>
+    <string name="logo">logo</string>
 </resources>

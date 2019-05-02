@@ -18,13 +18,15 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="117dp"
-            android:layout_centerHorizontal="true"
             android:layout_weight="3"
-            android:paddingLeft="30dp"
+            android:paddingStart="30dp"
             android:paddingTop ="30dp"
-            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/login_onece" />
+            android:contentDescription="@string/logo"
+            android:src="@drawable/login_onece"
+            android:paddingRight="10dp"
+            android:paddingLeft="30dp" />
 
         <EditText
             android:id="@+id/editText4"
@@ -66,6 +68,7 @@
         android:layout_marginBottom="50dp"
         android:layout_gravity="center"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
@@ -79,6 +82,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkBox"
             android:layout_marginRight="50dp" />
+
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
