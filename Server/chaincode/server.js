@@ -1,12 +1,20 @@
-const http = require('http'); // 서버를 만드는 모듈 불러옴
-console.log('Server starting...'); 
 
 
-function onAir(request, response) {  
-    response.writeHead(200, {'Content-Type' : 'text/plain'});
-    response.write('Connected...');
+
+
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+var string;
+var list;
+
+
+var app = http.createServer((request, response) => {
+
+    console.log(1231231321);
+ 
     response.end();
-}
-http.createServer(onAir).listen(8888);
 
-console.log('Server succesful');
+})
+
+app.listen(1238,'172.17.65.161');
