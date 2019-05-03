@@ -3,8 +3,8 @@ package main
 import (
     "fmt"
 
-    "github.com/hyperledger/fabric/core/chaincode/shim"
-    "github.com/hyperledger/fabric/protos/peer"
+    "https://github.com/hyperledger/fabric/tree/release-1.4/core/chaincode/shim"
+    "https://github.com/hyperledger/fabric/tree/release-1.4/protos/peer"
 )
 
 // SimpleAsset은 간단한 체인 코드를 구현하여 자산을 관리합니다.
