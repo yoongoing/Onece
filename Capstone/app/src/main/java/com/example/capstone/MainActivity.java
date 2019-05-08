@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         //b2의 리스너
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String url = "http://192.168.1.72:7777/?id=1234&pw=1234";
+                String idData = tvData.getText().toString();
+                String ip = "http://192.168.1.72:7777/?id=";
+                String url = ip.concat(idData);
                 NetworkTask networkTask = new NetworkTask(url, null);
                 networkTask.execute();
 
@@ -70,9 +72,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-            tvData.setText(s);
+//            doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
+            if(s.equals("true")) {
+                Intent intent = new Intent(getApplicationContext(),activeVerify.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(MainActivity.this,"회원 아이디를 확인하세요",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
