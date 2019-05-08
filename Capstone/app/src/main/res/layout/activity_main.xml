@@ -4,34 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="#000000"
     tools:context=".MainActivity">
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-40dp">
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="117dp"
-            android:layout_weight="3"
-            android:paddingStart="30dp"
-            android:paddingTop ="30dp"
-            android:paddingEnd="10dp"
-            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/logo"
-            android:src="@drawable/login_onece"
-            android:paddingRight="10dp"
-            android:paddingLeft="30dp" />
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
+            android:src="@drawable/login_onece2" />
 
         <EditText
-            android:id="@+id/editText4"
-            android:layout_width="wrap_content"
-            android:layout_height="73dp"
+            android:id="@+id/name"
+            android:layout_width="223dp"
+            android:layout_height="61dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_weight="1"
@@ -40,7 +37,10 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:paddingTop="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/editText4"
+            android:textColor="#ffffffff"
+            android:textColorHint="#ffffffff"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -55,45 +55,50 @@
             android:layout_marginRight="0dp"
             android:layout_marginBottom="40dp"
             android:layout_weight="1"
+            android:buttonTint="#ffffffff"
             android:text="@string/checkBox_name"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.746"
-            app:layout_constraintStart_toEndOf="@+id/editText4"
-            app:layout_constraintTop_toBottomOf="@+id/editText4" />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:layout_marginBottom="50dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+            android:textColor="#ffffffff"
+            android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="50dp"
-            android:text="@string/button_name"
+            android:layout_marginBottom="50dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox"
-            android:layout_marginRight="50dp" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:background="@drawable/buttonshape"
+                android:text="@string/button_name"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:text="@string/button2_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonshape"
+                android:text="@string/button2_name"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
         </LinearLayout>
     </LinearLayout>
