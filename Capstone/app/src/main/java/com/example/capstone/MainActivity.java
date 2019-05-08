@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //b2의 리스너
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String url = "http://172.17.65.161:7771/?id=1234&pw=1234";
+                String url = "http://192.168.1.72:7777/?id=1234&pw=1234";
                 NetworkTask networkTask = new NetworkTask(url, null);
                 networkTask.execute();
 
