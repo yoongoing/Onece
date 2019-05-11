@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@drawable/login_back"
     tools:context=".MainActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-40dp">
+        android:layout_height="match_parent">
+        <!--android:orientation="vertical"-->
+        <!--tools:layout_editor_absoluteX="0dp"-->
+        <!--tools:layout_editor_absoluteY="-40dp"-->
 
+        <!--logo-->
         <ImageView
+            android:id="@+id/logo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
@@ -23,84 +25,153 @@
             android:contentDescription="@string/logo"
             android:maxWidth="100dp"
             android:maxHeight="100dp"
-            android:src="@drawable/login_onece2" />
+            android:src="@drawable/login_onece"
+            app:srcCompat="@drawable/login_onece"/>
 
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="223dp"
-            android:layout_height="61dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/name"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            android:paddingTop="50dp"
-            android:textColor="#ffffffff"
-            android:textColorHint="#ffffffff"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:targetApi="o" />
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
+        <!--id-->
+        <RelativeLayout
+            android:id="@+id/login_id"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="40dp"
-            android:layout_weight="1"
-            android:buttonTint="#ffffffff"
-            android:text="@string/checkBox_name"
-            android:textColor="#ffffffff"
-            android:textSize="20sp" />
+            android:layout_below="@+id/logo"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imgView_userIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:padding="8dp"
+                android:src="@drawable/img_user"
+                android:tint="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imgView_userIcon"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/imgView_userIcon"
+                android:background="@color/editTextBG"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:paddingLeft="20dp"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/login_id"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_marginRight="30dp"-->
+            <!--android:layout_marginTop="30dp">-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/name"-->
+                <!--android:layout_width="223dp"-->
+                <!--android:layout_height="61dp"-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:ems="10"-->
+                <!--android:hint="@string/name"-->
+                <!--android:importantForAutofill="no"-->
+                <!--android:inputType="textPersonName"-->
+                <!--android:paddingTop="50dp"-->
+                <!--android:textColor="#ffffffff"-->
+                <!--android:textColorHint="#ffffffff"-->
+                <!--android:textSize="20sp"-->
+                <!--app:layout_constraintBottom_toTopOf="@+id/name"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintStart_toStartOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent"-->
+                <!--tools:targetApi="o"-->
+                <!--tools:ignore="NotSibling" />-->
+
+        <!--</RelativeLayout>-->
+
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/store"-->
+            <!--android:layout_below="@+id/login_id"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:layout_marginTop="30dp">-->
+
+            <!--<CheckBox-->
+                <!--android:id="@+id/checkBox"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="end"-->
+                <!--android:layout_marginEnd="50dp"-->
+                <!--android:layout_marginRight="80dp"-->
+                <!--android:layout_marginBottom="40dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:buttonTint="@color/white"-->
+                <!--android:text="@string/checkBox_name"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="20sp"/>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--button-->
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:layout_below="@id/login_id"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
-                android:background="@drawable/buttonshape"
-                android:text="@string/button_name"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+                <Button
+                    android:id="@+id/login_signUp"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginRight="50dp"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/button_name"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/buttonshape"
-                android:text="@string/button2_name"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                    <!--app:layout_constraintTop_toBottomOf="@+id/checkBox" />-->
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/button2_name"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
 
-        </LinearLayout>
-    </LinearLayout>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+                    <!--app:layout_constraintTop_toBottomOf="@+id/checkBox" />-->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
