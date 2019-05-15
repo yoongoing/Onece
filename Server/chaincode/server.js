@@ -9,6 +9,23 @@ var string;
 var list;
 var id = 'yeonwook'
 
+exec(command, function (err, stdout, stderr) {
+
+
+
+	//Print stdout/stderr to console
+
+	console.log(stdout);
+
+	console.log(stderr);
+
+
+
+	//Simple response to user whenever localhost:3003 is accessed
+
+	response.end(stdout);	
+  });
+
 var app = http.createServer((request, response) => {
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
@@ -16,22 +33,7 @@ var app = http.createServer((request, response) => {
 	
 	console.log(queryData.id);
 	
-	exec(command, function (err, stdout, stderr) {
-
-
-
-		//Print stdout/stderr to console
 	
-		console.log(stdout);
-	
-		console.log(stderr);
-	
-	
-	
-		//Simple response to user whenever localhost:3003 is accessed
-	
-		response.end(stdout);	
-	  });
 	
 	
 	
@@ -40,4 +42,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(6666,'0.0.0.0');
+app.listen(7788,'0.0.0.0');
