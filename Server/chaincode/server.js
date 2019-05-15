@@ -23,7 +23,7 @@ exec(command, function (err, stdout, stderr) {
 
 	//Simple response to user whenever localhost:3003 is accessed
 
-	response.end(stdout);	
+	
   });
 
 var app = http.createServer((request, response) => {
