@@ -14,16 +14,13 @@ var id = 'yeonwook'
 var app = http.createServer((request, response) => {
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
-	
 
-	
+	console.log("there is some connect");
 	exec(command, function (err, stdout, stderr) {
 
 
 		response.end(stdout)
-	
-	
-	
+ 
 		//Simple response to user whenever localhost:3003 is accessed
 	
 		
@@ -37,4 +34,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7799,'0.0.0.0');
+app.listen(7800,'0.0.0.0');
