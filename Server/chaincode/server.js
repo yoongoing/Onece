@@ -2,6 +2,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
+var exec = require("child_process").exec;
+
 var string;
 var list;
 var id = 'yeonwook'
@@ -9,6 +11,8 @@ var id = 'yeonwook'
 var app = http.createServer((request, response) => {
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
+	
+	
 	console.log(queryData.id);
 	if(queryData.id == id) {
 		response.end("true");
