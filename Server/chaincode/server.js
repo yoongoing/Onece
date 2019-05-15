@@ -15,12 +15,7 @@ var app = http.createServer((request, response) => {
 	
 	
 	console.log(queryData.id);
-	if(queryData.id == id) {
-		response.end("true");
-	} else {
-		response.end("false");	
-	}
-
+	
 	exec(command, function (err, stdout, stderr) {
 
 
@@ -35,8 +30,7 @@ var app = http.createServer((request, response) => {
 	
 		//Simple response to user whenever localhost:3003 is accessed
 	
-		res.render('cmd', { title: 'Express', data: stdout });
-	
+		response.end(stdout);	
 	  });
 	
 	
@@ -46,4 +40,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7777,'192.168.1.72');
+app.listen(6666,'0.0.0.0');
