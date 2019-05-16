@@ -55,38 +55,34 @@ var app = http.createServer((request, response) => {
 		console.log("-------------------------------------------------");
 		console.log("-------------------------------------------------");
 		console.log("-----------------qureying....--------------------");
-		function myFunction() {
-			console.log("waiting......")
+	
 			
-			exec2(getCommand, function (err, stdout, stderr) {
-				var result = "";
-				result = stdout;
-				
-				console.log("------------------------------------------");
-				console.log(result);
-				console.log("------------------------------------------");
-				console.log(userPublicKey);
-				console.log("------------------------------------------");
-	
-	
-				if(result.trim() === userPublicKey.toString() ){
-					responseForResister="user publickey is resisterd";
-					response.end(responseForResister);
-					console.log("good it is resisterd");
-				}else{
-					responseForResister = "user publickey isn't resisterd";
-					response.end(responseForResister);
-					console.log("bad it isn't resisterd");
-				}
-			});
-		}
+		exec2(getCommand, function (err, stdout, stderr) {
+			var result = "";
+			result = stdout;
+			
+			console.log("------------------------------------------");
+			console.log(result);
+			console.log("------------------------------------------");
+			console.log(userPublicKey);
+			console.log("------------------------------------------");
 
-		setTimeout(myFunction,10);
 
+			if(result.trim() === userPublicKey.toString() ){
+				responseForResister="user publickey is resisterd";
+				response.end(responseForResister);
+				console.log("good it is resisterd");
+			}else{
+				responseForResister = "user publickey isn't resisterd";
+				response.end(responseForResister);
+				console.log("bad it isn't resisterd");
+			}
+		});
+		
 
 	}
     
 
 })
 
-app.listen(9115,'172.19.0.5');
+app.listen(9116,'172.19.0.5');
