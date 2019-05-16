@@ -78,7 +78,7 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
-		setTimeout(myFunction,4000);
+		setTimeout(myFunction,10);
 
 
 	}
