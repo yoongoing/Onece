@@ -3,7 +3,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 var exec = require("child_process").exec;
-var command = "peer chaincode query -n Onece -c '{\"Args\":[\"query\",\"hymein\"]}' -C myc"
+var command = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"hyemin\"]}' -C myc"
 
 var string;
 var list;
