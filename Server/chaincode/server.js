@@ -55,6 +55,7 @@ var app = http.createServer((request, response) => {
 		function myFunction() {
 			console.log("waiting......")
 			exec2(getCommand, function (err, stdout, stderr) {
+				result = null;
 				result = stdout;
 				
 				console.log("------------------------------------------");
@@ -96,4 +97,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9111,'172.19.0.5');
+app.listen(9112,'172.19.0.5');
