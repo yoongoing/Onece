@@ -33,7 +33,7 @@ var app = http.createServer((request, response) => {
 	if (queryData.method==="r"){
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
-
+		var result = "";
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		
 		exec(setCommand, function (err, stdout, stderr) {});
@@ -54,7 +54,6 @@ var app = http.createServer((request, response) => {
 				console.log("bad it isn't resisterd");
 			}
 		});
-		console.log(result);
 		response.end(responseForResister);
 
 	}
