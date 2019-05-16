@@ -44,7 +44,7 @@ var app = http.createServer((request, response) => {
 		exec1(setCommand, function (err, stdout, stderr) {});
 		getCommand = getCommand1+userId+getCommand2;
 		
-		var result = "";
+		
 
 		console.log("still checkoing!");
 		console.log(setCommand);
@@ -54,8 +54,9 @@ var app = http.createServer((request, response) => {
 		console.log("-----------------qureying....--------------------");
 		function myFunction() {
 			console.log("waiting......")
+			
 			exec2(getCommand, function (err, stdout, stderr) {
-				result = null;
+				var result = "";
 				result = stdout;
 				
 				console.log("------------------------------------------");
@@ -77,24 +78,12 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
-		setTimeout(myFunction,1000);
-
-		
-
-		
-
-
-
+		setTimeout(myFunction,4000);
 
 
 	}
-
-	
-	
-	
-
     
 
 })
 
-app.listen(9112,'172.19.0.5');
+app.listen(9113,'172.19.0.5');
