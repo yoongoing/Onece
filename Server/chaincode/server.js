@@ -2,8 +2,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-var exec1 = require("exec-sync").exec;
-var exec2 = require("child_process").exec;
+const exec1  = require("child_process").execSync;
+const exec2 = require("child_process").execSync;
 
 
 var userId = "";
