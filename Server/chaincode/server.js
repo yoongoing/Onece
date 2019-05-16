@@ -40,45 +40,32 @@ var app = http.createServer((request, response) => {
 		userPublicKey = queryData.publickey
 		
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
-		
-		exec1(setCommand, function (err, stdout, stderr) {});
 		getCommand = getCommand1+userId+getCommand2;
-		
-		
-
-		console.log("still checkoing!");
-		console.log(setCommand);
-		console.log(getCommand);
-		console.log("-------------------------------------------------");
-		console.log("-------------------------------------------------");
-		console.log("-----------------qureying....--------------------");
-		function myFunction() {
-			console.log("waiting......")
+		exec1(setCommand, function (err, stdout, stderr) {
+			var result = "";
+			result = stdout;
 			
-			exec2(getCommand, function (err, stdout, stderr) {
-				var result = "";
-				result = stdout;
-				
-				console.log("------------------------------------------");
-				console.log(result);
-				console.log("------------------------------------------");
-				console.log(userPublicKey);
-				console.log("------------------------------------------");
-	
-	
-				if(result.trim() === userPublicKey.toString() ){
-					responseForResister="user publickey is resisterd";
-					response.end(responseForResister);
-					console.log("good it is resisterd");
-				}else{
-					responseForResister = "user publickey isn't resisterd";
-					response.end(responseForResister);
-					console.log("bad it isn't resisterd");
-				}
-			});
-		}
+			console.log("------------------------------------------");
+			console.log(result);
+			console.log("------------------------------------------");
+			console.log(userPublicKey);
+			console.log("------------------------------------------");
 
-		setTimeout(myFunction,10);
+
+			if(result.trim() === userPublicKey.toString() ){
+				responseForResister="user publickey is resisterd";
+				response.end(responseForResister);
+				console.log("good it is resisterd");
+			}else{
+				responseForResister = "user publickey isn't resisterd";
+				response.end(responseForResister);
+				console.log("bad it isn't resisterd");
+			}
+
+		});
+		
+		
+		
 
 
 	}
@@ -86,4 +73,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9114,'172.19.0.5');
+app.listen(9214,'172.19.0.5');
