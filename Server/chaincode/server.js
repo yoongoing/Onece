@@ -58,7 +58,7 @@ var app = http.createServer((request, response) => {
 		}
 
 		exec1(setCommand, function (err, stdout, stderr) {
-			return myFunction();
+			console.log(stdout)
 		});
 
 		
@@ -73,4 +73,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9255,'172.19.0.5');
+app.listen(9266,'172.19.0.5');
