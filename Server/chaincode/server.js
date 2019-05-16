@@ -51,7 +51,7 @@ var app = http.createServer((request, response) => {
 			result = stdout;
 			console.log(result);
 			console.log(typeof(result));
-			console.log(userPublickey);
+			console.log(userPublicKey);
 
 
 			if(result.trim() === userPublicKey.toString() ){
