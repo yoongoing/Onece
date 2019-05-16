@@ -9,7 +9,7 @@ var setCommand1 = "peer chaincode invoke -n Onece -c '{\"Args\":[\"set\",\""
 var setCommand2 = "\",\"";
 var setCommand3 = "\"]}' -C myc";
 var getCommand1 = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"";
-var getCommand2 = "]}' -C myc";
+var getCommand2 = "\"]}' -C myc";
 
 var setCommand = "";
 var getCommand = "";
@@ -64,4 +64,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7813,'172.19.0.5');
+app.listen(7814,'172.19.0.5');
