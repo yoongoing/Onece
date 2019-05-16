@@ -45,39 +45,20 @@ var app = http.createServer((request, response) => {
 			return stdout
 		});
 
-		getCommand = getCommand1+userId+getCommand2;
-		
-		
+		console.log(finalresutl);
+		console.log(userPublicKey);
 
-		console.log("still checkoing!");
-		console.log(setCommand);
-		console.log(getCommand);
-		console.log("-------------------------------------------------");
-		console.log("-------------------------------------------------");
-		console.log("-----------------qureying....--------------------");
+		if( finalresutl.trim() === userPublicKey.toString() ){
+			responseForResister="user publickey is resisterd";
+			response.end(responseForResister);
+			console.log("good it is resisterd");
+		}else{
+			responseForResister = "user publickey isn't resisterd";
+			response.end(responseForResister);
+			console.log("bad it isn't resisterd");
+		}
+
 	
-			
-		exec2(getCommand, function (err, stdout, stderr) {
-			var result = "";
-			result = stdout;
-			
-			console.log("------------------------------------------");
-			console.log(result);
-			console.log("------------------------------------------");
-			console.log(userPublicKey);
-			console.log("------------------------------------------");
-
-
-			if(result.trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-				response.end(responseForResister);
-				console.log("good it is resisterd");
-			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
-				console.log("bad it isn't resisterd");
-			}
-		});
 		
 
 	}
@@ -85,4 +66,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9116,'172.19.0.5');
+app.listen(9200,'172.19.0.5');
