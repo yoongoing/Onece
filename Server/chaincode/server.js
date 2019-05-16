@@ -2,8 +2,7 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-var exec1 = require("child_process").exec;
-var exec2 = require("child_process").exec;
+
 
 var userId = "";
 var userPublicKey = "";
@@ -28,11 +27,14 @@ var id = 'yeonwook'
 //  method가 a면 private key 검증
 
 var app = http.createServer((request, response) => {
+	
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 	
 	
 	if (queryData.method==="r"){
+		var exec1 = require("child_process").exec;
+		var exec2 = require("child_process").exec;
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
 		
@@ -81,4 +83,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7900,'172.19.0.5');
+app.listen(7979,'172.19.0.5');
