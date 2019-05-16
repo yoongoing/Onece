@@ -2,7 +2,7 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const exec1  = require("child_process").execSync;
+const exec1  = require("child_process").exec;
 const exec2 = require("child_process").exec;
 
 
@@ -73,4 +73,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9244,'172.19.0.5');
+app.listen(9255,'172.19.0.5');
