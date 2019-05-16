@@ -2,9 +2,9 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const exec1  = require("child_process").exec;
-const exec2 = require("child_process").execSync;
-
+const exec1  = require("child_process").execSync;
+const exec2 = require("child_process").exec;
+const waitSync = require('wait-sync');
 
 var userId = "";
 var userPublicKey = "";
@@ -58,9 +58,10 @@ var app = http.createServer((request, response) => {
 		}
 
 		exec1(setCommand, function (err, stdout, stderr) {
-			return setTimeout(myFunction,1000)
-		});
+			return setTimeout(() => console.log("waiting......"), 2000);
+ 		});
 		
+		myFunction();
 		
 		
 
@@ -74,4 +75,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9304,'172.19.0.5');
+app.listen(9305,'172.19.0.5');
