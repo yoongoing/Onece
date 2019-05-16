@@ -2,7 +2,9 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-var exec = require("child_process").exec;
+var exec1 = require("child_process").exec;
+var exec2 = require("child_process").exec;
+
 var userId = "";
 var userPublicKey = "";
 var setCommand1 = "peer chaincode invoke -n Onece -c '{\"Args\":[\"set\",\""
@@ -33,16 +35,19 @@ var app = http.createServer((request, response) => {
 	if (queryData.method==="r"){
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
-		var result = "";
+		
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		
-		exec(setCommand, function (err, stdout, stderr) {});
+		exec1(setCommand, function (err, stdout, stderr) {});
 		getCommand = getCommand1+userId+getCommand2;
 		
+		var result = "";
+
 		console.log("still checkoing!");
 		console.log(getCommand);
-		exec(getCommand, function (err, stdout, stderr) {
-			console.log(stdout+"                  result test");
+		exec2(getCommand, function (err, stdout, stderr) {
+			
+			console.log(stdout);
 			result = stdout;
 			console.log(result);
 			console.log(typeof(result))
@@ -66,4 +71,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7818,'172.19.0.5');
+app.listen(7819,'172.19.0.5');
