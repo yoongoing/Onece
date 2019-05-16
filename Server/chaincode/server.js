@@ -57,15 +57,11 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
-		var setResult = exec1(setCommand, function (err, stdout, stderr) {
-			return stdout
+		exec1(setCommand, function (err, stdout, stderr) {
+			return setTimeout(myFunction,1000)
 		});
 
-		console.log(setResult);
-		setResult.toString();
-		var temp = setResult.split("result: ");
-		console.log(temp[1]);
-
+		
 		
 
 		
@@ -78,4 +74,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9301,'172.19.0.5');
+app.listen(9302,'172.19.0.5');
