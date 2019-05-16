@@ -4,7 +4,7 @@ const url = require('url');
 const fs = require('fs');
 const exec1  = require("child_process").execSync;
 const exec2 = require("child_process").exec;
-const waitSync = require('wait-sync');
+
 
 var userId = "";
 var userPublicKey = "";
