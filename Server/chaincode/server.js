@@ -40,15 +40,15 @@ var app = http.createServer((request, response) => {
 		userPublicKey = queryData.publickey
 		
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
+		getCommand = getCommand1 + userId + getCommand2 ;
+		exec1(setCommand, function (err, stdout, stderr) {});
+
 		
-		var finalresutl= exec1(setCommand, function (err, stdout, stderr) {
+		var result = exec1(getCommand, function (err, stdout, stderr) {
 			return stdout
 		});
 
-		console.log(finalresutl);
-		console.log(userPublicKey);
-
-		if( finalresutl.trim() === userPublicKey.toString() ){
+		if( result.toString().trim() === userPublicKey.toString() ){
 			responseForResister="user publickey is resisterd";
 			response.end(responseForResister);
 			console.log("good it is resisterd");
@@ -66,4 +66,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9200,'172.19.0.5');
+app.listen(9211,'172.19.0.5');
