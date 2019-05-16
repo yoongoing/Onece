@@ -52,31 +52,30 @@ var app = http.createServer((request, response) => {
 		console.log("-------------------------------------------------");
 		console.log("-------------------------------------------------");
 		console.log("-----------------qureying....--------------------");
-		setTimeout(console.log("waiting......"),1000);
-
-		exec2(getCommand, function (err, stdout, stderr) {
-			result = stdout;
-			
-			console.log("------------------------------------------");
-			console.log(result);
-			console.log("------------------------------------------");
-			console.log(userPublicKey);
-			console.log("------------------------------------------");
-
-
-			if(result.trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-				response.end(responseForResister);
-				console.log("good it is resisterd");
-			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
-				console.log("bad it isn't resisterd");
-			}
-		});
-
-		
-
+		function myFunction() {
+			console.log("waiting......")
+		}
+		setTimeout(
+			exec2(getCommand, function (err, stdout, stderr) {
+				result = stdout;
+				
+				console.log("------------------------------------------");
+				console.log(result);
+				console.log("------------------------------------------");
+				console.log(userPublicKey);
+				console.log("------------------------------------------");
+	
+	
+				if(result.trim() === userPublicKey.toString() ){
+					responseForResister="user publickey is resisterd";
+					response.end(responseForResister);
+					console.log("good it is resisterd");
+				}else{
+					responseForResister = "user publickey isn't resisterd";
+					response.end(responseForResister);
+					console.log("bad it isn't resisterd");
+				}
+			}),1000);
 
 
 
