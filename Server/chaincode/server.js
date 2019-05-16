@@ -14,6 +14,8 @@ var getCommand2 = "\"]}' -C myc";
 var setCommand = "";
 var getCommand = "";
 
+
+var responseForResister = "";
 var string;
 var list;
 var id = 'yeonwook'
@@ -26,7 +28,8 @@ var id = 'yeonwook'
 var app = http.createServer((request, response) => {
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
-	var result = "";
+	
+	
 	if (queryData.method==="r"){
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
@@ -43,16 +46,16 @@ var app = http.createServer((request, response) => {
 			result = stdout;
 			console.log(result);
 			console.log(typeof(result))
-			if(result == userPublicKey){
-				result="user publickey is resisterd";
+			if(result === ""+userPublicKey){
+				responseForResister="user publickey is resisterd";
 				console.log("good it is resisterd");
 			}else{
-				result = "user publickey isn't resisterd";
+				responseForResister = "user publickey isn't resisterd";
 				console.log("bad it isn't resisterd");
 			}
 		});
 		console.log(result);
-		response.end(result);
+		response.end(responseForResister);
 
 	}
 
@@ -64,4 +67,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7814,'172.19.0.5');
+app.listen(7818,'172.19.0.5');
