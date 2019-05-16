@@ -10,6 +10,7 @@ var setCommand2 = "\",\"";
 var setCommand3 = "\"]}' -C myc";
 var getCommand1 = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"";
 var getCommand2 = "]}' -C myc";
+
 var setCommand = "";
 var getCommand = "";
 
@@ -36,8 +37,9 @@ var app = http.createServer((request, response) => {
 		getCommand = getCommand1+userId+getCommand2;
 		
 		console.log("still checkoing!");
-
+		console.log(getCommand);
 		exec(getCommand, function (err, stdout, stderr) {
+			console.log(stdout+"                  result test");
 			result = stdout;
 			console.log(result);
 			console.log(typeof(result))
@@ -62,4 +64,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7810,'172.19.0.5');
+app.listen(7813,'172.19.0.5');
