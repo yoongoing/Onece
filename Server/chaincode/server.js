@@ -2,7 +2,7 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const exec1  = require("child_process").exec;
+const exec1  = require("child_process").execSync;
 const exec2 = require("child_process").exec;
 
 
@@ -57,9 +57,11 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
-		exec1(setCommand, function (err, stdout, stderr) {
-			console.log(stdout)
+		var setResult = exec1(setCommand, function (err, stdout, stderr) {
+			return stdout
 		});
+
+		console.log(setResult);
 
 		
 
@@ -73,4 +75,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9266,'172.19.0.5');
+app.listen(9300,'172.19.0.5');
