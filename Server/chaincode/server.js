@@ -8,8 +8,10 @@ var userPublicKey = "";
 var setCommand1 = "peer chaincode invoke -n Onece -c '{\"Args\":[\"set\",\""
 var setCommand2 = "\",\"";
 var setCommand3 = "\"]}' -C myc";
-var getCommand = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"hyemin\"]}' -C myc";
-var command = ""
+var getCommand1 = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"";
+var getCommand2 = "]}' -C myc";
+var setCommand = "";
+var getCommand = "";
 
 var string;
 var list;
@@ -23,24 +25,26 @@ var id = 'yeonwook'
 var app = http.createServer((request, response) => {
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
-
+	var result = "";
 	if (queryData.method==="r"){
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
 
-		command = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
+		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		console.log("there is some connect");
-		exec(command, function (err, stdout, stderr) {
+		exec(setCommand, function (err, stdout, stderr) {});
+		getCommand = getCommand1+userId+getCommand2;
+		exec(getCommand, function (err, stdout, stderr) {
 			var result = stdout;
-			console.log(result);
-
-			response.end(result);
-	
-			//Simple response to user whenever localhost:3003 is accessed
-		
-			
+			if(result === ""+userPublicKey){
+				result="user publickey is resisterd";
+			}else{
+				result = "user publickey isn't resisterd";
+			}
 		});
-	
+		
+		response.end(result);
+
 	}
 
 	
@@ -51,4 +55,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7803,'172.19.0.5');
+app.listen(7805,'172.19.0.5');
