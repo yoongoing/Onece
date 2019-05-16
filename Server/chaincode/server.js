@@ -38,8 +38,10 @@ var app = http.createServer((request, response) => {
 		console.log("still checkoing!");
 
 		exec(getCommand, function (err, stdout, stderr) {
-			var result = stdout;
-			if(result === ""+userPublicKey){
+			result = stdout;
+			console.log(result);
+			console.log(typeof(result))
+			if(result == userPublicKey){
 				result="user publickey is resisterd";
 				console.log("good it is resisterd");
 			}else{
@@ -47,7 +49,7 @@ var app = http.createServer((request, response) => {
 				console.log("bad it isn't resisterd");
 			}
 		});
-		
+		console.log(result);
 		response.end(result);
 
 	}
