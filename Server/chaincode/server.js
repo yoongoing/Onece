@@ -52,6 +52,7 @@ var app = http.createServer((request, response) => {
 		console.log("-------------------------------------------------");
 		console.log("-------------------------------------------------");
 		console.log("-----------------qureying....--------------------");
+		setTimeout(console.log("waiting......"),1000);
 
 		exec2(getCommand, function (err, stdout, stderr) {
 			result = stdout;
@@ -90,4 +91,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(8900,'172.19.0.5');
+app.listen(8989,'172.19.0.5');
