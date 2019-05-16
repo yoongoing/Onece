@@ -31,9 +31,10 @@ var app = http.createServer((request, response) => {
 		command = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		console.log("there is some connect");
 		exec(command, function (err, stdout, stderr) {
+			var result = stdout;
+			console.log(result);
 
-
-			response.end(stdout)
+			response.end(result);
 	
 			//Simple response to user whenever localhost:3003 is accessed
 		
@@ -50,4 +51,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7800,'172.19.0.5');
+app.listen(7801,'172.19.0.5');
