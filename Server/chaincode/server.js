@@ -31,15 +31,20 @@ var app = http.createServer((request, response) => {
 		userPublicKey = queryData.publickey
 
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
-		console.log("there is some connect");
+		
 		exec(setCommand, function (err, stdout, stderr) {});
 		getCommand = getCommand1+userId+getCommand2;
+		
+		console.log("still checkoing!");
+
 		exec(getCommand, function (err, stdout, stderr) {
 			var result = stdout;
 			if(result === ""+userPublicKey){
 				result="user publickey is resisterd";
+				console.log("good it is resisterd");
 			}else{
 				result = "user publickey isn't resisterd";
+				console.log("bad it isn't resisterd");
 			}
 		});
 		
@@ -55,4 +60,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7805,'172.19.0.5');
+app.listen(7807,'172.19.0.5');
