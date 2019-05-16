@@ -2,6 +2,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
+var exec1 = require("child_process").exec;
+var exec2 = require("child_process").exec;
 
 
 var userId = "";
@@ -33,8 +35,7 @@ var app = http.createServer((request, response) => {
 	
 	
 	if (queryData.method==="r"){
-		var exec1 = require("child_process").exec;
-		var exec2 = require("child_process").exec;
+		
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
 		
@@ -46,14 +47,20 @@ var app = http.createServer((request, response) => {
 		var result = "";
 
 		console.log("still checkoing!");
+		console.log(setCommand);
 		console.log(getCommand);
+		console.log("-------------------------------------------------");
+		console.log("-------------------------------------------------");
+		console.log("-----------------qureying....--------------------");
+
 		exec2(getCommand, function (err, stdout, stderr) {
-			
-			console.log(stdout);
 			result = stdout;
+			
+			console.log("------------------------------------------");
 			console.log(result);
-			console.log(typeof(result));
+			console.log("------------------------------------------");
 			console.log(userPublicKey);
+			console.log("------------------------------------------");
 
 
 			if(result.trim() === userPublicKey.toString() ){
@@ -83,4 +90,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7979,'172.19.0.5');
+app.listen(8900,'172.19.0.5');
