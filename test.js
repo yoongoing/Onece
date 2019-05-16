@@ -6,7 +6,7 @@ var setCommand3 = "\"]}' -C myc";
 
 
 
-userId = "jjuo12";
+userId = "hello2121";
 userPublicKey = 01231231;
 
 console.log(setCommand1+userId+setCommand2+userPublicKey+setCommand3);
