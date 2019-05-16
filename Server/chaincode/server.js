@@ -57,10 +57,8 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
-		exec1(setCommand, function (err, stdout, stderr) {
-			return setTimeout(() => console.log("waiting......"), 2000);
- 		});
-		
+		exec1(setCommand, function (err, stdout, stderr) {});
+		setTimeout(() => console.log("waiting......for resister"), 2000);
 		myFunction();
 		
 		
@@ -75,4 +73,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9305,'172.19.0.5');
+app.listen(9306,'172.19.0.5');
