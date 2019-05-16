@@ -41,21 +41,27 @@ var app = http.createServer((request, response) => {
 		
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		getCommand = getCommand1 + userId + getCommand2 ;
-		exec1(setCommand, function (err, stdout, stderr) {});
+		
+		function myFunction() {
+			exec2(getCommand, function (err, stdout, stderr) {
+				var result = stdout	
+				if( result.toString().trim() === userPublicKey.toString() ){
+					responseForResister="user publickey is resisterd";
+					response.end(responseForResister);
+					console.log("good it is resisterd");
+				}else{
+					responseForResister = "user publickey isn't resisterd";
+					response.end(responseForResister);
+					console.log("bad it isn't resisterd");
+				}
+			});
+		}
+
+		exec1(setCommand, function (err, stdout, stderr) {
+			return myFunction();
+		});
 
 		
-		exec2(getCommand, function (err, stdout, stderr) {
-			var result = stdout	
-			if( result.toString().trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-				response.end(responseForResister);
-				console.log("good it is resisterd");
-			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
-				console.log("bad it isn't resisterd");
-			}
-		});
 
 		
 
@@ -67,4 +73,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9222,'172.19.0.5');
+app.listen(9244,'172.19.0.5');
