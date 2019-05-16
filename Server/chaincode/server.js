@@ -53,13 +53,13 @@ var app = http.createServer((request, response) => {
 			console.log(typeof(result))
 			if(result.trim() === userPublicKey.toString() ){
 				responseForResister="user publickey is resisterd";
+				response.end(responseForResister);
 				console.log("good it is resisterd");
 			}else{
 				responseForResister = "user publickey isn't resisterd";
 				console.log("bad it isn't resisterd");
 			}
 		});
-		response.end(responseForResister);
 
 	}
 
@@ -71,4 +71,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(7820,'172.19.0.5');
+app.listen(7822,'172.19.0.5');
