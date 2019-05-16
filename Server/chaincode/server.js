@@ -62,6 +62,9 @@ var app = http.createServer((request, response) => {
 		});
 
 		console.log(setResult);
+		setResult.toString();
+		var temp = setResult.split("result: ");
+		console.log(temp[1]);
 
 		
 
@@ -75,4 +78,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9300,'172.19.0.5');
+app.listen(9301,'172.19.0.5');
