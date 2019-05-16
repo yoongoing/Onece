@@ -3,7 +3,7 @@ const http = require('http');
 const url = require('url');
 const fs = require('fs');
 const exec1  = require("child_process").execSync;
-const exec2 = require("child_process").execSync;
+const exec2 = require("child_process").exec;
 
 
 var userId = "";
@@ -44,19 +44,20 @@ var app = http.createServer((request, response) => {
 		exec1(setCommand, function (err, stdout, stderr) {});
 
 		
-		var result = exec1(getCommand, function (err, stdout, stderr) {
-			return stdout
+		exec2(getCommand, function (err, stdout, stderr) {
+			var result = stdout	
+			if( result.toString().trim() === userPublicKey.toString() ){
+				responseForResister="user publickey is resisterd";
+				response.end(responseForResister);
+				console.log("good it is resisterd");
+			}else{
+				responseForResister = "user publickey isn't resisterd";
+				response.end(responseForResister);
+				console.log("bad it isn't resisterd");
+			}
 		});
 
-		if( result.toString().trim() === userPublicKey.toString() ){
-			responseForResister="user publickey is resisterd";
-			response.end(responseForResister);
-			console.log("good it is resisterd");
-		}else{
-			responseForResister = "user publickey isn't resisterd";
-			response.end(responseForResister);
-			console.log("bad it isn't resisterd");
-		}
+		
 
 	
 		
@@ -66,4 +67,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9211,'172.19.0.5');
+app.listen(9222,'172.19.0.5');
