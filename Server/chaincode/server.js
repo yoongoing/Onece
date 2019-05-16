@@ -2,7 +2,7 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-var exec1 = require("child_process").exec;
+var exec1 = require("exec-sync").exec;
 var exec2 = require("child_process").exec;
 
 
@@ -40,32 +40,48 @@ var app = http.createServer((request, response) => {
 		userPublicKey = queryData.publickey
 		
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
-		getCommand = getCommand1+userId+getCommand2;
-		exec1(setCommand, function (err, stdout, stderr) {
-			var result = "";
-			result = stdout;
-			
-			console.log("------------------------------------------");
-			console.log(result);
-			console.log("------------------------------------------");
-			console.log(userPublicKey);
-			console.log("------------------------------------------");
-
-
-			if(result.trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-				response.end(responseForResister);
-				console.log("good it is resisterd");
-			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
-				console.log("bad it isn't resisterd");
-			}
-
+		
+		var finalresutl= exec1(setCommand, function (err, stdout, stderr) {
+			return stdout
 		});
+
+		getCommand = getCommand1+userId+getCommand2;
 		
 		
-		
+
+		console.log("still checkoing!");
+		console.log(setCommand);
+		console.log(getCommand);
+		console.log("-------------------------------------------------");
+		console.log("-------------------------------------------------");
+		console.log("-----------------qureying....--------------------");
+		function myFunction() {
+			console.log("waiting......")
+			
+			exec2(getCommand, function (err, stdout, stderr) {
+				var result = "";
+				result = stdout;
+				
+				console.log("------------------------------------------");
+				console.log(result);
+				console.log("------------------------------------------");
+				console.log(userPublicKey);
+				console.log("------------------------------------------");
+	
+	
+				if(result.trim() === userPublicKey.toString() ){
+					responseForResister="user publickey is resisterd";
+					response.end(responseForResister);
+					console.log("good it is resisterd");
+				}else{
+					responseForResister = "user publickey isn't resisterd";
+					response.end(responseForResister);
+					console.log("bad it isn't resisterd");
+				}
+			});
+		}
+
+		setTimeout(myFunction,10);
 
 
 	}
@@ -73,4 +89,4 @@ var app = http.createServer((request, response) => {
 
 })
 
-app.listen(9214,'172.19.0.5');
+app.listen(9115,'172.19.0.5');
