@@ -3,6 +3,7 @@ package com.example.capstone;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -49,6 +50,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         this.update("앱 접근이 허용되었습니다.", true);
+        Intent intent = new Intent(context.getApplicationContext(),login.class);
+        context.startActivity(intent);
     }
 
     public void stopFingerAuth(){
