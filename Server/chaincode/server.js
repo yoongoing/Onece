@@ -62,6 +62,7 @@ var app = http.createServer((request, response) => {
 
 		exec1(setCommand, function (err, stdout, stderr) {});
 		console.log(setCommand);
+		console.log(queryData);
 		setTimeout( myFunction, 2000);
 		
 		
