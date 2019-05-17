@@ -50,7 +50,7 @@ public class Activity_SignUp extends Activity {
 //                    } else {
 //                        makeDataSet(id,pw,phoneNum,username);
 //                        makeQueryMsg(query);
-                        String ip = "http://192.168.1.54:9310/?method=r&id=sex&publickey=1";
+                        String ip = "http://192.168.1.54:9310/?method=r&id=se&publickey=1";
 //                        String url = ip.concat(query);
 //                        System.out.println(query);
                         NetworkTask networkTask = new NetworkTask(ip, null);
