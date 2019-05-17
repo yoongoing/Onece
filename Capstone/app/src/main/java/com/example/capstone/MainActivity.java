@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fingerprint);
-
         iv_fingerprint = findViewById(R.id.iv_fingerprint);
         tv_message = findViewById(R.id.tv_message);
         tv_message.setText("Message");
@@ -139,61 +138,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-
-    public ImageView getIv_fingerprint() {
-        return iv_fingerprint;
-    }
 }
-
-//    private Button login_signUp;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        login_signUp = findViewById(R.id.login_signUp);
-//        login_signUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), Activity_SignUp.class);
-//                startActivityForResult(intent, 1000);
-//            }
-//        });
-//    }
-
-
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        setContentView(R.layout.activity_main);
-//
-//
-//        Button b1 = findViewById(R.id.button);
-//        Button b2 = findViewById(R.id.button2);
-//
-//        //b1의 리스너
-//        b1.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                Intent intent = new Intent(getApplicationContext(),signUp.class);
-//                startActivity(intent);
-//            }
-//        });
-//        //b2의 리스너
-//        b2.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View view){
-//                Intent intent = new Intent(getApplicationContext(),activeVerify.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//
-//
-//    }
-
-
 
 

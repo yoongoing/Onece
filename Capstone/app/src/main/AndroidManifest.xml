@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/SignUpActivityTheme">
         <activity android:name=".activeVerify"/>
-        <activity android:name=".signUp"/>
+        <activity android:name=".login"/>
+        <activity android:name=".Activity_SignUp"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>

@@ -3,18 +3,17 @@ package com.example.capstone;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 import android.os.CancellationSignal;
 
 @TargetApi(Build.VERSION_CODES.M)
+
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback{
 
@@ -60,7 +59,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     private void update(String s, boolean b) {
         final TextView tv_message = ((Activity)context).findViewById(R.id.tv_message);
         final ImageView iv_fingerprint = ((Activity)context).findViewById(R.id.iv_fingerprint);
-        final LinearLayout linearLayout = ((Activity)context).findViewById(R.id.ll_secure);
+
 
         //안내 메세지 출력
         tv_message.setText(s);
@@ -70,12 +69,10 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         } else {//지문인증 성공
             tv_message.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
             iv_fingerprint.setImageResource(R.mipmap.done);
-            linearLayout.setVisibility(LinearLayout.VISIBLE);
 
-            //sound effect
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(context, notification);
-            r.play();
+            Intent intent = new Intent(context.getApplicationContext(),login.class);
+            context.startActivity(intent);
+
         }
     }
 }

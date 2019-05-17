@@ -1,115 +1,84 @@
 package com.example.capstone;
 
-import android.content.Intent;
-import android.graphics.Color;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+public class Activity_SignUp extends Activity {
 
-public class Activity_SignUp extends AppCompatActivity {
-
-    private EditText etUsername;
-    private EditText etPassword;
-    private EditText etRetype;
-    private Button btn_signUp;
-//    private Button btnCancel;
+    protected EditText id;
+    protected EditText pw;
+    protected EditText retype_pw;
+    protected EditText phoneNum;
+    protected EditText username;
+    protected Button signup;
+    protected String[] dataSet;
+    protected String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
+    //회원정보
+        username = findViewById(R.id.etUsername);
+        id = findViewById(R.id.etId);
+        pw = findViewById(R.id.etPassword);
+        retype_pw = findViewById(R.id.etRetype);
+        phoneNum = findViewById(R.id.etPhone);
+    //회원가입버튼
+        signup = findViewById(R.id.btn_signUp);
 
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        etRetype = findViewById(R.id.etRetype);
-        btn_signUp = findViewById(R.id.btn_signUp);
-//        btnCancel = (Button) findViewById(R.id.btnCancel);
-
-        // 비밀번호 일치 검사
-        etRetype.addTextChangedListener(new TextWatcher() {
+    //회원가입 버튼 클릭 시
+        signup.setOnClickListener(new Button.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String password = etPassword.getText().toString();
-                String confirm = etRetype.getText().toString();
-
-                if( password.equals(confirm) ) {
-                    etPassword.setBackgroundColor(Color.GREEN);
-                    etRetype.setBackgroundColor(Color.GREEN);
+            public void onClick(View view) {
+                //회원정보가 모두 입력되지 않은 경우
+                if(id.getText().toString().length() == 0 || pw.getText().toString().length() == 0 ||
+                phoneNum.getText().toString().length() == 0 || username.getText().toString().length() == 0 ||
+                retype_pw.getText().toString().length() == 0) {
+                    Toast.makeText(getApplicationContext(),"회원 정보를 확인 하세요.",Toast.LENGTH_SHORT).show();
                 } else {
-                    etPassword.setBackgroundColor(Color.RED);
-                    etRetype.setBackgroundColor(Color.RED);
+                    //재입력한 비밀번호가 다를경우
+//                    if(pw.getText().toString().equals(retype_pw.getText().toString())){
+//                        Toast.makeText(getApplicationContext(),"회원정보를 확인 하세요2.",Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        makeDataSet(id,pw,phoneNum,username);
+//                        makeQueryMsg(query);
+                        String ip = "http://192.168.1.54:9310/?method=r&id=sex&publickey=1";
+//                        String url = ip.concat(query);
+//                        System.out.println(query);
+                        NetworkTask networkTask = new NetworkTask(ip, null);
+                        networkTask.execute();
+
+//                    }
                 }
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        btn_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            // 전화번호 입력 확인
-            if( etUsername.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "전화를 입력하세요!", Toast.LENGTH_SHORT).show();
-                etUsername.requestFocus();
-                return;
-            }
-
-            // 비밀번호 입력 확인
-            if( etPassword.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
-                etPassword.requestFocus();
-                return;
-            }
-
-            // 비밀번호 확인 입력 확인
-            if( etRetype.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
-                etRetype.requestFocus();
-                return;
-            }
-
-            // 비밀번호 일치 확인
-            if( !etPassword.getText().toString().equals(etRetype.getText().toString()) ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
-                etPassword.setText("");
-                etRetype.setText("");
-                etPassword.requestFocus();
-                return;
-            }
-
-            Intent result = new Intent();
-            result.putExtra("name", etUsername.getText().toString());
-
-            // 자신을 호출한 Activity로 데이터를 보낸다.
-            setResult(RESULT_OK, result);
-            finish();
-            }
         });
 
 
+    }
+    private void makeDataSet(EditText id,EditText pw,EditText phoneNum,EditText username){
+        this.dataSet[0] = "&id=".concat(id.getText().toString());
+        this.dataSet[1] =  "&pw=".concat(pw.getText().toString());
+        this.dataSet[2] = "&phoneNum=".concat( phoneNum.getText().toString());
+        this.dataSet[3] = "&username=".concat(username.getText().toString());
+        this.dataSet[4] = "&publickey=daehan";
 
-//        btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+    }
+
+    private String makeQueryMsg(String query){
+        query = "?method=r";
+        int count = this.dataSet.length;
+        for(int index = 0; index < count; index++){
+            query.concat(this.dataSet[index]);
+        }
+        return query;
 
     }
 }
-

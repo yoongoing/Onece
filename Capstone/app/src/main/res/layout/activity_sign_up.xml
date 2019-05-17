@@ -84,14 +84,14 @@
                     android:tint="@color/white" />
 
                 <EditText
-                    android:id="@+id/etUsername"
+                    android:id="@+id/etId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/imgView_userIcon"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_userIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Username"
+                    android:hint="ID"
                     android:inputType="textPersonName"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -220,7 +220,7 @@
                     android:tint="@color/white" />
 
                 <EditText
-                    android:id="@+id/etBirth"
+                    android:id="@+id/etUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/imgView_birthIcon"
