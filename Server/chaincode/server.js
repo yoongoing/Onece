@@ -47,10 +47,12 @@ var app = http.createServer((request, response) => {
 				var result = stdout	
 				if( result.toString().trim() === userPublicKey.toString() ){
 					responseForResister="user publickey is resisterd";
+					response.writeHead(200, {'Content-Type': 'text/html'});
 					response.end(responseForResister);
 					console.log("good it is resisterd");
 				}else{
 					responseForResister = "user publickey isn't resisterd";
+					response.writeHead(400, {'Content-Type': 'text/html'});
 					response.end(responseForResister);
 					console.log("bad it isn't resisterd");
 				}
