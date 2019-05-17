@@ -45,6 +45,7 @@ var app = http.createServer((request, response) => {
 		function myFunction() {
 			exec2(getCommand, function (err, stdout, stderr) {
 				var result = stdout	
+
 				if( result.toString().trim() === userPublicKey.toString() ){
 					responseForResister="user publickey is resisterd";
 					response.writeHead(200, {'Content-Type': 'text/html'});
@@ -60,6 +61,7 @@ var app = http.createServer((request, response) => {
 		}
 
 		exec1(setCommand, function (err, stdout, stderr) {});
+		console.log(setCommand);
 		setTimeout( myFunction, 2000);
 		
 		
