@@ -38,25 +38,25 @@ public class Activity_SignUp extends Activity {
         signup.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //회원정보가 모두 입력되지 않은 경우
+
+//                회원정보가 모두 입력되지 않은 경우
                 if(id.getText().toString().length() == 0 || pw.getText().toString().length() == 0 ||
                 phoneNum.getText().toString().length() == 0 || username.getText().toString().length() == 0 ||
                 retype_pw.getText().toString().length() == 0) {
                     Toast.makeText(getApplicationContext(),"회원 정보를 확인 하세요.",Toast.LENGTH_SHORT).show();
+
                 } else {
-                    //재입력한 비밀번호가 다를경우
-//                    if(pw.getText().toString().equals(retype_pw.getText().toString())){
-//                        Toast.makeText(getApplicationContext(),"회원정보를 확인 하세요2.",Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        makeDataSet(id,pw,phoneNum,username);
-//                        makeQueryMsg(query);
-                        String ip = "http://192.168.1.54:9310/?method=r&id=se&publickey=1";
-//                        String url = ip.concat(query);
-//                        System.out.println(query);
+//                    재입력한 비밀번호가 다를경우
+                    if(!(pw.getText().toString().equals(retype_pw.getText().toString()))){
+                        Toast.makeText(getApplicationContext(),"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show();
+                    } else {
+                        makeDataSet(id,pw,phoneNum,username);
+                        makeQueryMsg(query);
+                        String ip = "http://192.168.1.54:9310/?method=r";
+                        String url = ip.concat(query);
                         NetworkTask networkTask = new NetworkTask(ip, null);
                         networkTask.execute();
-
-//                    }
+                    }
                 }
             }
         });
