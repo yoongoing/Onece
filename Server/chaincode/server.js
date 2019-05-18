@@ -93,9 +93,10 @@ var ref = db.ref("server/saving-data/fireblog");
 
 var app = http.createServer((request, response) => {
 	
-	function writeUserData(userId, publickey) {
+	function writeUserData(userId, publickey, userToken) {
 		firebase.database().ref('jeff/' + userId).set({
-		  publickey : publickey
+		  publickey : publickey,
+		  token : userToken
 		});
 	}
 
@@ -107,7 +108,8 @@ var app = http.createServer((request, response) => {
 		
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
-		writeUserData(userId, userPublicKey);
+		var userToken = queryData.token;
+		writeUserData(userId, userPublicKey,userToken);
 
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		getCommand = getCommand1 + userId + getCommand2 ;
@@ -131,6 +133,7 @@ var app = http.createServer((request, response) => {
 		exec1(setCommand, function (err, stdout, stderr) {});
 		setTimeout( myFunction, 2000);		
 		console.log(queryData.token);
+	
 	}else if(queryData.method === "a"){
 		
 		
