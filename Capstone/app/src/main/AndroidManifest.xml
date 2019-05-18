@@ -22,11 +22,21 @@
 
         </activity>
 
-        <service android:name=".java.MyFirebaseMessagingService">
+        <service
+            android:name=".FireBaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <service
+            android:name=".FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        출처: https://blog.codejun.space/18 [CodeJUN]
     </application>
 
 </manifest>
