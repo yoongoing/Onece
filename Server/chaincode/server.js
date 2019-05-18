@@ -24,6 +24,9 @@ var list;
 var id = 'yeonwook'
 
 
+
+
+
 var firebase = require("firebase");
 var firebaseConfig = {
     apiKey: "AIzaSyCSHdmNBd0BDhJ9RRGe6JmT0He1nBCO2T8",
@@ -34,6 +37,10 @@ var firebaseConfig = {
     messagingSenderId: "919878588338",
     appId: "1:919878588338:web:a2948e81e2caf85a"
   };
+
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var ref = db.ref("server/saving-data/fireblog");
   // Initialize Firebase
 
 
@@ -45,46 +52,53 @@ var firebaseConfig = {
 
 var app = http.createServer((request, response) => {
 	
+	
+	function writeUserData(userId, name, email) {
+		firebase.database().ref('jeff/' + userId).set({
+		  username: name,
+		  email: email,
+		});
+	}
+
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
-	firebase.initializeApp(firebaseConfig);
-	var db = firebase.database();
-	var ref = db.ref("server/saving-data/fireblog");
+	writeUserData("jjuo12", "we", "w4102945@gmail.com");
+
+
+
+	// if (queryData.method==="r"){
+		
+	// 	userId = queryData.id;
+	// 	userPublicKey = queryData.publickey
+		
+	// 	setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
+	// 	getCommand = getCommand1 + userId + getCommand2 ;
+		
+	// 	function myFunction() {
+	// 		exec2(getCommand, function (err, stdout, stderr) {
+	// 			var result = stdout	
+	// 			if( result.toString().trim() === userPublicKey.toString() ){
+	// 				responseForResister="user publickey is resisterd";
+	// 				response.end(responseForResister);
+	// 				console.log("good it is resisterd");
+	// 			}else{
+	// 				responseForResister = "user publickey isn't resisterd";
+	// 				response.end(responseForResister);
+	// 				console.log("bad it isn't resisterd");
+	// 			}
+	// 		});
+	// 	}
+
+	// 	exec1(setCommand, function (err, stdout, stderr) {});
+	// 	setTimeout( myFunction, 2000);
+		
+
 	
-
-	if (queryData.method==="r"){
-		
-		userId = queryData.id;
-		userPublicKey = queryData.publickey
-		
-		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
-		getCommand = getCommand1 + userId + getCommand2 ;
-		
-		function myFunction() {
-			exec2(getCommand, function (err, stdout, stderr) {
-				var result = stdout	
-				if( result.toString().trim() === userPublicKey.toString() ){
-					responseForResister="user publickey is resisterd";
-					response.end(responseForResister);
-					console.log("good it is resisterd");
-				}else{
-					responseForResister = "user publickey isn't resisterd";
-					response.end(responseForResister);
-					console.log("bad it isn't resisterd");
-				}
-			});
-		}
-
-		exec1(setCommand, function (err, stdout, stderr) {});
-		setTimeout( myFunction, 2000);
 		
 
-	
-		
-
-	}
+	//}
     
 
 })
 
-app.listen(9308,'172.19.0.5');
+app.listen(9307,'localhost');
