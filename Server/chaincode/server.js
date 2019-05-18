@@ -131,7 +131,8 @@ var app = http.createServer((request, response) => {
 		}
 
 		exec1(setCommand, function (err, stdout, stderr) {});
-		setTimeout( myFunction, 2000);		
+		setTimeout( myFunction, 2000);	
+		console.log("ah si bal");	
 		console.log(queryData.token);
 	
 	}else if(queryData.method === "a"){

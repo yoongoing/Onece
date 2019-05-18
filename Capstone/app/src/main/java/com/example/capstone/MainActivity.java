@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 String temp = "http://192.168.0.26:9000/?method=r&id=testId&publickey=1234&token="+token;
-                 NetworkTask networkTask = new NetworkTask(temp, null);
+                NetworkTask networkTask = new NetworkTask(temp, null);
                 networkTask.execute();
                 
 //                화면전환 이벤트
