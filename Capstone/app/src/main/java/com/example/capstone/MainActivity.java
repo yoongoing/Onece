@@ -39,9 +39,29 @@ public class MainActivity extends AppCompatActivity {
                 String idData = tvData.getText().toString();
                 String ip = "http://192.168.1.72:7777/?id=";
                 String url = ip.concat(idData);
-                NetworkTask networkTask = new NetworkTask(url, null);
-                networkTask.execute();
+               
+                String token = FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
 
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                }).toString;
+                String temp = "http://192.168.0.26:9000/?method=r&id=testId&publickey=1234&token="+token;
+                 NetworkTask networkTask = new NetworkTask(temp, null);
+                networkTask.execute();
+                
 //                화면전환 이벤트
 //                Intent intent = new Intent(getApplicationContext(),activeVerify.class);
 //                startActivity(intent);
