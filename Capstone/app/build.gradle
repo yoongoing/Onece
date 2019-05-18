@@ -17,7 +17,6 @@ android {
         }
     }
 }
-apply plugin: 'com.google.gms.google-services'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -29,3 +28,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
 }
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
