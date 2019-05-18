@@ -111,7 +111,8 @@ var app = http.createServer((request, response) => {
 
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		getCommand = getCommand1 + userId + getCommand2 ;
-		console.log(queryData.token);
+		
+		
 		function myFunction() {
 			exec2(getCommand, function (err, stdout, stderr) {
 				var result = stdout	
@@ -129,7 +130,7 @@ var app = http.createServer((request, response) => {
 
 		exec1(setCommand, function (err, stdout, stderr) {});
 		setTimeout( myFunction, 2000);		
-
+		console.log(queryData.token);
 	}else if(queryData.method === "a"){
 		
 		

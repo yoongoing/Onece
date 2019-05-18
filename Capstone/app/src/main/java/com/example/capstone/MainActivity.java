@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
+
+
 
 public class MainActivity extends AppCompatActivity {
     TextView tvData;
@@ -40,24 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 String ip = "http://192.168.1.72:7777/?id=";
                 String url = ip.concat(idData);
                
-                String token = FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
+                String token = FirebaseInstanceId.getInstance().getInstanceId().toString();
 
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
 
-                        // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                }).toString;
                 String temp = "http://192.168.0.26:9000/?method=r&id=testId&publickey=1234&token="+token;
                  NetworkTask networkTask = new NetworkTask(temp, null);
                 networkTask.execute();
