@@ -24,6 +24,20 @@ var list;
 var id = 'yeonwook'
 
 
+var firebase = require("firebase");
+var firebaseConfig = {
+    apiKey: "AIzaSyCSHdmNBd0BDhJ9RRGe6JmT0He1nBCO2T8",
+    authDomain: "pushserver-b0722.firebaseapp.com",
+    databaseURL: "https://pushserver-b0722.firebaseio.com",
+    projectId: "pushserver-b0722",
+    storageBucket: "pushserver-b0722.appspot.com",
+    messagingSenderId: "919878588338",
+    appId: "1:919878588338:web:a2948e81e2caf85a"
+  };
+
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+var ref = db.ref("server/saving-data/fireblog");
   // Initialize Firebase
 
 
@@ -35,14 +49,23 @@ var id = 'yeonwook'
 
 var app = http.createServer((request, response) => {
 	
+	
+	function writeUserData(userId, publickey) {
+		firebase.database().ref('jeff/' + userId).set({
+		  publickey : publickey
+		});
+	}
+
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
+
 
 	if (queryData.method==="r"){
 		
 		userId = queryData.id;
 		userPublicKey = queryData.publickey
-		
+		writeUserData(userId, userPublicKey);
+
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		getCommand = getCommand1 + userId + getCommand2 ;
 		
