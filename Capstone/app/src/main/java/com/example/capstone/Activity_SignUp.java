@@ -11,13 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 
 public class Activity_SignUp extends AppCompatActivity {
 
     private EditText etUsername;
     private EditText etPassword;
     private EditText etRetype;
+    private EditText etPhone;
+    private EditText etRealname;
     private Button btn_signUp;
+    private String url;
+    private final String server_ip = "http://192.168.1.72:7777/!method=r";
 //    private Button btnCancel;
 
     @Override
@@ -28,88 +34,83 @@ public class Activity_SignUp extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etRetype = findViewById(R.id.etRetype);
+        etPhone = findViewById(R.id.etPhone);
+        etRealname = findViewById(R.id.etrealName);
         btn_signUp = findViewById(R.id.btn_signUp);
 //        btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        // 비밀번호 일치 검사
-        etRetype.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String password = etPassword.getText().toString();
-                String confirm = etRetype.getText().toString();
-
-                if( password.equals(confirm) ) {
-                    etPassword.setBackgroundColor(Color.GREEN);
-                    etRetype.setBackgroundColor(Color.GREEN);
-                } else {
-                    etPassword.setBackgroundColor(Color.RED);
-                    etRetype.setBackgroundColor(Color.RED);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-            // 전화번호 입력 확인
-            if( etUsername.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "전화를 입력하세요!", Toast.LENGTH_SHORT).show();
-                etUsername.requestFocus();
-                return;
-            }
+                // 전화번호 입력 확인
+                if (etUsername.getText().toString().length() == 0) {
+                    Toast.makeText(Activity_SignUp.this, "전화를 입력하세요!", Toast.LENGTH_SHORT).show();
+                    etUsername.requestFocus();
+                    return;
+                }
 
-            // 비밀번호 입력 확인
-            if( etPassword.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
-                etPassword.requestFocus();
-                return;
-            }
+                // 비밀번호 입력 확인
+                if (etPassword.getText().toString().length() == 0) {
+                    Toast.makeText(Activity_SignUp.this, "비밀번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                    etPassword.requestFocus();
+                    return;
+                }
 
-            // 비밀번호 확인 입력 확인
-            if( etRetype.getText().toString().length() == 0 ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
-                etRetype.requestFocus();
-                return;
-            }
+                // 비밀번호 확인 입력 확인
+                if (etRetype.getText().toString().length() == 0) {
+                    Toast.makeText(Activity_SignUp.this, "비밀번호 확인을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    etRetype.requestFocus();
+                    return;
+                }
 
-            // 비밀번호 일치 확인
-            if( !etPassword.getText().toString().equals(etRetype.getText().toString()) ) {
-                Toast.makeText(Activity_SignUp.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
-                etPassword.setText("");
-                etRetype.setText("");
-                etPassword.requestFocus();
-                return;
-            }
+                // 비밀번호 일치 확인
+                if (!etPassword.getText().toString().equals(etRetype.getText().toString())) {
+                    Toast.makeText(Activity_SignUp.this, "비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show();
+                    etPassword.setText("");
+                    etRetype.setText("");
+                    etPassword.requestFocus();
+                    return;
+                }
+                if(etPhone.getText().toString().length() == 0){
+                    Toast.makeText(Activity_SignUp.this, "전화번호를 입력하세요!", Toast.LENGTH_SHORT).show();
+                    etPhone.requestFocus();
+                }
+                if(etRealname.getText().toString().length() == 0){
+                    Toast.makeText(Activity_SignUp.this, "이름을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    etRealname.requestFocus();
+                }
 
-            Intent result = new Intent();
-            result.putExtra("name", etUsername.getText().toString());
+                Intent result = new Intent();
+                result.putExtra("name", etUsername.getText().toString());
 
-            // 자신을 호출한 Activity로 데이터를 보낸다.
-            setResult(RESULT_OK, result);
-            finish();
+                String data = "&id="+etUsername.getText()
+                        + "&password=" +etPassword.getText()
+                        + "&phoneNUm=" + etPhone.getText()
+                        + "&name=" + etRealname.getText();
+
+                url = server_ip + data;
+                NetworkTask networkTask = new NetworkTask(url,null);
+                try {
+                    networkTask.execute();
+                    String res =  networkTask.execute().get();
+                    if(res.equals("success")) {
+                        setResult(RESULT_OK, result);
+                        finish();
+                    } else {
+                        Toast.makeText(Activity_SignUp.this, "sex!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(Activity_SignUp.this, "메롱", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             }
         });
 
-
-
-//        btnCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
     }
+
+
 }
 

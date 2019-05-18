@@ -50,8 +50,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         this.update("앱 접근이 허용되었습니다.", true);
-        Intent intent = new Intent(context.getApplicationContext(),login.class);
-        context.startActivity(intent);
+
     }
 
     public void stopFingerAuth(){
@@ -75,10 +74,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             iv_fingerprint.setImageResource(R.mipmap.done);
             linearLayout.setVisibility(LinearLayout.VISIBLE);
 
-            //sound effect
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(context, notification);
-            r.play();
+            Intent intent = new Intent(context.getApplicationContext(),login.class);
+            context.startActivity(intent);
         }
     }
 }

@@ -202,7 +202,7 @@
 
             <!--Birthday-->
             <RelativeLayout
-                android:id="@+id/birthday"
+                android:id="@+id/realname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/phone"
@@ -220,14 +220,14 @@
                     android:tint="@color/white" />
 
                 <EditText
-                    android:id="@+id/etBirth"
+                    android:id="@+id/etrealName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/imgView_birthIcon"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_birthIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Birthday"
+                    android:hint="name"
                     android:inputType="datetime"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -238,7 +238,7 @@
                 android:id="@+id/chkBox1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/birthday"
+                android:layout_below="@id/realname"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"

@@ -8,8 +8,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 public class login extends AppCompatActivity {
-    private Button b1 = findViewById(R.id.login_signUp);
-    private Button b2 = findViewById(R.id.login);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,10 +15,12 @@ public class login extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        Button b1 = findViewById(R.id.login_signUp);
+        Button b2 = findViewById(R.id.login);
         //b1의 리스너
         b1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent intent = new Intent(getApplicationContext(),signUp.class);
+                Intent intent = new Intent(getApplicationContext(),Activity_SignUp.class);
                 startActivity(intent);
             }
         });
