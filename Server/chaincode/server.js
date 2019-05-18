@@ -21,30 +21,7 @@ var id = 'yeonwook'
 
 var FCM = require('fcm-node');
 var serverKey = 'AIzaSyCSHdmNBd0BDhJ9RRGe6JmT0He1nBCO2T8';
-var client_token = ""
 
-var push_data = {
-    // 수신대상
-    to: client_token,
-    // App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-    notification: {
-        title: "Hello Node",
-        body: "Node로 발송하는 Push 메시지 입니다.",
-        sound: "default",
-        click_action: "FCM_PLUGIN_ACTIVITY",
-        icon: "fcm_push_icon"
-    },
-    // 메시지 중요도
-	priority: "high",
-	
-    // App 패키지 이름
-    restricted_package_name: "com.example.capstone",
-    // App에게 전달할 데이터
-    data: {
-        num1: 2000,
-        num2: 3000
-    }
-};
 
 
 var fcm = new FCM(serverKey);
@@ -137,6 +114,31 @@ var app = http.createServer((request, response) => {
 	
 	}else if(queryData.method === "a"){
 		
+
+		var client_token = "com.google.android.gms.tasks.zzu@882f46d"
+
+		var push_data = {
+			// 수신대상
+			to: client_token,
+			// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
+			notification: {
+				title: "Hello Node",
+				body: "Node로 발송하는 Push 메시지 입니다.",
+				sound: "default",
+				click_action: "FCM_PLUGIN_ACTIVITY",
+				icon: "fcm_push_icon"
+			},
+			// 메시지 중요도
+			priority: "high",
+			
+			// App 패키지 이름
+			restricted_package_name: "com.example.capstone",
+			// App에게 전달할 데이터
+			data: {
+				num1: 2000,
+				num2: 3000
+			}
+		};
 		
 		fcm.send(push_data, function(err, response) {
 			if (err) {
