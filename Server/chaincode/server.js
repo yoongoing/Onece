@@ -114,7 +114,7 @@ var app = http.createServer((request, response) => {
 	}else if(queryData.method === "a"){
 		
 
-		var client_token = "com.google.android.gms.tasks.zzu@7caeea"
+		var client_token = "7caeea"
 
 		var push_data = {
 			// 수신대상
