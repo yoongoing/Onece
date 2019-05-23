@@ -20,8 +20,7 @@ var list;
 var id = 'yeonwook'
 
 var FCM = require('fcm-node');
-var serverKey = 'AIzaSyCSHdmNBd0BDhJ9RRGe6JmT0He1nBCO2T8';
-
+var serverKey = 'AAAA1i0JV7I:APA91bFCZeqWJbdpko7tnQIf_bPkMthWz6WJlDGHfK3NnjAhPO0fL33fzQxNmMUlw4Mu51hV5-0jtelED8Ozvib8VQILy0W9dECVSC0KY463AUKr9uPY-m4OkhySPkalvbtrIg8aIQAZ'
 
 
 var fcm = new FCM(serverKey);
@@ -115,7 +114,7 @@ var app = http.createServer((request, response) => {
 	}else if(queryData.method === "a"){
 		
 
-		var client_token = "com.google.android.gms.tasks.zzu@c4c9878"
+		var client_token = "com.google.android.gms.tasks.zzu@7caeea"
 
 		var push_data = {
 			// 수신대상
