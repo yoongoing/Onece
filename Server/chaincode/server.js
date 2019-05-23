@@ -114,7 +114,7 @@ var app = http.createServer((request, response) => {
 	}else if(queryData.method === "a"){
 		
 
-		var client_token = "7caeea"
+		var client_token = "fH1qYStBOgc:APA91bGZpN5--xCaw1dXfpXe7I_yizgcxmpowPdfyXyl92eCp7Qg-YxmqgWugASUJtcqftqVHJ_Rtppfyhcg4Ahv0cPGA9-HLtuMtSFWU8G0Xz7qwkrj17YeyMvJFVR7Bevhr8YARb2m"
 
 		var push_data = {
 			// 수신대상
