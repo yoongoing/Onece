@@ -38,4 +38,13 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
+<<<<<<< HEAD
 }
+=======
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+}
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+>>>>>>> fb5fd49991b83bef7fbca0b10319076a2e9e3fa9

@@ -13,4 +13,8 @@ public class activeVerify extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_active_verify);
     }
+
+    public void onBackPressed(){
+//        super.onBackPressed();
+    }
 }
