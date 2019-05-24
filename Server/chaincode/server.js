@@ -114,7 +114,7 @@ var app = http.createServer((request, response) => {
 	}else if(queryData.method === "a"){
 		
 
-		var client_token = "fH1qYStBOgc:APA91bGZpN5--xCaw1dXfpXe7I_yizgcxmpowPdfyXyl92eCp7Qg-YxmqgWugASUJtcqftqVHJ_Rtppfyhcg4Ahv0cPGA9-HLtuMtSFWU8G0Xz7qwkrj17YeyMvJFVR7Bevhr8YARb2m"
+		var client_token = "fNIw7cMesO4:APA91bGKqz0z9LATFVexZDCp-SnquKoIjI79EEBTbI0wN7aKjB1DjyHcw5PHIzC16Kz2MCihRR5oPQ-_FOF6C6E5w2Ux0wnqQTTUPC9mA6rsVG-r5H4xn28uTekU6aoNS_o4NF10FEMF"
 
 		var push_data = {
 			// 수신대상
