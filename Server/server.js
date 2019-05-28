@@ -181,6 +181,7 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		var userName = queryData.name;
+		console.log(queryData.publickey);
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
 		async function checkIdAndName(){
