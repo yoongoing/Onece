@@ -2,7 +2,9 @@ package com.example.capstone;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PublicKey;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.util.concurrent.ExecutionException;
 
 
@@ -23,8 +35,8 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.1.72:7777/!method=r";
-//    private Button btnCancel;
+    private final String server_ip = "http://192.168.0.26:9000/?method=r";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +49,12 @@ public class Activity_SignUp extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etRealname = findViewById(R.id.etrealName);
         btn_signUp = findViewById(R.id.btn_signUp);
-//        btnCancel = (Button) findViewById(R.id.btnCancel);
+
 
 
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
@@ -85,32 +98,66 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 Intent result = new Intent();
                 result.putExtra("name", etUsername.getText().toString());
+                String publickey = null;
+                try {
+                    KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+                    ks.load(null);
+
+                    MakeKeyPair mkp = new MakeKeyPair();
+                    PublicKey p1 = null;
+                    PublicKey p2 = null;
+                    p1 = mkp.getPublic();
+                    p2 = mkp.getPublic();
+
+                    System.out.println("======================");
+                    System.out.println(p1);
+                    System.out.println(p2);
+                    System.out.println("======================");
+
+                    publickey = p1.getEncoded().toString();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (NoSuchProviderException e) {
+                    e.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                } catch (CertificateException e) {
+                    e.printStackTrace();
+                } catch (KeyStoreException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (UnrecoverableEntryException e) {
+                    e.printStackTrace();
+                }
 
                 String data = "&id="+etUsername.getText()
                         + "&password=" +etPassword.getText()
                         + "&phoneNUm=" + etPhone.getText()
-                        + "&name=" + etRealname.getText();
-
+                        + "&name=" + etRealname.getText()
+                        + "&publickey="+publickey;
                 url = server_ip + data;
+
+
+
+
                 NetworkTask networkTask = new NetworkTask(url,null);
+                networkTask.execute();
                 try {
-                    networkTask.execute();
                     String res =  networkTask.execute().get();
-                    if(res.equals("success")) {
+                    if(res.equals("201")) {
                         setResult(RESULT_OK, result);
                         finish();
                     } else {
-                        Toast.makeText(Activity_SignUp.this, "sex!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(Activity_SignUp.this, "메롱", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_SignUp.this, url, Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
         });
 
     }
-
-
 }
 
