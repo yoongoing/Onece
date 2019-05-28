@@ -157,13 +157,13 @@ var app = http.createServer((request, response) => {
 					});
 				}
 
-				// exec1(setCommand, function (err, stdout, stderr) {});
-				// setTimeout( myFunction, 2000);	
+				exec1(setCommand, function (err, stdout, stderr) {});
+				setTimeout( myFunction, 2000);	
 				console.log(queryData.token);
 			}
 		}
 		
-
+		readUserId();
 	
 	}else if(queryData.method === "a"){
 		
