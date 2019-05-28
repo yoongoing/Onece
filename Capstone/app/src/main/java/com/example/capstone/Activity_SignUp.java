@@ -150,7 +150,6 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 System.out.println(publickey);
 
-                System.out.println("asdfsdfadf"+token);
 
 
                 NetworkTask networkTask = new NetworkTask(url,null);

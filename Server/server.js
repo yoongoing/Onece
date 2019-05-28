@@ -189,17 +189,10 @@ var app = http.createServer((request, response) => {
 			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
-
 				await readUserToken(userId);
 				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
 				
-
-				var PUB = '-----BEGIN PUBLIC KEY-----'+userPublicKey+'-----END RSA PUBLIC KEY-----';
-				var key = new NodeRSA({bits:2048});
-				key.importKey(PUB,'pkcs8');
-
-
 				// console.log(nonce);
 				// console.log(encnonce);
 				// console.log(client_token);
