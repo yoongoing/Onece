@@ -132,7 +132,7 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	var _url = request.url;
+	var _url = decodeURIComponent(request.url);
 	var queryData = url.parse(_url,true).query;
 
 
