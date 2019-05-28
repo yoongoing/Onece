@@ -1,5 +1,6 @@
 
 const http = require('http');
+const crypto = require('crypto');
 const url = require('url');
 const fs = require('fs');
 const exec1  = require("child_process").execSync;
@@ -68,6 +69,7 @@ var app = http.createServer((request, response) => {
 	var isUserIdAlreayIn = false;
 	var valideUserIdAndName = false;
 	var client_token;
+	
 	const writeUserData = function(userId, userName,publickey, userToken) {
 		return new Promise(function(resolve,reject){
 			resolve(firebase.database().ref('jeff/' + userId).set({
@@ -81,7 +83,7 @@ var app = http.createServer((request, response) => {
 	const isUserIdIn = function(userId) {
 		return new Promise(function(resolve,reject){
 			resolve(
-				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					if(data.val() == null){
 						isUserIdAlreayIn = false;
 					}else{
@@ -95,8 +97,10 @@ var app = http.createServer((request, response) => {
 	const readUserNameAndId = function(userId,userName) {
 		return new Promise(function(resolve,reject){
 			resolve(
-				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
-					if(data.val(),id == userId && data.val().name == userName){
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
+					if( data.val()==null){
+						valideUserIdAndName = false;
+					}else if(data.val().name == userName){
 						valideUserIdAndName = true;
 					}else{
 						valideUserIdAndName = false;
@@ -109,7 +113,7 @@ var app = http.createServer((request, response) => {
 	const readUserToken = function(userId,userName) {
 		return new Promise(function(resolve,reject){
 			resolve(
-				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					usersToken = data.val().token 
 				})
 			)
@@ -127,44 +131,54 @@ var app = http.createServer((request, response) => {
 		var userToken = queryData.token;
 		var userName = queryData.name;
 		
-		writeUserData(userId, userName,userPublicKey,userToken);
+		async function readUserId(){
+			await isUserIdIn(userId)
 
-		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
-		getCommand = getCommand1 + userId + getCommand2 ;
-		
-		
-		function myFunction() {
-			exec2(getCommand, function (err, stdout, stderr) {
-				var result = stdout	
-				if( result.toString().trim() === userPublicKey.toString() ){
-					responseForResister="user publickey is resisterd";
-					response.end(responseForResister);
-					console.log("good it is resisterd");
-				}else{
-					responseForResister = "user publickey isn't resisterd";
-					response.end(responseForResister);
-					console.log("bad it isn't resisterd");
+			if(!isUserIdAlreayIn){
+				
+				writeUserData(userId, userName,userPublicKey,userToken);
+
+				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
+				getCommand = getCommand1 + userId + getCommand2 ;
+				
+				
+				function myFunction() {
+					exec2(getCommand, function (err, stdout, stderr) {
+						var result = stdout	
+						if( result.toString().trim() === userPublicKey.toString() ){
+							responseForResister="user publickey is resisterd";
+							response.end(responseForResister);
+							console.log("good it is resisterd");
+						}else{
+							responseForResister = "user publickey isn't resisterd";
+							response.end(responseForResister);
+							console.log("bad it isn't resisterd");
+						}
+					});
 				}
-			});
-		}
 
-		exec1(setCommand, function (err, stdout, stderr) {});
-		setTimeout( myFunction, 2000);	
-		console.log(queryData.token);
+				// exec1(setCommand, function (err, stdout, stderr) {});
+				// setTimeout( myFunction, 2000);	
+				console.log(queryData.token);
+			}
+		}
+		
+
 	
 	}else if(queryData.method === "a"){
 		
 		var userId = queryData.id;
 		var userName = queryData.name;
-
+		var nonce = crypto.randomBytes(16).toString('hex');
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-
+			
+			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
 
 				await readUserToken(userId);
-				
+				console.log(nonce);
 				var push_data = {
 					// 수신대상
 					to: client_token,
@@ -183,8 +197,7 @@ var app = http.createServer((request, response) => {
 					restricted_package_name: "com.example.capstone",
 					// App에게 전달할 데이터
 					data: {
-						num1: 2000,
-						num2: 3000
+						num1: 2000
 					}
 				};
 				
@@ -201,9 +214,12 @@ var app = http.createServer((request, response) => {
 			}
 		}
 		
+
+
+		checkIdAndName();
 	}
     
 
 })
 
-app.listen(9000,'172.19.0.5');
+app.listen(9001,'localhost');
