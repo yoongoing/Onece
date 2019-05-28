@@ -1,5 +1,7 @@
 
 const http = require('http');
+var NodeRSA = require('node-rsa');
+
 const crypto = require('crypto');
 const url = require('url');
 const fs = require('fs');
@@ -191,8 +193,12 @@ var app = http.createServer((request, response) => {
 				await readUserToken(userId);
 				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
+				var key = new NodeRSA();
+
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----\n';
-				var encnonce = crypto.publicEncrypt(PUB, Buffer.from(nonce, 'utf8') ).toString('base64');
+				key.importKey(PUB,"pkcs8-public-pem");
+
+				var encnonce = key.encrypt(nonce, 'base64');
 
 				console.log(nonce);
 				console.log(encnonce);
