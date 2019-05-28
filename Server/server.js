@@ -190,7 +190,7 @@ var app = http.createServer((request, response) => {
 
 				await readUserToken(userId);
 				await eadUserPublicKey(userId);
-
+				await console.log(userPublicKey);
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----\n';
 				var encnonce = crypto.publicEncrypt(PUBKEY, Buffer.from(nonce, 'utf8') ).toString('base64');
 
@@ -215,7 +215,7 @@ var app = http.createServer((request, response) => {
 					restricted_package_name: "com.example.capstone",
 					// App에게 전달할 데이터
 					data: {
-						num1: 2000
+						num1: encnonce
 					}
 				};
 				
