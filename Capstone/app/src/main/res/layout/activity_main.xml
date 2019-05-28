@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_back"
-    tools:context=".MainActivity">
+    tools:context=".login">
 
 
     <RelativeLayout
@@ -61,65 +61,6 @@
 
         </RelativeLayout>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/login_id"-->
-            <!--android:layout_marginLeft="30dp"-->
-            <!--android:layout_marginRight="30dp"-->
-            <!--android:layout_marginTop="30dp">-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/name"-->
-                <!--android:layout_width="223dp"-->
-                <!--android:layout_height="61dp"-->
-                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:ems="10"-->
-                <!--android:hint="@string/name"-->
-                <!--android:importantForAutofill="no"-->
-                <!--android:inputType="textPersonName"-->
-                <!--android:paddingTop="50dp"-->
-                <!--android:textColor="#ffffffff"-->
-                <!--android:textColorHint="#ffffffff"-->
-                <!--android:textSize="20sp"-->
-                <!--app:layout_constraintBottom_toTopOf="@+id/name"-->
-                <!--app:layout_constraintEnd_toEndOf="parent"-->
-                <!--app:layout_constraintStart_toStartOf="parent"-->
-                <!--app:layout_constraintTop_toTopOf="parent"-->
-                <!--tools:targetApi="o"-->
-                <!--tools:ignore="NotSibling" />-->
-
-        <!--</RelativeLayout>-->
-
-
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/store"-->
-            <!--android:layout_below="@+id/login_id"-->
-            <!--android:layout_marginLeft="40dp"-->
-            <!--android:layout_marginRight="40dp"-->
-            <!--android:layout_marginTop="30dp">-->
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/checkBox"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="end"-->
-                <!--android:layout_marginEnd="50dp"-->
-                <!--android:layout_marginRight="80dp"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:buttonTint="@color/white"-->
-                <!--android:text="@string/checkBox_name"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="20sp"/>-->
-
-        <!--</RelativeLayout>-->
-
-        <!--button-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

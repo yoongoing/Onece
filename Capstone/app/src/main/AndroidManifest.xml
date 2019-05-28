@@ -3,10 +3,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.capstone">
 
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
-=======
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <meta-data
         android:name="firebase_messaging_auto_init_enabled"
@@ -14,7 +12,6 @@
     <meta-data
         android:name="firebase_analytics_collection_enabled"
         android:value="false" />
->>>>>>> fb5fd49991b83bef7fbca0b10319076a2e9e3fa9
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/SignUpActivityTheme">
         <activity android:name=".activeVerify"/>
-        <activity android:name=".signUp"/>
+        <activity android:name=".login"/>
+        <activity android:name=".Activity_SignUp"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>
@@ -39,7 +37,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-s
+
         <service
             android:name=".FireBaseMessagingService"
             android:stopWithTask="false">
@@ -47,8 +45,6 @@ s
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-
     </application>
 
 </manifest>
