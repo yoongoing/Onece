@@ -196,9 +196,10 @@ var app = http.createServer((request, response) => {
 				var key = new NodeRSA();
 
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
-				key.importKey(PUB,"pkcs8-public");
+				var buffer = new Buffer(nonce, "utf8")
 
-				var encnonce = key.encrypt(nonce, 'base64');
+				console.log(crypto.publicEncrypt(PUB,buffer));
+
 
 				console.log(nonce);
 				console.log(encnonce);
