@@ -5,8 +5,7 @@ const fs = require('fs');
 const exec1  = require("child_process").execSync;
 const exec2 = require("child_process").exec;
 
-var userId = "";
-var userPublicKey = "";
+
 var setCommand1 = "peer chaincode invoke -n Onece -c '{\"Args\":[\"set\",\""
 var setCommand2 = "\",\"";
 var setCommand3 = "\"]}' -C myc";
@@ -15,9 +14,7 @@ var getCommand2 = "\"]}' -C myc";
 var setCommand = "";
 var getCommand = "";
 var responseForResister = "";
-var string;
-var list;
-var id = 'yeonwook'
+
 
 var FCM = require('fcm-node');
 var serverKey = 'AAAA1i0JV7I:APA91bFCZeqWJbdpko7tnQIf_bPkMthWz6WJlDGHfK3NnjAhPO0fL33fzQxNmMUlw4Mu51hV5-0jtelED8Ozvib8VQILy0W9dECVSC0KY463AUKr9uPY-m4OkhySPkalvbtrIg8aIQAZ'
@@ -68,12 +65,55 @@ var ref = db.ref("server/saving-data/fireblog");
 
 
 var app = http.createServer((request, response) => {
-	
-	function writeUserData(userId, publickey, userToken) {
-		firebase.database().ref('jeff/' + userId).set({
-		  publickey : publickey,
-		  token : userToken
-		});
+	var isUserIdAlreayIn = false;
+	var valideUserIdAndName = false;
+	var client_token;
+	const writeUserData = function(userId, userName,publickey, userToken) {
+		return new Promise(function(resolve,reject){
+			resolve(firebase.database().ref('jeff/' + userId).set({
+				publickey : publickey,
+				token : userToken,
+				name : userName
+			  }));
+		})
+	}
+
+	const isUserIdIn = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(
+				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
+					if(data.val() == null){
+						isUserIdAlreayIn = false;
+					}else{
+						isUserIdAlreayIn = true;
+					}
+				})
+			)
+		})
+	}
+
+	const readUserNameAndId = function(userId,userName) {
+		return new Promise(function(resolve,reject){
+			resolve(
+				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
+					if(data.val(),id == userId && data.val().name == userName){
+						valideUserIdAndName = true;
+					}else{
+						valideUserIdAndName = false;
+					}
+				})
+			)
+		})
+	}
+
+	const readUserToken = function(userId,userName) {
+		return new Promise(function(resolve,reject){
+			resolve(
+				firebase.database().ref('jeff/' + userId).sonce('value').then(function(data) {
+					usersToken = data.val().token 
+				})
+			)
+		})
 	}
 
 	var _url = request.url;
@@ -82,10 +122,12 @@ var app = http.createServer((request, response) => {
 
 	if (queryData.method==="r"){
 		
-		userId = queryData.id;
-		userPublicKey = queryData.publickey
+		var userId = queryData.id;
+		var userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
-		writeUserData(userId, userPublicKey,userToken);
+		var userName = queryData.name;
+		
+		writeUserData(userId, userName,userPublicKey,userToken);
 
 		setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 		getCommand = getCommand1 + userId + getCommand2 ;
@@ -108,47 +150,57 @@ var app = http.createServer((request, response) => {
 
 		exec1(setCommand, function (err, stdout, stderr) {});
 		setTimeout( myFunction, 2000);	
-		console.log("ah si bal");	
 		console.log(queryData.token);
 	
 	}else if(queryData.method === "a"){
 		
+		var userId = queryData.id;
+		var userName = queryData.name;
 
-		var client_token = "fNIw7cMesO4:APA91bGKqz0z9LATFVexZDCp-SnquKoIjI79EEBTbI0wN7aKjB1DjyHcw5PHIzC16Kz2MCihRR5oPQ-_FOF6C6E5w2Ux0wnqQTTUPC9mA6rsVG-r5H4xn28uTekU6aoNS_o4NF10FEMF"
+		async function checkIdAndName(){
+			await readUserNameAndId(userId,userName);
 
-		var push_data = {
-			// 수신대상
-			to: client_token,
-			// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-			notification: {
-				title: "Hello Node",
-				body: "Node로 발송하는 Push 메시지 입니다.",
-				sound: "default",
-				click_action: "FCM_PLUGIN_ACTIVITY",
-				icon: "fcm_push_icon"
-			},
-			// 메시지 중요도
-			priority: "high",
-			
-			// App 패키지 이름
-			restricted_package_name: "com.example.capstone",
-			// App에게 전달할 데이터
-			data: {
-				num1: 2000,
-				num2: 3000
+
+			if(valideUserIdAndName){
+
+				await readUserToken(userId);
+				
+				var push_data = {
+					// 수신대상
+					to: client_token,
+					// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
+					notification: {
+						title: "Hello Node",
+						body: "Node로 발송하는 Push 메시지 입니다.",
+						sound: "default",
+						click_action: "FCM_PLUGIN_ACTIVITY",
+						icon: "fcm_push_icon"
+					},
+					// 메시지 중요도
+					priority: "high",
+					
+					// App 패키지 이름
+					restricted_package_name: "com.example.capstone",
+					// App에게 전달할 데이터
+					data: {
+						num1: 2000,
+						num2: 3000
+					}
+				};
+				
+				fcm.send(push_data, function(err, response) {
+					if (err) {
+						console.error('Push메시지 발송에 실패했습니다.');
+						console.error(err);
+						return;
+					}
+				
+					console.log('Push메시지가 발송되었습니다.');
+					console.log(response);
+				});
 			}
-		};
+		}
 		
-		fcm.send(push_data, function(err, response) {
-			if (err) {
-				console.error('Push메시지 발송에 실패했습니다.');
-				console.error(err);
-				return;
-			}
-		
-			console.log('Push메시지가 발송되었습니다.');
-			console.log(response);
-		});
 	}
     
 
