@@ -114,7 +114,7 @@ var app = http.createServer((request, response) => {
 		return new Promise(function(resolve,reject){
 			resolve(
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-					usersToken = data.val().token 
+					client_token = data.val().token 
 				})
 			)
 		})
@@ -179,6 +179,7 @@ var app = http.createServer((request, response) => {
 
 				await readUserToken(userId);
 				console.log(nonce);
+				console.log(client_token);
 				var push_data = {
 					// 수신대상
 					to: client_token,

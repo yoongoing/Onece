@@ -41,7 +41,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.0.26:9000/?method=r";
+    private final String server_ip = "http://192.168.219.102:9000/?method=r";
 
 
     @Override
@@ -105,15 +105,14 @@ public class Activity_SignUp extends AppCompatActivity {
                 Intent result = new Intent();
                 result.putExtra("name", etUsername.getText().toString());
                 String publickey = null;
-                String token = FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
+                String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String newToken = instanceIdResult.getToken();
                         Log.e("newToken",newToken);
-
                     } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
 
-                }).toString();
+                }).getResult().getToken();
                 try {
                     KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
                     ks.load(null);
@@ -123,9 +122,6 @@ public class Activity_SignUp extends AppCompatActivity {
                     p1 = mkp.getPublic();
                     byte[] pb1 = p1.getEncoded();
 
-                    System.out.println("======================");
-                    System.out.println(pb1);
-                    System.out.println("======================");
 
                     publickey = Base64.encodeToString(pb1,Base64.DEFAULT);
                 } catch (NoSuchAlgorithmException e) {
@@ -146,13 +142,15 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 String data = "&id="+etUsername.getText()
                         + "&password=" +etPassword.getText()
-                        + "&phoneNUm=" + etPhone.getText()
+                        + "&phone=" + etPhone.getText()
                         + "&name=" + etRealname.getText()
                         + "&publickey="+publickey
                         +"&token="+token;
                 url = server_ip + data;
 
                 System.out.println(publickey);
+
+                System.out.println("asdfsdfadf"+token);
 
 
                 NetworkTask networkTask = new NetworkTask(url,null);
