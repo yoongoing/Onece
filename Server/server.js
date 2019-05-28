@@ -196,7 +196,7 @@ var app = http.createServer((request, response) => {
 
 				var PUB = '-----BEGIN PUBLIC KEY-----'+userPublicKey+'-----END RSA PUBLIC KEY-----';
 				var key = new NodeRSA({bits:2048});
-				key.importKey(PUB);
+				key.importKey(PUB,'pkcs1');
 
 
 				// console.log(nonce);
