@@ -192,7 +192,7 @@ var app = http.createServer((request, response) => {
 				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----\n';
-				var encnonce = crypto.publicEncrypt(PUBKEY, Buffer.from(nonce, 'utf8') ).toString('base64');
+				var encnonce = crypto.publicEncrypt(PUB, Buffer.from(nonce, 'utf8') ).toString('base64');
 
 				console.log(nonce);
 				console.log(encnonce);
