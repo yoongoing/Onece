@@ -189,7 +189,7 @@ var app = http.createServer((request, response) => {
 			if(valideUserIdAndName){
 
 				await readUserToken(userId);
-				await eadUserPublicKey(userId);
+				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----\n';
 				var encnonce = crypto.publicEncrypt(PUBKEY, Buffer.from(nonce, 'utf8') ).toString('base64');
