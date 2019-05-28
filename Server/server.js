@@ -69,6 +69,7 @@ var app = http.createServer((request, response) => {
 	var isUserIdAlreayIn = false;
 	var valideUserIdAndName = false;
 	var client_token;
+	var userPublicKey;
 	
 	const writeUserData = function(userId, userName,publickey, userToken) {
 		return new Promise(function(resolve,reject){
@@ -110,11 +111,20 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	const readUserToken = function(userId,userName) {
+	const readUserToken = function(userId) {
 		return new Promise(function(resolve,reject){
 			resolve(
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					client_token = data.val().token 
+				})
+			)
+		})
+	}
+	const readUserPublicKey = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
+					userPublicKey = data.val().publickey 
 				})
 			)
 		})
@@ -127,7 +137,7 @@ var app = http.createServer((request, response) => {
 	if (queryData.method==="r"){
 		
 		var userId = queryData.id;
-		var userPublicKey =  queryData.publickey;
+		userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
 		var userName = queryData.name;
 		
@@ -170,6 +180,7 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
+		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
 			
@@ -178,7 +189,13 @@ var app = http.createServer((request, response) => {
 			if(valideUserIdAndName){
 
 				await readUserToken(userId);
+				await eadUserPublicKey(userId);
+
+				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----\n';
+				var encnonce = crypto.publicEncrypt(PUBKEY, Buffer.from(nonce, 'utf8') ).toString('base64');
+
 				console.log(nonce);
+				console.log(encnonce);
 				console.log(client_token);
 				var push_data = {
 					// 수신대상
