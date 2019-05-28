@@ -20,6 +20,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -146,12 +148,17 @@ public class Activity_SignUp extends AppCompatActivity {
                         + "&name=" + etRealname.getText()
                         + "&publickey="+publickey
                         +"&token="+token;
+                try {
+                    data = URLEncoder.encode(data,"utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 url = server_ip + data;
 
                 System.out.println(publickey);
 
                 System.out.println("asdfsdfadf"+token);
-
 
                 NetworkTask networkTask = new NetworkTask(url,null);
                 networkTask.execute();

@@ -132,7 +132,7 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	var _url =  encodeURIComponent(request.url);
+	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
 
@@ -196,7 +196,7 @@ var app = http.createServer((request, response) => {
 
 				var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
 				var key = new NodeRSA();
-				key.importKey(PUB,'pkcs1-public');
+				key.importKey(PUB,'pkcs8-public');
 
 
 				// console.log(nonce);
