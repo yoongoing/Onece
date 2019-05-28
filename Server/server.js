@@ -196,8 +196,8 @@ var app = http.createServer((request, response) => {
 				
 
 				var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
-				var key = new NodeRSA(PUB);
-
+				var key = new NodeRSA();
+				key.importKey(PUB,'pkcs8-public');
 
 
 				// console.log(nonce);
