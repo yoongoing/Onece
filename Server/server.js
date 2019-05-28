@@ -139,7 +139,9 @@ var app = http.createServer((request, response) => {
 	if (queryData.method==="r"){
 		
 		var userId = queryData.id;
-		userPublicKey =  queryData.publickey.toString();
+		userPublicKey =  queryData.publickey;
+		userPublicKey = userPublicKey.replace(/\r?\n|\r/g, " ");
+
 		var userToken = queryData.token;
 		var userName = queryData.name;
 		
