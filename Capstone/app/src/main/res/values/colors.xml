@@ -7,4 +7,8 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="textColor">#6e6e6e</color>
+    <color name="pink">#ea5a5f</color>
+    <color name="yellow">#f5be40</color>
+    <color name="blue">#3ea9d7</color>
+    <color name="purple">#26243b</color>
 </resources>
