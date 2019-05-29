@@ -11,25 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PublicKey;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
 
 
 public class Activity_SignUp extends AppCompatActivity {
-    private DatabaseReference mDatabase;
+
     private EditText etUsername;
     private EditText etPassword;
     private EditText etRetype;
@@ -98,13 +90,17 @@ public class Activity_SignUp extends AppCompatActivity {
                     etRealname.requestFocus();
                 }
 
-
+                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff/"+etUsername.getText().toString());
+                if(mRootRef != null){
+                    Toast.makeText(Activity_SignUp.this,"이미 등록되어있는 아이디 입니다.",Toast.LENGTH_SHORT).show();
+                }
 
 
 
                 Intent result = new Intent();
+                String str_pub = null;
                 result.putExtra("name", etUsername.getText().toString());
-                String publickey = null;
+
                 String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -114,46 +110,24 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 }).getResult().getToken();
 
-                try {
-                    KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-                    ks.load(null);
-
-                    MakeKeyPair mkp = new MakeKeyPair();
-                    PublicKey p1 = null;
-                    p1 = mkp.getPublic();
-                    byte[] pb1 = p1.getEncoded();
-                    System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
-
-                    String hexPub = Utils.getHex(pb1);
-                    publickey = hexPub;
-
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (NoSuchProviderException e) {
-                    e.printStackTrace();
-                } catch (InvalidAlgorithmParameterException e) {
-                    e.printStackTrace();
-                } catch (CertificateException e) {
-                    e.printStackTrace();
-                } catch (KeyStoreException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (UnrecoverableEntryException e) {
-                    e.printStackTrace();
-                }
+                RSACryptor.getInstance().init();
+                PublicKey publickey = RSACryptor.getInstance().getPublicKey();
+                byte[] byte_publickey = publickey.getEncoded();
+                System.out.println(Base64.encodeToString(byte_publickey, Base64.DEFAULT));
+                String hexPub = Utils.getHex(byte_publickey);
+                str_pub = hexPub;
 
 
 
                 System.out.println("-----------------------------------------");
-                System.out.println(publickey);
+                System.out.println(str_pub);
                 System.out.println("-----------------------------------------");
 
                 String data = "&id="+etUsername.getText()
                         + "&password=" +etPassword.getText()
                         + "&phone=" + etPhone.getText()
                         + "&name=" + etRealname.getText()
-//                        + "&publickey="+publickey
+                        + "&publickey="+str_pub
                         +"&token="+token;
 
                 url = server_ip + data;
@@ -168,6 +142,7 @@ public class Activity_SignUp extends AppCompatActivity {
                         finish();
                     } else {
                         Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 } catch (Exception e) {
                     Toast.makeText(Activity_SignUp.this, url, Toast.LENGTH_LONG).show();

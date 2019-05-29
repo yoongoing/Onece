@@ -15,6 +15,7 @@ import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.security.spec.RSAKeyGenParameterSpec;
@@ -115,6 +116,9 @@ public class RSACryptor {
             Log.e(TAG, "Decrypt fail",  e);
             return encryptedText;
         }
+    }
+    public PublicKey getPublicKey(){
+        return ((KeyStore.PrivateKeyEntry) keyEntry).getCertificate().getPublicKey();
     }
 }
 
