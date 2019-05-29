@@ -188,7 +188,7 @@ var app = http.createServer((request, response) => {
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
-				await exec1(setCommand, function (err, stdout, stderr) {
+				await exec1(getCommand, function (err, stdout, stderr) {
 					publickey = stdout;
 				});
 
