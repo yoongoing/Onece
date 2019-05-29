@@ -142,7 +142,7 @@ var app = http.createServer((request, response) => {
 		userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
 		var userName = queryData.name;
-		
+		console.log(userPublicKey);
 		async function readUserId(){
 			await isUserIdIn(userId)
 
@@ -185,7 +185,7 @@ var app = http.createServer((request, response) => {
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-			
+		
 			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
@@ -193,6 +193,12 @@ var app = http.createServer((request, response) => {
 				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
 				
+
+				var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
+				var key = new NodeRSA();
+				key.importKey(PUB,'pkcs8-public');
+
+
 				// console.log(nonce);
 				// console.log(encnonce);
 				// console.log(client_token);
