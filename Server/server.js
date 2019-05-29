@@ -232,9 +232,14 @@ var app = http.createServer((request, response) => {
 				await readUserToken(userId);
 
 				getCommand = getCommand1 + userId + getCommand2 ;
-				console.log(getCommand);
-				
-				
+			
+				await exec2(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout.toString();
+						
+				})
+
+				console.log(userPublicKey);
+				console.log("sibal");
 
 				
 
@@ -244,17 +249,11 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		getCommand = getCommand1 + userId + getCommand2 ;
 
-		function ja(){
-			exec2(getCommand, function (err, stdout, stderr) {
-				var result = stdout.toString();
-				console.log(result);
-				console.log("sibalnoma whe andoenenguya")
-			})
-		}
 		
-		setTimeout(ja ,1000);
+		
+		
+		setTimeout( sendmessage ,2000);
 	}
     
 
