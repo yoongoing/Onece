@@ -198,7 +198,7 @@ var app = http.createServer((request, response) => {
 		}
 
 		function sendmessage(){
-			var buf = new Buffer(userPublicKey);
+			var buf = new Buffer(userPublicKey,'hex');
 			var base64String = buf.toString('base64');
 			console.log(base64String);
 			
@@ -244,7 +244,7 @@ var app = http.createServer((request, response) => {
 				console.log(response);
 			});
 		}
-		
+
 
 
 		checkIdAndName();		

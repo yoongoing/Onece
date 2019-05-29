@@ -123,6 +123,8 @@ public class Activity_SignUp extends AppCompatActivity {
                     PublicKey p1 = null;
                     p1 = mkp.getPublic();
                     byte[] pb1 = p1.getEncoded();
+                    System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
+
                     String hexPub = Utils.byteArrayToHexString(pb1);
                     publickey = hexPub;
 
