@@ -254,7 +254,6 @@ var app = http.createServer((request, response) => {
 		
 		
 		
-		setTimeout( sendmessage ,2000);
 	}
     
 
