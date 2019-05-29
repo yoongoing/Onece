@@ -65,11 +65,6 @@ var ref = db.ref("server/saving-data/fireblog");
 // 	  자신이 생성한 nonce 값과 비교후에 맞는 사용자인지 아닌지 구분해줌
 //   
 
-function hexToBase64(str) {
-    return btoa(String.fromCharCode.apply(null,
-      str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
-    );
-}
 
 
 var app = http.createServer((request, response) => {
@@ -185,38 +180,13 @@ var app = http.createServer((request, response) => {
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
-		
-		
-		async function checkIdAndName(){
-			await readUserNameAndId(userId,userName);
-			await console.log(valideUserIdAndName);
-
-			if(valideUserIdAndName){
-				await readUserToken(userId);
-				
-			}
-		}
-		
-
-
-		checkIdAndName();
-		getCommand = getCommand1 + userId + getCommand2 ;	
-		exec2(getCommand, function (err, stdout, stderr) {
-		userPublicKey = stdout.toString();
-			
-		})
-
-		function sendMessage(){
-			console.log(typeof(userPublicKey));
-			console.log(userPublicKey);
-
-
+		function sendmessage(){
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
 			console.log(PUB);
 			var key = new NodeRSA();
 			key.importKey(PUB,'pkcs8-public');
-	
-	
+
+
 			console.log(nonce);
 			console.log(encnonce);
 			console.log(client_token);
@@ -253,13 +223,33 @@ var app = http.createServer((request, response) => {
 				console.log(response);
 			});
 		}
+		
+		async function checkIdAndName(){
+			await readUserNameAndId(userId,userName);
+			await console.log(valideUserIdAndName);
 
-		setTimeout(sendMessage,2000);
+			if(valideUserIdAndName){
+				await readUserToken(userId);
+				getCommand = getCommand1 + userId + getCommand2 ;
+			
+				await exec2(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout.toString();
+						
+				})
+
+				console.log(userPublicKey);
+				console.log("sibal");
+
+				
+
+			}
+		}
 		
 
+
+		checkIdAndName();		
 		
-		
-		
+		setTimeout( sendmessage ,2000);
 	}
     
 
