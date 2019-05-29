@@ -125,7 +125,7 @@ public class Activity_SignUp extends AppCompatActivity {
                     byte[] pb1 = p1.getEncoded();
                     System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
 
-                    String hexPub = Utils.byteArrayToHexString(pb1);
+                    String hexPub = Utils.getHex(pb1);
                     publickey = hexPub;
 
                 } catch (NoSuchAlgorithmException e) {

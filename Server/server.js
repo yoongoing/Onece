@@ -200,17 +200,15 @@ var app = http.createServer((request, response) => {
 		function sendmessage(){
 			var buf = new Buffer(userPublicKey,'hex');
 			var base64String = buf.toString('base64');
-			console.log(base64String);
-			console.log(userPublicKey);
-			
+		
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
-			console.log(PUB);
 			var key = new NodeRSA();
+			var encnonce = key.encrypt(nonce,'base64');
+			console.log(encnonce)l
 			key.importKey(PUB,'pkcs8-public');
 
 
-			console.log(nonce);
-			console.log(encnonce);
+
 			console.log(client_token);
 			var push_data = {
 				// 수신대상
@@ -257,3 +255,7 @@ var app = http.createServer((request, response) => {
 })
 
 app.listen(9000,'172.19.0.5');
+
+
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsoGh3M+O25uFg9YPD6Zsx2y/ikjzvn2wUV9xS4rZdVgz8S6GCP89MOLn+xknhi5AYf5BxJZHgg7vvSb2kxhrzdV5WifsT6cj5vICU7Lvs64uJHLaS2OS6DsZ7zkbGpOImuRV1F/wMvXQ55GxBIFllHglaqDHBN4tccysuFRoRfNSVPeukYSjPrnSrOQ9KqdE5m8e68ob8XyY7XSqHS1KrPGvpDPtag0ewG+EAlMmv/kvRK8BEpZTyIj0fibBeYjnxE1+rbw2AKUeSas+ZVd2R/4Kg1vt6WNvneYDkA2D2IB0ZmGz9rQEwbalok7JJmy2Qucy8RGz5sqZmnslUcvF9wIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsoGh3M+O25uFg9YPD6Zsx2y/ikjzvn2wUV9xS4rZdVgz8S6GCP89MOLn+xknhi5AYf5BxJZHgg7vvSb2kxhrzdV5WifsT6cj5vICU7Lvs64uJHLaS2OS6DsZ7zkbGpOImuRV1F/wMvXQ55GxBIFllHglaqDHBN4tccysuFRoRfNSVPeukYSjPrnSrOQ9KqdE5m8e68ob8XyY7XSqHS1KrPGvpDPtag0ewG+EAlMmv/kvRK8BEpZTyIj0fibBeYjnxE1+rbw2AKUeSas+ZVd2R/4Kg1vt6WNvneYDkA2D2IB0ZmGz9rQEwbalok7JJmy2Qucy8RGz5sqZmnslUcvF9wIDAQAB
