@@ -1,56 +1,128 @@
 package com.example.capstone;
 
+
 import android.os.Build;
+
 import android.security.keystore.KeyGenParameterSpec;
-import android.support.annotation.RequiresApi;
+import android.security.keystore.KeyProperties;
+import android.util.Base64;
+import android.util.Log;
+
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPair;
+import java.io.UnsupportedEncodingException;
+
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
+import java.security.spec.RSAKeyGenParameterSpec;
 
 
-import static android.security.keystore.KeyProperties.*;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 
-class MakeKeyPair {
-    final private int KEY_LENGTH_BIT = 2048;
-    final private String alias = "Onece_Key";
+public class MakeKeyPair {
+    private static final String TAG = "RSACryptor";
+    private static final String alias = "Onece_Key";
+    private KeyStore.Entry keyEntry;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    MakeKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException, KeyStoreException, CertificateException, IOException {
+    //비대칭 암호화(공개키) 알고리즘 호출 상수
+    private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
 
-        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-        keyStore.load(null);
-        if (!keyStore.isKeyEntry(alias)) {
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance(
-                    KEY_ALGORITHM_RSA, "AndroidKeyStore");
-            kpg.initialize(new KeyGenParameterSpec.Builder(
-                    alias,
-                    PURPOSE_SIGN | PURPOSE_VERIFY)
-                    .setDigests(DIGEST_SHA256,
-                            DIGEST_SHA512)
-                    .setKeySize(KEY_LENGTH_BIT)
-                    .build());
-            KeyPair keypair = kpg.generateKeyPair();
-            System.out.println("-------------------------");
-            System.out.println("Not alias in keyStore!!!!!");
-            System.out.println("Make KeyPair");
-            System.out.println("-------------------------");
+    MakeKeyPair(){}
+
+    private static class RSACryptorHolder{
+        static final MakeKeyPair INSTANCE = new MakeKeyPair();
+    }
+
+    public static MakeKeyPair getInstance(){
+        return RSACryptorHolder.INSTANCE;
+    }
+
+    public void init(){
+        try {
+
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+
+
+            if(!ks.containsAlias(alias)){
+                initAndroidM(alias);
+            }
+            keyEntry = ks.getEntry(alias, null);
+        }catch (KeyStoreException | IOException | NoSuchAlgorithmException |
+                CertificateException | UnrecoverableEntryException e ){
+            Log.e(TAG, "Initialize fail", e);
         }
     }
 
-    protected PublicKey getPublic() throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, CertificateException, IOException {
-        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-        keyStore.load(null);
-        KeyStore.Entry entry = keyStore.getEntry(alias, null);
-        PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
-        return publicKey;
+    private void initAndroidM(String alias) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
+                kpg.initialize(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        .setAlgorithmParameterSpec(new RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4))
+                        .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                        .setDigests(KeyProperties.DIGEST_SHA512, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA256)
+                        .setUserAuthenticationRequired(false)
+                        .build());
+
+                kpg.generateKeyPair();
+
+                Log.d(TAG, "RSA Initialize");
+            }
+        } catch (GeneralSecurityException e) {
+            Log.e(TAG, "init error", e);
+        }
+    }
+
+
+    public String encrypt(String plain){
+        try {
+            byte[] bytes = plain.getBytes("UTF-8");
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            //Public Key로 암호화
+            cipher.init(Cipher.ENCRYPT_MODE, ((KeyStore.PrivateKeyEntry) keyEntry).getCertificate().getPublicKey());
+            byte[] encryptedBytes = cipher.doFinal(bytes);
+            return new String(Base64.encode(encryptedBytes, Base64.DEFAULT));
+
+
+        }catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException |
+                InvalidKeyException | IllegalBlockSizeException | BadPaddingException e){
+            Log.e(TAG, "Encrypt fail",  e);
+            return plain;
+        }
+    }
+
+    public String decrypt(String encryptedText) {
+        try {
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            //Private Key로 복호화
+            cipher.init(Cipher.DECRYPT_MODE, ((KeyStore.PrivateKeyEntry) keyEntry).getPrivateKey());
+            byte[] base64Bytes = encryptedText.getBytes("UTF-8");
+            byte[] decryptedBytes = Base64.decode(base64Bytes, Base64.DEFAULT);
+
+            return new String(cipher.doFinal(decryptedBytes));
+
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
+                UnsupportedEncodingException | BadPaddingException | IllegalBlockSizeException e) {
+            Log.e(TAG, "Decrypt fail",  e);
+            return encryptedText;
+        }
+    }
+
+    public PublicKey getPublicKey(){
+        PublicKey pk = ((KeyStore.PrivateKeyEntry) keyEntry).getCertificate().getPublicKey();
+        return pk;
     }
 }
+

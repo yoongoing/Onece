@@ -98,45 +98,8 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 Intent result = new Intent();
                 result.putExtra("name", etUsername.getText().toString());
-                String publickey = null;
-                try {
-                    KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-                    ks.load(null);
 
-                    MakeKeyPair mkp = new MakeKeyPair();
-                    PublicKey p1 = null;
-                    PublicKey p2 = null;
-                    p1 = mkp.getPublic();
-                    p2 = mkp.getPublic();
 
-                    System.out.println("======================");
-                    System.out.println(p1);
-                    System.out.println(p2);
-                    System.out.println("======================");
-
-                    publickey = p1.getEncoded().toString();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (NoSuchProviderException e) {
-                    e.printStackTrace();
-                } catch (InvalidAlgorithmParameterException e) {
-                    e.printStackTrace();
-                } catch (CertificateException e) {
-                    e.printStackTrace();
-                } catch (KeyStoreException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (UnrecoverableEntryException e) {
-                    e.printStackTrace();
-                }
-
-                String data = "&id="+etUsername.getText()
-                        + "&password=" +etPassword.getText()
-                        + "&phoneNUm=" + etPhone.getText()
-                        + "&name=" + etRealname.getText()
-                        + "&publickey="+publickey;
-                url = server_ip + data;
 
 
 
