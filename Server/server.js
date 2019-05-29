@@ -246,13 +246,13 @@ var app = http.createServer((request, response) => {
 		checkIdAndName();
 		getCommand = getCommand1 + userId + getCommand2 ;
 
-		exec1(getCommand, function (err, stdout, stderr) {
-			userPublicKey = stdout.toString();
-			console.log(userPublicKey);
-			console.log("sibalnoma whe andoenenguya")
-		});
 		
-		setTimeout( sendmessage,2000);
+		
+		setTimeout( exec1(getCommand, function (err, stdout, stderr) {
+			var result = stdout.toString();
+			console.log(result);
+			console.log("sibalnoma whe andoenenguya")
+		}),2000);
 	}
     
 
