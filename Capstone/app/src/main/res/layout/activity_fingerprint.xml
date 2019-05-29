@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:background="@color/purple"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -13,16 +12,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/certification">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"
-            android:text="지문인증"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24dp" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/finger_cer"
+            android:layout_marginTop="200dp" />
 
     </RelativeLayout>
 
@@ -34,12 +28,13 @@
 
         <ImageView
             android:id="@+id/iv_fingerprint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="66dp"
-            app:srcCompat="@mipmap/fingerprint" />
+            android:layout_marginTop="50dp"
+            app:srcCompat="@mipmap/fingerprint"
+            android:tint="@color/yellow" />
     </RelativeLayout>
     <!--지문 이미지-->
 
@@ -56,6 +51,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:text="Message" />
     </RelativeLayout>
 
@@ -73,10 +69,10 @@
 
         <ImageView
             android:id="@+id/iv_lock"
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/done"/>
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:srcCompat="@mipmap/done"
+            android:tint="@color/blue" />
 
     </LinearLayout>
 </RelativeLayout>
