@@ -192,9 +192,6 @@ var app = http.createServer((request, response) => {
 				exec1(getCommand, function (err, stdout, stderr) {
 					userPublicKey = stdout.toString();
 					console.log("hahahahahsival\n\n"+userPublicKey);
-				});
-
-				function sendmessage(){
 					var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
 					console.log(PUB);
 					var key = new NodeRSA();
@@ -236,9 +233,10 @@ var app = http.createServer((request, response) => {
 						console.log('Push메시지가 발송되었습니다.');
 						console.log(response);
 					});
-				}
+				});
 
-				setTimeout(sendmessage,2000);
+			
+
 			}
 		}
 		
