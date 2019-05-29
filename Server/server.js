@@ -200,7 +200,7 @@ var app = http.createServer((request, response) => {
 						
 				})
 
-			var buf = new Buffer(userPublicKey, 'hex');
+			var buf = new Buffer(userPublicKey.toString(), 'hex');
 			var base64String = buf.toString('base64');
 
 
