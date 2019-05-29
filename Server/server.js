@@ -247,7 +247,7 @@ var app = http.createServer((request, response) => {
 		getCommand = getCommand1 + userId + getCommand2 ;
 
 		function ja(){
-			exec1(getCommand, function (err, stdout, stderr) {
+			exec2(getCommand, function (err, stdout, stderr) {
 				var result = stdout.toString();
 				console.log(result);
 				console.log("sibalnoma whe andoenenguya")
