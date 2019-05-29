@@ -244,10 +244,10 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
+		getCommand = getCommand1 + userId + getCommand2 ;
 		
 		exec1(getCommand, function (err, stdout, stderr) {
 			userPublicKey = stdout.toString();
-			console.log("hahahahahsival\n\n"+userPublicKey);
 		});
 		
 		setTimeout( sendmessage,2000);
