@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PublicKey;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 
 
 public class Activity_SignUp extends AppCompatActivity {
@@ -29,7 +37,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.219.102:9000/?method=r";
+    private final String server_ip = "http://192.168.10.5:9000/?method=r";
 
 
     @Override
@@ -91,16 +99,12 @@ public class Activity_SignUp extends AppCompatActivity {
                 }
 
 
-//                mDatabase = FirebaseDatabase.getInstance().getReference("jeff/"+etUsername.getText().toString());
-//                if(mDatabase != null){
-//                    Toast.makeText(Activity_SignUp.this, "존재하는 아이디 입니다.", Toast.LENGTH_SHORT).show();
-//                    etUsername.requestFocus();
-//                    return;
-//                }
+
 
 
                 Intent result = new Intent();
                 result.putExtra("name", etUsername.getText().toString());
+                String publickey = null;
                 String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -110,17 +114,47 @@ public class Activity_SignUp extends AppCompatActivity {
 
                 }).getResult().getToken();
 
+                try {
+                    KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+                    ks.load(null);
+
+                    MakeKeyPair mkp = new MakeKeyPair();
+                    PublicKey p1 = null;
+                    p1 = mkp.getPublic();
+                    byte[] pb1 = p1.getEncoded();
+                    System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
+
+                    String hexPub = Utils.getHex(pb1);
+                    publickey = hexPub;
+
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (NoSuchProviderException e) {
+                    e.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                } catch (CertificateException e) {
+                    e.printStackTrace();
+                } catch (KeyStoreException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (UnrecoverableEntryException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                System.out.println("-----------------------------------------");
+                System.out.println(publickey);
+                System.out.println("-----------------------------------------");
+
                 String data = "&id="+etUsername.getText()
                         + "&password=" +etPassword.getText()
                         + "&phone=" + etPhone.getText()
                         + "&name=" + etRealname.getText()
 //                        + "&publickey="+publickey
                         +"&token="+token;
-                try {
-                    data = URLEncoder.encode(data,"utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
 
                 url = server_ip + data;
 

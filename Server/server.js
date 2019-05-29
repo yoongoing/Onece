@@ -72,6 +72,23 @@ var app = http.createServer((request, response) => {
 	var valideUserIdAndName = false;
 	var client_token;
 	var userPublicKey;
+
+
+	function myFunction() {
+		exec2(getCommand, function (err, stdout, stderr) {
+			var result = stdout	
+			if( result.toString().trim() === userPublicKey.toString() ){
+				responseForResister="user publickey is resisterd";
+
+				response.end(responseForResister);
+				console.log("good it is resisterd");
+			}else{
+				responseForResister = "user publickey isn't resisterd";
+				response.end(responseForResister);
+				console.log("bad it isn't resisterd");
+			}
+		});
+	}
 	
 	const writeUserData = function(userId, userName,publickey, userToken) {
 		return new Promise(function(resolve,reject){
@@ -82,6 +99,8 @@ var app = http.createServer((request, response) => {
 			  }));
 		})
 	}
+
+
 
 	const isUserIdIn = function(userId) {
 		return new Promise(function(resolve,reject){
@@ -122,17 +141,8 @@ var app = http.createServer((request, response) => {
 			)
 		})
 	}
-	const readUserPublicKey = function(userId) {
-		return new Promise(function(resolve,reject){
-			resolve(
-				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-					userPublicKey = data.val().publickey 
-				})
-			)
-		})
-	}
 
-	var _url = decodeURIComponent(request.url);
+	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
 
@@ -140,11 +150,10 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		userPublicKey =  queryData.publickey;
-		userPublicKey = userPublicKey.replace(/\r?\n|\r/g, " ");
-
 		var userToken = queryData.token;
 		var userName = queryData.name;
 		
+		console.log(userPublicKey); 
 		async function readUserId(){
 			await isUserIdIn(userId)
 
@@ -155,21 +164,7 @@ var app = http.createServer((request, response) => {
 				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 				getCommand = getCommand1 + userId + getCommand2 ;
 				
-				
-				function myFunction() {
-					exec2(getCommand, function (err, stdout, stderr) {
-						var result = stdout	
-						if( result.toString().trim() === userPublicKey.toString() ){
-							responseForResister="user publickey is resisterd";
-							response.end(responseForResister);
-							console.log("good it is resisterd");
-						}else{
-							responseForResister = "user publickey isn't resisterd";
-							response.end(responseForResister);
-							console.log("bad it isn't resisterd");
-						}
-					});
-				}
+			
 
 				exec1(setCommand, function (err, stdout, stderr) {});
 				setTimeout( myFunction, 2000);	
@@ -183,63 +178,84 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		var userName = queryData.name;
-		console.log(queryData.publickey);
 		var nonce = crypto.randomBytes(16).toString('hex');
+		
+		
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-			
 			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
 				await readUserToken(userId);
-				await readUserPublicKey(userId);
-				await console.log(userPublicKey);
-				
-				// console.log(nonce);
-				// console.log(encnonce);
-				// console.log(client_token);
-				// var push_data = {
-				// 	// 수신대상
-				// 	to: client_token,
-				// 	// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-				// 	notification: {
-				// 		title: "Hello Node",
-				// 		body: "Node로 발송하는 Push 메시지 입니다.",
-				// 		sound: "default",
-				// 		click_action: "FCM_PLUGIN_ACTIVITY",
-				// 		icon: "fcm_push_icon"
-				// 	},
-				// 	// 메시지 중요도
-				// 	priority: "high",
-					
-				// 	// App 패키지 이름
-				// 	restricted_package_name: "com.example.capstone",
-				// 	// App에게 전달할 데이터
-				// 	data: {
-				// 		num1: encnonce
-				// 	}
-				// };
-				
-				// fcm.send(push_data, function(err, response) {
-				// 	if (err) {
-				// 		console.error('Push메시지 발송에 실패했습니다.');
-				// 		console.error(err);
-				// 		return;
-				// 	}
-				
-				// 	console.log('Push메시지가 발송되었습니다.');
-				// 	console.log(response);
-				// });
+				getCommand = getCommand1 + userId + getCommand2 ;
+			
+				await exec2(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout.toString();
+						
+				})
 			}
 		}
+
+		function sendmessage(){
+			var buf = new Buffer(userPublicKey,'hex');
+			var base64String = buf.toString('base64');
 		
+			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
+			var key = new NodeRSA();
+			
+			key.importKey(PUB,'pkcs8-public');
 
 
-		checkIdAndName();
+			var encnonce = key.encrypt(nonce,'base64');
+			console.log(encnonce)
+
+
+
+			console.log(client_token);
+			var push_data = {
+				// 수신대상
+				to: client_token,
+				// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
+				notification: {
+					title: "Hello Node",
+					body: "Node로 발송하는 Push 메시지 입니다.",
+					sound: "default",
+					click_action: "FCM_PLUGIN_ACTIVITY",
+					icon: "fcm_push_icon"
+				},
+				// 메시지 중요도
+				priority: "high",
+				
+				// App 패키지 이름
+				restricted_package_name: "com.example.capstone",
+				// App에게 전달할 데이터
+				data: {
+					num1: encnonce
+				}
+			};
+			
+			fcm.send(push_data, function(err, response) {
+				if (err) {
+					console.error('Push메시지 발송에 실패했습니다.');
+					console.error(err);
+					return;
+				}
+			
+				console.log('Push메시지가 발송되었습니다.');
+				console.log(response);
+			});
+		}
+
+
+
+		checkIdAndName();		
+		
+		setTimeout( sendmessage ,2000);
 	}
     
 
 })
 
 app.listen(9000,'172.19.0.5');
+
