@@ -246,13 +246,15 @@ var app = http.createServer((request, response) => {
 		checkIdAndName();
 		getCommand = getCommand1 + userId + getCommand2 ;
 
+		function ja(){
+			exec1(getCommand, function (err, stdout, stderr) {
+				var result = stdout.toString();
+				console.log(result);
+				console.log("sibalnoma whe andoenenguya")
+			})
+		}
 		
-		
-		setTimeout( exec1(getCommand, function (err, stdout, stderr) {
-			var result = stdout.toString();
-			console.log(result);
-			console.log("sibalnoma whe andoenenguya")
-		}),2000);
+		setTimeout(ja ,1000);
 	}
     
 
