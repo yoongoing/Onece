@@ -191,7 +191,6 @@ var app = http.createServer((request, response) => {
 				console.log(getCommand);
 				exec1(getCommand, function (err, stdout, stderr) {
 					userPublicKey = stdout;
-
 				});
 
 				function sendmessage(){
@@ -238,7 +237,7 @@ var app = http.createServer((request, response) => {
 					});
 				}
 
-				setTimeout(sendmessage,1000);
+				setTimeout(sendmessage,2000);
 			}
 		}
 		
