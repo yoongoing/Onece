@@ -141,17 +141,6 @@ var app = http.createServer((request, response) => {
 			)
 		})
 	}
-	const readUserPublicKey = function(userId) {
-		getCommand = getCommand1 + userId + getCommand2 ;
-
-		return new Promise(function(resolve,reject){
-			resolve(
-				exec2(getCommand, function (err, stdout, stderr) {
-					publickey = stdout	
-				})
-			)
-		})
-	}
 
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
@@ -174,7 +163,6 @@ var app = http.createServer((request, response) => {
 
 				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 				getCommand = getCommand1 + userId + getCommand2 ;
-				
 				
 			
 
@@ -200,8 +188,13 @@ var app = http.createServer((request, response) => {
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				await readUserPublicKey(userId);
+				getCommand = getCommand1 + userId + getCommand2 ;
+				await exec1(setCommand, function (err, stdout, stderr) {
+					publickey = stdout;
+				});
+
 				await console.log(userPublicKey);
-				await console.log("this is same");
+				console.log("is this is same??")
 				
 
 				var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
