@@ -201,6 +201,7 @@ var app = http.createServer((request, response) => {
 			var buf = new Buffer(userPublicKey,'hex');
 			var base64String = buf.toString('base64');
 			console.log(base64String);
+			console.log(userPublicKey);
 			
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
 			console.log(PUB);
