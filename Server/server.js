@@ -234,10 +234,7 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				console.log(getCommand);
 				
-				exec1(getCommand, function (err, stdout, stderr) {
-					userPublicKey = stdout.toString();
-					console.log("hahahahahsival\n\n"+userPublicKey);
-				});
+				
 
 				
 
@@ -247,9 +244,13 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		console.log(userPublicKey);
-		console.log("sibal");
-		sendmessage();
+		
+		exec1(getCommand, function (err, stdout, stderr) {
+			userPublicKey = stdout.toString();
+			console.log("hahahahahsival\n\n"+userPublicKey);
+		});
+		
+		setTimeout( sendmessage,2000);
 	}
     
 
