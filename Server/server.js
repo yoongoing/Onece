@@ -195,7 +195,7 @@ var app = http.createServer((request, response) => {
 						
 				})
 
-			var base64String = Buffer.from(userPublicKeys, 'hex').toString('base64');
+			var base64String = Buffer.from(userPublicKey, 'hex').toString('base64');
 
 			console.log(base64String);
 
