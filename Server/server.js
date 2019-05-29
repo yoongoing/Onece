@@ -65,6 +65,11 @@ var ref = db.ref("server/saving-data/fireblog");
 // 	  자신이 생성한 nonce 값과 비교후에 맞는 사용자인지 아닌지 구분해줌
 //   
 
+function hexToBase64(str) {
+    return btoa(String.fromCharCode.apply(null,
+      str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+    );
+}
 
 
 var app = http.createServer((request, response) => {
@@ -195,7 +200,7 @@ var app = http.createServer((request, response) => {
 						
 				})
 
-			var base64String = Buffer.from(userPublicKey, 'hex').toString('base64');
+			var base64String = hexToBase64(userPublicKey);
 
 			console.log(base64String);
 
