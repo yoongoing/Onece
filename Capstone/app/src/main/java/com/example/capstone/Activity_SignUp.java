@@ -43,7 +43,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.219.102:9000/?method=r";
+    private final String server_ip = "http://192.168.10.5:9000/?method=r";
 
 
     @Override
@@ -123,9 +123,9 @@ public class Activity_SignUp extends AppCompatActivity {
                     PublicKey p1 = null;
                     p1 = mkp.getPublic();
                     byte[] pb1 = p1.getEncoded();
+                    String hexPub = Utils.byteArrayToHexString(pb1);
+                    publickey = hexPub;
 
-
-                    publickey = Base64.encodeToString(pb1,Base64.DEFAULT);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 } catch (NoSuchProviderException e) {
@@ -142,17 +142,17 @@ public class Activity_SignUp extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
+                System.out.println("-----------------------------------------");
+                System.out.println(publickey);
+                System.out.println("-----------------------------------------");
+
                 String data = "&id="+etUsername.getText()
                         + "&password=" +etPassword.getText()
                         + "&phone=" + etPhone.getText()
                         + "&name=" + etRealname.getText()
                         + "&publickey="+publickey
                         +"&token="+token;
-                try {
-                    data = URLEncoder.encode(data,"utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
 
                 url = server_ip + data;
 

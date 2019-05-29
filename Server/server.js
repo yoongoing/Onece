@@ -72,6 +72,23 @@ var app = http.createServer((request, response) => {
 	var valideUserIdAndName = false;
 	var client_token;
 	var userPublicKey;
+
+
+	function myFunction() {
+		exec2(getCommand, function (err, stdout, stderr) {
+			var result = stdout	
+			if( result.toString().trim() === userPublicKey.toString() ){
+				responseForResister="user publickey is resisterd";
+
+				response.end(responseForResister);
+				console.log("good it is resisterd");
+			}else{
+				responseForResister = "user publickey isn't resisterd";
+				response.end(responseForResister);
+				console.log("bad it isn't resisterd");
+			}
+		});
+	}
 	
 	const writeUserData = function(userId, userName,publickey, userToken) {
 		return new Promise(function(resolve,reject){
@@ -82,6 +99,8 @@ var app = http.createServer((request, response) => {
 			  }));
 		})
 	}
+
+
 
 	const isUserIdIn = function(userId) {
 		return new Promise(function(resolve,reject){
@@ -123,16 +142,18 @@ var app = http.createServer((request, response) => {
 		})
 	}
 	const readUserPublicKey = function(userId) {
+		getCommand = getCommand1 + userId + getCommand2 ;
+
 		return new Promise(function(resolve,reject){
 			resolve(
-				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-					userPublicKey = data.val().publickey 
+				exec2(getCommand, function (err, stdout, stderr) {
+					publickey = stdout	
 				})
 			)
 		})
 	}
 
-	var _url = decodeURIComponent(request.url);
+	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
 
@@ -140,11 +161,10 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		userPublicKey =  queryData.publickey;
-		userPublicKey = userPublicKey.replace(/\r?\n|\r/g, " ");
-
 		var userToken = queryData.token;
 		var userName = queryData.name;
 		
+		console.log(userPublicKey); 
 		async function readUserId(){
 			await isUserIdIn(userId)
 
@@ -156,20 +176,7 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				
 				
-				function myFunction() {
-					exec2(getCommand, function (err, stdout, stderr) {
-						var result = stdout	
-						if( result.toString().trim() === userPublicKey.toString() ){
-							responseForResister="user publickey is resisterd";
-							response.end(responseForResister);
-							console.log("good it is resisterd");
-						}else{
-							responseForResister = "user publickey isn't resisterd";
-							response.end(responseForResister);
-							console.log("bad it isn't resisterd");
-						}
-					});
-				}
+			
 
 				exec1(setCommand, function (err, stdout, stderr) {});
 				setTimeout( myFunction, 2000);	
@@ -183,19 +190,25 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		var userName = queryData.name;
-		console.log(queryData.publickey);
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-			
+		
 			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				await readUserPublicKey(userId);
 				await console.log(userPublicKey);
+				await console.log("this is same");
 				
+
+				var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
+				var key = new NodeRSA();
+				key.importKey(PUB,'pkcs8-public');
+
+
 				// console.log(nonce);
 				// console.log(encnonce);
 				// console.log(client_token);
