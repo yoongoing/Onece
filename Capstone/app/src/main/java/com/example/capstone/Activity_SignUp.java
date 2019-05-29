@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -27,9 +29,11 @@ import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class Activity_SignUp extends AppCompatActivity {
-    private DatabaseReference mDatabase;
     private EditText etUsername;
     private EditText etPassword;
     private EditText etRetype;
@@ -98,84 +102,108 @@ public class Activity_SignUp extends AppCompatActivity {
                     etRealname.requestFocus();
                 }
 
-
-
-
-
-                Intent result = new Intent();
-                result.putExtra("name", etUsername.getText().toString());
-                String publickey = null;
-                String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
+                boolean sibal = false;
+                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
+                mRootRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String newToken = instanceIdResult.getToken();
-                        Log.e("newToken",newToken);
-                    } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        DataSnapshot childRef = dataSnapshot.child(etUsername.getText().toString());
+                        if (childRef.exists()) {
+                            Toast.makeText(Activity_SignUp.this, "이미 등록되어있는 아이디 입니다. 시발러", Toast.LENGTH_SHORT).show();
 
-                }).getResult().getToken();
+                        }else{
+                            Intent result = new Intent();
+                            result.putExtra("name", etUsername.getText().toString());
+                            String publickey = null;
+                            String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
+                                @Override
+                                public void onSuccess(InstanceIdResult instanceIdResult) {
+                                    String newToken = instanceIdResult.getToken();
+                                    Log.e("newToken",newToken);
+                                } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
 
-                try {
-                    KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-                    ks.load(null);
+                            }).getResult().getToken();
 
-                    MakeKeyPair mkp = new MakeKeyPair();
-                    PublicKey p1 = null;
-                    p1 = mkp.getPublic();
-                    byte[] pb1 = p1.getEncoded();
-                    System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
+                            try {
+                                KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+                                ks.load(null);
 
-                    String hexPub = Utils.getHex(pb1);
-                    publickey = hexPub;
+                                MakeKeyPair mkp = new MakeKeyPair();
+                                PublicKey p1 = null;
+                                p1 = mkp.getPublic();
+                                byte[] pb1 = p1.getEncoded();
+                                System.out.println(Base64.encodeToString(pb1, Base64.DEFAULT));
 
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (NoSuchProviderException e) {
-                    e.printStackTrace();
-                } catch (InvalidAlgorithmParameterException e) {
-                    e.printStackTrace();
-                } catch (CertificateException e) {
-                    e.printStackTrace();
-                } catch (KeyStoreException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (UnrecoverableEntryException e) {
-                    e.printStackTrace();
-                }
+                                String hexPub = Utils.getHex(pb1);
+                                publickey = hexPub;
 
-
-
-                System.out.println("-----------------------------------------");
-                System.out.println(publickey);
-                System.out.println("-----------------------------------------");
-
-                String data = "&id="+etUsername.getText()
-                        + "&password=" +etPassword.getText()
-                        + "&phone=" + etPhone.getText()
-                        + "&name=" + etRealname.getText()
-//                        + "&publickey="+publickey
-                        +"&token="+token;
-
-                url = server_ip + data;
+                            } catch (NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            } catch (NoSuchProviderException e) {
+                                e.printStackTrace();
+                            } catch (InvalidAlgorithmParameterException e) {
+                                e.printStackTrace();
+                            } catch (CertificateException e) {
+                                e.printStackTrace();
+                            } catch (KeyStoreException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (UnrecoverableEntryException e) {
+                                e.printStackTrace();
+                            }
 
 
-                NetworkTask networkTask = new NetworkTask(url,null);
-                networkTask.execute();
-                try {
-                    String res =  networkTask.execute().get();
-                    if(res.equals("201")) {
-                        setResult(RESULT_OK, result);
-                        finish();
-                    } else {
-                        Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
+
+                            System.out.println("-----------------------------------------");
+                            System.out.println(publickey);
+                            System.out.println("-----------------------------------------");
+
+                            String data = "&id="+etUsername.getText()
+                                    + "&password=" +etPassword.getText()
+                                    + "&phone=" + etPhone.getText()
+                                    + "&name=" + etRealname.getText()
+                                   + "&publickey="+publickey
+                                    +"&token="+token;
+
+                            url = server_ip + data;
+
+
+                            NetworkTask networkTask = new NetworkTask(url,null);
+                            networkTask.execute();
+                            try {
+                                String res =  networkTask.execute().get();
+                                if(res.equals("201")) {
+                                    setResult(RESULT_OK, result);
+                                    finish();
+                                } else {
+                                    Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Toast.makeText(Activity_SignUp.this, url, Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(Activity_SignUp.this, url, Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                    }
+
+
+                });
+
+
+
+
+
+
             }
-        });
+        } );
 
     }
+
 }
 
