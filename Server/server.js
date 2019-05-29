@@ -180,8 +180,29 @@ var app = http.createServer((request, response) => {
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
+		
+		
+		async function checkIdAndName(){
+			await readUserNameAndId(userId,userName);
+			await console.log(valideUserIdAndName);
+
+			if(valideUserIdAndName){
+				await readUserToken(userId);
+				getCommand = getCommand1 + userId + getCommand2 ;
+			
+				await exec2(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout.toString();
+						
+				})
+			}
+		}
+
 		function sendmessage(){
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+userPublicKey+'-----END RSA PUBLIC KEY-----';
+			var buf = new Buffer(userPublicKey);
+			var base64String = b.toString('base64');
+			console.log(base64String);
+			
+			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
 			console.log(PUB);
 			var key = new NodeRSA();
 			key.importKey(PUB,'pkcs8-public');
@@ -222,27 +243,6 @@ var app = http.createServer((request, response) => {
 				console.log('Push메시지가 발송되었습니다.');
 				console.log(response);
 			});
-		}
-		
-		async function checkIdAndName(){
-			await readUserNameAndId(userId,userName);
-			await console.log(valideUserIdAndName);
-
-			if(valideUserIdAndName){
-				await readUserToken(userId);
-				getCommand = getCommand1 + userId + getCommand2 ;
-			
-				await exec2(getCommand, function (err, stdout, stderr) {
-					userPublicKey = stdout.toString();
-						
-				})
-
-				console.log(userPublicKey);
-				console.log("sibal");
-
-				
-
-			}
 		}
 		
 
