@@ -199,7 +199,7 @@ var app = http.createServer((request, response) => {
 
 		function sendmessage(){
 			var buf = new Buffer(userPublicKey);
-			var base64String = b.toString('base64');
+			var base64String = buf.toString('base64');
 			console.log(base64String);
 			
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
