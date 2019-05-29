@@ -182,16 +182,18 @@ var app = http.createServer((request, response) => {
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-		
 			await console.log(valideUserIdAndName);
 
 			if(valideUserIdAndName){
 				await readUserToken(userId);
+
 				getCommand = getCommand1 + userId + getCommand2 ;
-				await exec1(getCommand, function (err, stdout, stderr) {
-					publickey = stdout;
+				console.log(getCommand);
+				exec1(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout;
 				});
 
+				console.log("is this is same??")
 				await console.log(userPublicKey);
 				console.log("is this is same??")
 				
