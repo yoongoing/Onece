@@ -200,13 +200,12 @@ var app = http.createServer((request, response) => {
 			var base64String = buf.toString('base64');
 
 			
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----'+base64String+'-----BEGIN RSA PRIVATE KEY-----';
+			var PUB = '-----BEGIN PUBLIC KEY-----'+base64String+'-----BEGIN PRIVATE KEY-----';
 			var key = new NodeRSA();
-			console.log(PUB);
 			var key = new RSAKey(PUB);
 
 
-			key.importKey(PUB,'pkcs1-public');
+			key.importKey(PUB,'pkcs8-public');
 
 			var encnonce = key.encrypt(nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
