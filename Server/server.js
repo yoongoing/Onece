@@ -237,7 +237,7 @@ var app = http.createServer((request, response) => {
 					userPublicKey = stdout.toString();
 				})
 			}else{
-				response.end("Bad request");
+				response.end("Bad request!!!!!!!!!!!!!!");
 				return;
 			}
 		}
@@ -250,7 +250,7 @@ var app = http.createServer((request, response) => {
 		if(valideUserIdAndName){
 			setTimeout(sendmessage(userPublicKey),2500)
 		}else{
-			response.end("Bad request");
+			response.end("Bad requestsibal");
 		}
 		
 		
