@@ -203,7 +203,7 @@ var app = http.createServer((request, response) => {
 
 			var encnonce = key.encrypt(nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
-			var encmsg = crypto.publicEncrypt(PUB,buf).toString('base64');
+			var encmsg = crypto.publicEncrypt(key.importKey(PUB,'pkcs8-public'),buf).toString('base64');
 
 			console.log("--------------------------------------------------")
 			console.log(nonce);
