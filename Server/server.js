@@ -221,7 +221,7 @@ var app = http.createServer((request, response) => {
 
 			PUB = PUB.toString('base64');
 			var buffer = str2ab(base64String);
-			var encnonce  =crypto.publicEncrypt(PUB, buffer)
+			var encnonce  = crypto.publicEncrypt({ key: PUB, padding: constants.RSA_PKCS1_PADDING }, buffer)
 
 			// var encnonce = key.encrypt(base64Nonce,'base64');
 			// var buf = new Buffer(nonce,'base64');
