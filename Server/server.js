@@ -191,13 +191,17 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 			
 				
-
-				await exec2(getCommand, function (err, stdout, stderr) {
-					pubkey = stdout.toString();
-					console.log("sibal jinja BBACKCHINE")
-					console.log(pubkey);
-						
-				});
+				const getUserPubkey = function(command) {
+					return new Promise(function(resolve,reject){
+						resolve(
+							
+							exec2(command, function (err, stdout, stderr) {
+								pubkey = stdout.toString();
+							})
+						)
+					})
+				}
+				await getUserPubkey(getCommand);
 
 
 				setTimeout( sendmessage(pubkey),2000);
