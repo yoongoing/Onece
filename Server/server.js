@@ -183,7 +183,7 @@ var app = http.createServer((request, response) => {
 		
 		function sendmessage(pubkey){
 		
-			
+			console.log(pubkey);
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 		
@@ -229,21 +229,13 @@ var app = http.createServer((request, response) => {
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
 			await console.log(valideUserIdAndName);
-			var pubkey;
+			
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
-			
-
-				const exec3 = require('await-exec')
-				await exec3(getCommand, function (err, stdout, stderr) {
-					pubkey = stdout.toString();
+				exec2(getCommand, function (err, stdout, stderr) {
+					userPublicKey = stdout.toString();
 				})
-
-				await console.log(pubkey);
-
-				setTimeout(sendmessage(pubkey),3000);
-				
 			}else{
 				response.end("Bad request");
 				return;
@@ -254,7 +246,12 @@ var app = http.createServer((request, response) => {
 
 
 
-		checkIdAndName();		
+		checkIdAndName();
+		if(valideUserIdAndName){
+			setTimeout(sendmessage(userPublicKey),2500)
+		}else{
+			response.end("Bad request");
+		}
 		
 		
 	}
