@@ -31,7 +31,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.10.5:9000/?method=r";
+    private final String server_ip = "http://192.168.1.72:9000/?method=r";
 
 
     @Override
@@ -153,7 +153,7 @@ public class Activity_SignUp extends AppCompatActivity {
                             networkTask.execute();
                             try {
                                 String res =  networkTask.execute().get();
-                                if(res.equals("201")) {
+                                if(res.equals("OK")) {
                                     setResult(RESULT_OK, result);
                                     finish();
                                 } else {
