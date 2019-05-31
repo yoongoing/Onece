@@ -97,15 +97,6 @@ public class Activity_SignUp extends AppCompatActivity {
                 Intent result = new Intent();
                 result.putExtra("name", etUsername.getText().toString());
 
-                String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        String newToken = instanceIdResult.getToken();
-                        Log.e("newToken",newToken);
-                    } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
-
-                }).getResult().getToken();
-
 
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
                 mRootRef.addValueEventListener(new ValueEventListener() {
