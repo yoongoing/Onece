@@ -236,10 +236,10 @@ var app = http.createServer((request, response) => {
 			
 
 				const exec3 = require('await-exec')
-				await exec3(cmd, function (err, stdout, stderr) {
+				await exec3(getCommand, function (err, stdout, stderr) {
 					pubkey = stdout.toString();
 				})
-				
+
 				await console.log(pubkey);
 
 				setTimeout(sendmessage(pubkey),3000);
