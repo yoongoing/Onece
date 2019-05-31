@@ -56,7 +56,7 @@ public class login extends AppCompatActivity {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         DataSnapshot childRef = dataSnapshot.child(id.getText().toString());
-                        if (childRef.exists()&&childRef.child(pw.getText().toString()).getValue().equals(pw.getText().toString())) {
+                        if (childRef.exists()&&childRef.child("password").getValue().equals(pw.getText().toString())) {
 
                                 Intent intent = new Intent(getApplicationContext(),activeVerify.class);
                                 startActivity(intent);

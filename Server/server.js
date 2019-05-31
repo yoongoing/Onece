@@ -93,7 +93,8 @@ var app = http.createServer((request, response) => {
 			resolve(firebase.database().ref('jeff/' + userId).set({
 				publickey : publickey,
 				token : userToken,
-				name : userName
+				name : userName,
+				password:userPw
 			  }));
 		})
 	}
