@@ -2,8 +2,6 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var RSAKey = require('rsa-key');
-var hexToBinary = require('hex-to-binary');
-
 
 
 const crypto = require('crypto');
@@ -100,7 +98,7 @@ var app = http.createServer((request, response) => {
 				password:userPw
 			  }));
 		})
-	}
+	}to
 
 
 
@@ -199,15 +197,14 @@ var app = http.createServer((request, response) => {
 		
 
 			var buf = new Buffer(pubkey,'hex');
-			var binaryKey = hexToBinary(buf)
 			var base64String = buf.toString('base64');
 
 			
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+binaryKey+'\n-----BEGIN PRIVATE KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'\n-----BEGIN PRIVATE KEY-----';
 			var key = new NodeRSA();
 
 
-			key.importKey(PUB,'pkcs1-public-der');
+			key.importKey(PUB,'pkcs1-public-pem');
 
 			var encnonce = key.encrypt(nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
