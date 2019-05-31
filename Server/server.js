@@ -296,4 +296,3 @@ app.listen(9000,'172.19.0.4');
 
 
 
-var result = crypto.createSign("RSA-SHA1").update(testString).sign(keyPem, 'binary');
