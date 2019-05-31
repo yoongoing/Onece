@@ -197,20 +197,18 @@ var app = http.createServer((request, response) => {
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 			
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----BEGIN RSA PRIVATE KEY-----';
 			var key = new NodeRSA();
-			key.importKey(PUB,'pkcs8-public');
+			key.importKey(PUB,'pkcs1-public');
 
 			var encnonce = key.encrypt(nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
-			var encmsg = crypto.publicEncrypt(key.importKey(PUB,'pkcs8-public'),buf).toString('base64');
 
 			console.log("--------------------------------------------------")
 			console.log(nonce);
 			console.log("--------------------------------------------------")
 			console.log(encnonce);
 			console.log("--------------------------------------------------")
-			console.log(encmsg);
 
 			var push_data = {
 				// 수신대상
