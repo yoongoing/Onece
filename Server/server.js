@@ -190,12 +190,23 @@ var app = http.createServer((request, response) => {
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
 			
-				console.log(getCommand)
+				
+
 				await exec2(getCommand, function (err, stdout, stderr) {
 					pubkey = stdout.toString();
 						
-				})
-				await sendmessage( pubkey);
+				});
+
+
+
+				await console.log(getCommand);
+				await console.log(pubkey);
+
+				await sendmessage(pubkey);
+				
+			}else{
+				response.end("Bad request");
+				return;
 			}
 		}
 
@@ -226,7 +237,7 @@ var app = http.createServer((request, response) => {
 					title: "Hello Node",
 					body: "Node로 발송하는 Push 메시지 입니다.",
 					sound: "default",
-					click_action: "FCM_PLUGIN_ACTIVITY",
+					click_action: "Mainactivity",
 					icon: "fcm_push_icon"
 				},
 				// 메시지 중요도
