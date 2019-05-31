@@ -235,18 +235,13 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 			
 
-				function execShellCommand(cmd) {
-					
-					return new Promise((resolve, reject) => {
-						exec2(cmd, function (err, stdout, stderr) {
-							pubkey = stdout.toString();
-						})
-					});
-				}
+				const exec3 = require('await-exec')
+				await exec3(cmd, function (err, stdout, stderr) {
+					pubkey = stdout.toString();
+				})
 				
-				await execShellCommand(getCommand);
 				await console.log(pubkey);
-				
+
 				setTimeout(sendmessage(pubkey),3000);
 				
 			}else{
