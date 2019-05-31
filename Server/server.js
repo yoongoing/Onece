@@ -1,6 +1,8 @@
 
 const http = require('http');
 var NodeRSA = require('node-rsa');
+var RSAKey = require('rsa-key');
+
 
 const crypto = require('crypto');
 const url = require('url');
@@ -201,6 +203,8 @@ var app = http.createServer((request, response) => {
 			var PUB = '-----BEGIN RSA PUBLIC KEY-----'+base64String+'-----BEGIN RSA PRIVATE KEY-----';
 			var key = new NodeRSA();
 			console.log(PUB);
+			var key = new RSAKey(PUB);
+
 
 			key.importKey(PUB,'pkcs1-public');
 
