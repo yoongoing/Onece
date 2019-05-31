@@ -194,10 +194,10 @@ var app = http.createServer((request, response) => {
 		
 		function sendmessage(pubkey){
 		
-			console.log(pubkey);
+
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
-		
+	
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
 			key.importKey(PUB,'pkcs8-public');
