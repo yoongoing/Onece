@@ -98,7 +98,7 @@ var app = http.createServer((request, response) => {
 				password:userPw
 			  }));
 		})
-	}to
+	}
 
 
 
