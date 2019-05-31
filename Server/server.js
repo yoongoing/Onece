@@ -168,7 +168,6 @@ var app = http.createServer((request, response) => {
 
 				exec1(setCommand, function (err, stdout, stderr) {});
 				setTimeout( myFunction, 2000);	
-				console.log(queryData.token);
 			}
 		}
 		
@@ -202,6 +201,12 @@ var app = http.createServer((request, response) => {
 			var key = new NodeRSA();
 			key.importKey(PUB,'pkcs8-public');
 			var encnonce = key.encrypt(nonce,'base64');
+			console.log("--------------------------------------------------")
+			console.log(nonce);
+			console.log("--------------------------------------------------")
+			console.log(encnonce);
+			console.log("--------------------------------------------------")
+
 			var push_data = {
 				// 수신대상
 				to: client_token,
@@ -248,13 +253,11 @@ var app = http.createServer((request, response) => {
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
-			await console.log(valideUserIdAndName);
 			
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
-				await console.log(userPublicKey);
 				await promiseSendMessage(userPublicKey);
 
 			}else{
