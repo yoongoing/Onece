@@ -150,7 +150,7 @@ var app = http.createServer((request, response) => {
 		var userPw = queryData.password;
 		var userToken = queryData.token;
 		var userName = queryData.name;
-
+		userPublicKey =queryData.userPublicKey;
 		
 		
 		async function readUserId(){
@@ -200,18 +200,18 @@ var app = http.createServer((request, response) => {
 			console.log(userPublicKey);
 			console.log("si bal sulma");
 
-			// var buf = new Buffer(userPublicKey,'hex');
+			var buf = new Buffer(userPublicKey,'hex');
 			
-			// var base64String = buf.toString('base64');
+			var base64String = buf.toString('base64');
 		
-			// var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
-			// var key = new NodeRSA();
+			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
+			var key = new NodeRSA();
 			
-			// key.importKey(PUB,'pkcs8-public');
+			key.importKey(PUB,'pkcs8-public');
 
 
-			// var encnonce = key.encrypt(nonce,'base64');
-			// console.log(encnonce)
+			var encnonce = key.encrypt(nonce,'base64');
+			console.log(encnonce)
 
 
 
