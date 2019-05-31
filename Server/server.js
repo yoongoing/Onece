@@ -235,9 +235,9 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				exec2(getCommand, function (err, stdout, stderr) {
 					userPublicKey = stdout.toString();
+					console.log(userPublicKey);
+					setTimeout(sendmessage(userPublicKey),3000)
 				})
-
-				setTimeout(sendmessage(userPublicKey),3000)
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
 				return;
