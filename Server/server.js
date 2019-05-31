@@ -181,37 +181,6 @@ var app = http.createServer((request, response) => {
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
 		
-		
-		async function checkIdAndName(){
-			await readUserNameAndId(userId,userName);
-			await console.log(valideUserIdAndName);
-			var pubkey;
-			if(valideUserIdAndName){
-				await readUserToken(userId);
-				getCommand = getCommand1 + userId + getCommand2 ;
-			
-				
-				const getUserPubkey = function(command) {
-					return new Promise(function(resolve,reject){
-						resolve(
-							
-							exec2(command, function (err, stdout, stderr) {
-								pubkey = stdout.toString();
-							})
-						)
-					})
-				}
-				await getUserPubkey(getCommand);
-
-
-				setTimeout( sendmessage(pubkey),2000);
-				
-			}else{
-				response.end("Bad request");
-				return;
-			}
-		}
-
 		function sendmessage(pubkey){
 		
 			var buf = new Buffer(pubkey,'hex');
@@ -219,10 +188,7 @@ var app = http.createServer((request, response) => {
 		
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
-			
 			key.importKey(PUB,'pkcs8-public');
-
-
 			var encnonce = key.encrypt(nonce,'base64');
 			var push_data = {
 				// 수신대상
@@ -257,6 +223,37 @@ var app = http.createServer((request, response) => {
 				console.log(response);
 			});
 		}
+		
+		
+		async function checkIdAndName(){
+			await readUserNameAndId(userId,userName);
+			await console.log(valideUserIdAndName);
+			var pubkey;
+			if(valideUserIdAndName){
+				await readUserToken(userId);
+				getCommand = getCommand1 + userId + getCommand2 ;
+			
+
+				function execShellCommand(cmd) {
+					
+					return new Promise((resolve, reject) => {
+						exec2(cmd, function (err, stdout, stderr) {
+							pubkey = stdout.toString();
+						})
+					});
+				}
+				
+				await execShellCommand(getCommand);
+
+				setTimeout(sendmessage(pubkey),3000);
+				
+			}else{
+				response.end("Bad request");
+				return;
+			}
+		}
+
+		
 
 
 
