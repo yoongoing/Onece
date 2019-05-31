@@ -180,6 +180,17 @@ var app = http.createServer((request, response) => {
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
 		
+		function execPromise(command) {
+			return new Promise(function(resolve, reject) {
+				exec2(command, (error, stdout, stderr) => {
+					if (error) {
+						reject(error);
+						return;
+					}
+					resolve(userPublicKey=stdout.toString());
+				});
+			});
+		}
 		
 		function sendmessage(pubkey){
 		
@@ -233,11 +244,11 @@ var app = http.createServer((request, response) => {
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
-				exec2(getCommand, function (err, stdout, stderr) {
-					userPublicKey = stdout.toString();
-					console.log(userPublicKey);
-					setTimeout(sendmessage(userPublicKey),3000)
-				})
+				var result = await execPromise(getCommand);
+				await console.log(userPublicKey);
+
+
+
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
 				return;
