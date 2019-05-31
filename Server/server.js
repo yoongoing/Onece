@@ -88,9 +88,10 @@ var app = http.createServer((request, response) => {
 		});
 	}
 	
-	const writeUserData = function(userId, userName, userToken,userPw) {
+	const writeUserData = function(userId, userName,publickey, userToken,userPw) {
 		return new Promise(function(resolve,reject){
 			resolve(firebase.database().ref('jeff/' + userId).set({
+				publickey : publickey,
 				token : userToken,
 				name : userName,
 				password:userPw
@@ -148,17 +149,18 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		var userPw = queryData.password;
+		userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
 		var userName = queryData.name;
-		userPublicKey =queryData.userPublicKey;
+
 		
-		
+		console.log(userPublicKey); 
 		async function readUserId(){
 			await isUserIdIn(userId)
 
 			if(!isUserIdAlreayIn){
 				
-				writeUserData(userId, userName,userToken,userPw);
+				writeUserData(userId, userName,userPublicKey,userToken,userPw);
 
 				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 				getCommand = getCommand1 + userId + getCommand2 ;
@@ -197,11 +199,7 @@ var app = http.createServer((request, response) => {
 		}
 
 		function sendmessage(){
-			console.log(userPublicKey);
-			console.log("si bal sulma");
-
 			var buf = new Buffer(userPublicKey,'hex');
-			
 			var base64String = buf.toString('base64');
 		
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
@@ -234,7 +232,7 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1:"encnonce"
+					num1: encnonce
 				}
 			};
 			
@@ -252,8 +250,7 @@ var app = http.createServer((request, response) => {
 
 
 
-		checkIdAndName();	
-		console.log(userPublicKey)	
+		checkIdAndName();		
 		
 		setTimeout( sendmessage ,2000);
 	}
