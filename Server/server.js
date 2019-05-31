@@ -212,9 +212,8 @@ var app = http.createServer((request, response) => {
 
 			key.importKey(PUB,'pkcs8-public-pem');
 			var base64Nonce = hexToBase64(nonce);
-			var encmsg = crypto.publicEncrypt(PUB, Buffer.from(base64Nonce, 'base64') ).toString('base64');
+			var encnonce = crypto.publicEncrypt(PUB, Buffer.from(base64Nonce, 'base64') ).toString('base64');
 
-			var encnonce = key.encrypt(base64Nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
 
 			console.log("--------------------------------------------------")
@@ -241,7 +240,7 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1:encmsg
+					num1:encnonce
 				}
 			};
 			
