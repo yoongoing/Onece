@@ -201,8 +201,7 @@ var app = http.createServer((request, response) => {
 		
 
 			var buf = new Buffer(pubkey,'hex');
-			var base64String =new ByteBuffer()
-			console.log(base64String);
+			
 			function hexToBase64(str) {
 				return btoa(String.fromCharCode.apply(null,
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
