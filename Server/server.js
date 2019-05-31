@@ -78,13 +78,12 @@ var app = http.createServer((request, response) => {
 		exec2(getCommand, function (err, stdout, stderr) {
 			var result = stdout	
 			if( result.toString().trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-
-				response.end(responseForResister);
+				response.writeHead(201, { 'Content-Type': 'text/plain' });
+				response.end("OK");
 				console.log("good it is resisterd");
 			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
+				response.writeHead(400, { 'Content-Type': 'text/plain' });
+				response.end("Bad request");
 				console.log("bad it isn't resisterd");
 			}
 		});
