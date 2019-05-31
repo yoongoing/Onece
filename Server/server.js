@@ -197,7 +197,11 @@ var app = http.createServer((request, response) => {
 		}
 
 		function sendmessage(){
+			console.log(userPublicKey);
+			console.log("si bal sulma");
+			
 			var buf = new Buffer(userPublicKey,'hex');
+			
 			var base64String = buf.toString('base64');
 		
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
