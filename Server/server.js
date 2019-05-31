@@ -206,7 +206,7 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'\n-----END PUBLIC KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----'+base64String+'-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 
