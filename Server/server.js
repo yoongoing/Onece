@@ -206,16 +206,21 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN PUBLIC KEY-----'+base64String+'-----END PUBLIC KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----'+base64String+'-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
 
-			var crt = ursa.createPublicKey(PUB);
+			
+			// key.importKey(PUB,'pkcs8-public-pem');
 
-			key.importKey(PUB,'pkcs8-public-pem');
+			
 			var base64Nonce = hexToBase64(nonce);
 
-			var encnonce = key.encrypt(base64Nonce,'base64');
-			var buf = new Buffer(nonce,'base64');
+
+			var buffer = new Buffer(base64Nonce,'base64')
+			var encnonce  =crypto.publicEncrypt(PUB, buffer)
+
+			// var encnonce = key.encrypt(base64Nonce,'base64');
+			// var buf = new Buffer(nonce,'base64');
 
 			console.log("--------------------------------------------------")
 			console.log(hexToBase64(nonce));
