@@ -153,7 +153,7 @@ var app = http.createServer((request, response) => {
 		var userName = queryData.name;
 
 		
-		console.log(userPublicKey); 
+	
 		async function readUserId(){
 			await isUserIdIn(userId)
 
@@ -194,10 +194,15 @@ var app = http.createServer((request, response) => {
 					userPublicKey = stdout.toString();
 						
 				})
+
+				await sendmessage();
 			}
 		}
 
 		function sendmessage(){
+			
+			console.log(userPublicKey);
+
 			var buf = new Buffer(userPublicKey,'hex');
 			var base64String = buf.toString('base64');
 		
@@ -251,7 +256,7 @@ var app = http.createServer((request, response) => {
 
 		checkIdAndName();		
 		
-		setTimeout( sendmessage ,2000);
+		
 	}
     
 
