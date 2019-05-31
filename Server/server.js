@@ -218,6 +218,7 @@ var app = http.createServer((request, response) => {
 
 			console.log("--------------------------------------------------")
 			console.log(hexToBase64(nonce));
+			console.log(base64Nonce);
 			console.log("--------------------------------------------------")
 			console.log(encnonce);
 			console.log("--------------------------------------------------")
