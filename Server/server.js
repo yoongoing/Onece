@@ -200,7 +200,7 @@ var app = http.createServer((request, response) => {
 			var base64String = buf.toString('base64');
 
 			
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'\n-----BEGIN PRIVATE KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----BEGIN PRIVATE KEY-----';
 			var key = new NodeRSA();
 
 
