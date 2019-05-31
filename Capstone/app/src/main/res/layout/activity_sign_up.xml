@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple"
     tools:context=".Activity_SignUp">
 
     <android.support.v7.widget.CardView
@@ -28,7 +29,7 @@
                 android:id="@+id/linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/purple"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -78,7 +79,7 @@
                     android:id="@+id/imgView_userIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/purple"
                     android:padding="8dp"
                     android:src="@drawable/img_user"
                     android:tint="@color/white" />
@@ -91,7 +92,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_userIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Username"
+                    android:hint="ID"
                     android:inputType="textPersonName"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -112,7 +113,7 @@
                     android:id="@+id/imgView_passwordIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/purple"
                     android:padding="8dp"
                     android:src="@drawable/img_authentication"
                     android:tint="@color/white" />
@@ -146,7 +147,7 @@
                     android:id="@+id/imgView_repasswordIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/purple"
                     android:padding="8dp"
                     android:src="@drawable/img_authentication"
                     android:tint="@color/white" />
@@ -159,7 +160,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_repasswordIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Re-type Password"
+                    android:hint="Re-Password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -180,7 +181,7 @@
                     android:id="@+id/imgView_phoneIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/purple"
                     android:padding="8dp"
                     android:src="@drawable/img_email"
                     android:tint="@color/white" />
@@ -214,7 +215,7 @@
                     android:id="@+id/imgView_birthIcon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/purple"
                     android:padding="8dp"
                     android:src="@drawable/img_email"
                     android:tint="@color/white" />
@@ -243,7 +244,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif"
-                android:text="I agree to the Terms of Service"
+                android:text="정보제공을 동의 합니다."
                 android:textColor="@color/textColor" />
 
             <!--sign up-->
@@ -255,7 +256,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/colorPrimary"
+                android:background="@color/yellow"
                 android:fontFamily="sans-serif-medium"
                 android:text="SIGN UP"
                 android:textColor="@color/white" />

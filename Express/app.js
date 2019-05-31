@@ -1,18 +1,30 @@
 var http = require('http');
+var request = require('request');
 var fs = require('fs');
 var url = require('url');
 var querystring = require('querystring');
 var express = require('express'); 
 var bodyParser = require('body-parser'); 
-
-var options = {
-    host: 'localhost',
-    port: 3000,
-    path: '/',
-    method:'GET'
-};
+//192.168.10.5:9000
+// var options = {
+//     host: '127.0.0.1',
+//     port: 3001,
+//     path: '/',
+//     method:'GET',
+// };
+function handleResponse(response,body){
+    var serverdata = '';
+    response.on('data', function (chunk) {//연결 서버로 부터 받아오는 데이터가 있다면 출력해주기!
+        serverdata+=chunk;
+    });
+    response.on('end',function(){
+        console.log(serverdata);
+    });
+    res
+}
 
 var app = express(); 
+
 app.use(express.static('public')); 
 app.use(bodyParser.urlencoded({extended : true})); 
 app.set('view engine', 'ejs');//ejs 템플릿 엔진  연동 
@@ -28,15 +40,17 @@ app.get('/template', function (req, res) {
     var name = req.query.name;
     var _url = req.url;
     var queryData = url.parse(_url,true).query;
-    console.log(name+id);
+    var responses = '';
+    var Toserver = '?method=a&name='+name+'&id='+id;
+    var location  = "http://127.0.0.1:3000/"
 
-    http.get(options, function(response){
-        response.on('data', function (response) {
-            console.log('NAME: ' + name);
-            console.log('ID: ' + id);
-        });
-    res.render('template', {title: 'GET',name: name, id:id});//views디렉토리안에 있는 index.ejs 파일 
-});
+    console.log(name+id);
+    request(location+Toserver,function(error,response){
+        responses = 0;
+        if(responses == 1) res.render('template', {title: 'GET',name: name, id:id, demo:'disabled'});
+        else res.render('template', {title: 'GET',name: name, id:id, demo:''});
+        console.log(response);
+    });
 
 });
 app.listen(3001, function(){ 
