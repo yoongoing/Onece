@@ -204,7 +204,7 @@ var app = http.createServer((request, response) => {
 			var key = new NodeRSA();
 
 
-			key.importKey(PUB,'pkcs8-public');
+			key.importKey(PUB,'pkcs1-public');
 
 			var encnonce = key.encrypt(nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
