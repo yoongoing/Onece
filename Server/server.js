@@ -213,7 +213,7 @@ var app = http.createServer((request, response) => {
 			key.importKey(PUB,'pkcs8-public-pem');
 			var base64Nonce = hexToBase64(nonce);
 
-			var encnonce = key.encrypt(base64Nonce,'base64');
+			var encnonce = key.decrypt(base64Nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
 
 			console.log("--------------------------------------------------")
