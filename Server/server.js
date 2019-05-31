@@ -194,15 +194,13 @@ var app = http.createServer((request, response) => {
 
 				await exec2(getCommand, function (err, stdout, stderr) {
 					pubkey = stdout.toString();
+					console.log("sibal jinja BBACKCHINE")
+					console.log(pubkey);
 						
 				});
 
 
-
-				await console.log(getCommand);
-				await console.log(pubkey);
-
-				await sendmessage(pubkey);
+				setTimeout( sendmessage(pubkey),2000);
 				
 			}else{
 				response.end("Bad request");
@@ -211,9 +209,7 @@ var app = http.createServer((request, response) => {
 		}
 
 		function sendmessage(pubkey){
-			
-			console.log(pubkey);
-
+		
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 		
@@ -224,11 +220,6 @@ var app = http.createServer((request, response) => {
 
 
 			var encnonce = key.encrypt(nonce,'base64');
-			console.log(encnonce)
-
-
-
-			console.log(client_token);
 			var push_data = {
 				// 수신대상
 				to: client_token,
