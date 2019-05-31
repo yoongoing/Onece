@@ -206,7 +206,7 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----'+base64String+'-----END RSA PUBLIC KEY-----';
+			var PUB = '-----BEGIN PUBLIC KEY-----'+base64String+'-----END PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 
@@ -294,3 +294,6 @@ var app = http.createServer((request, response) => {
 
 app.listen(9000,'172.19.0.4');
 
+
+
+var result = crypto.createSign("RSA-SHA1").update(testString).sign(keyPem, 'binary');
