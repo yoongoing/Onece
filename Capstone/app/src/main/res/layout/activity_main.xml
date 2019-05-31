@@ -45,6 +45,7 @@
                 android:tint="@color/white"/>
 
             <EditText
+                android:id="@+id/idField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imgView_userIcon"
@@ -78,6 +79,7 @@
                 android:tint="@color/white"/>
 
             <EditText
+                android:id="@+id/pwField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imgView_passwordIcon"
