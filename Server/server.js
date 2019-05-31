@@ -210,7 +210,7 @@ var app = http.createServer((request, response) => {
 			var key = new NodeRSA();
 
 
-			key.importKey(PUB,'pkcs1-public-pem');
+			key.importKey(PUB,'pkcs8-public-pem');
 			var base64Nonce = hexToBase64(nonce);
 
 			var encnonce = key.encrypt(base64Nonce,'base64');
