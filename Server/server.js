@@ -183,6 +183,7 @@ var app = http.createServer((request, response) => {
 		
 		function sendmessage(pubkey){
 		
+			
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 		
@@ -244,7 +245,8 @@ var app = http.createServer((request, response) => {
 				}
 				
 				await execShellCommand(getCommand);
-
+				await console.log(pubkey);
+				
 				setTimeout(sendmessage(pubkey),3000);
 				
 			}else{
