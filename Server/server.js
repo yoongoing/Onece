@@ -2,7 +2,8 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var btoa = require('btoa');
-var atob = require('atob');
+var str2ab = require('string-to-arraybuffer')
+
 
 
 
@@ -214,20 +215,12 @@ var app = http.createServer((request, response) => {
 			// key.importKey(PUB,'pkcs8-public-pem');
 
 
-			function _base64ToArrayBuffer(base64) {
-				var binary_string =  atob(base64);
-				var len = binary_string.length;
-				var bytes = new Uint8Array( len );
-				for (var i = 0; i < len; i++)        {
-					bytes[i] = binary_string.charCodeAt(i);
-				}
-				return bytes.buffer;
-			}
+		
 			
 			var base64Nonce = hexToBase64(nonce);
 
 			PUB = PUB.toString('base64');
-			var buffer = _base64ToArrayBuffer(base64String);
+			var buffer = str2ab(base64String);
 			var encnonce  =crypto.publicEncrypt(PUB, buffer)
 
 			// var encnonce = key.encrypt(base64Nonce,'base64');
