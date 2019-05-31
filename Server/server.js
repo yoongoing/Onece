@@ -152,7 +152,7 @@ var app = http.createServer((request, response) => {
 		var userName = queryData.name;
 
 		
-		console.log(userPublicKey); 
+		
 		async function readUserId(){
 			await isUserIdIn(userId)
 
@@ -199,19 +199,19 @@ var app = http.createServer((request, response) => {
 		function sendmessage(){
 			console.log(userPublicKey);
 			console.log("si bal sulma");
+
+			// var buf = new Buffer(userPublicKey,'hex');
 			
-			var buf = new Buffer(userPublicKey,'hex');
-			
-			var base64String = buf.toString('base64');
+			// var base64String = buf.toString('base64');
 		
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
-			var key = new NodeRSA();
+			// var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
+			// var key = new NodeRSA();
 			
-			key.importKey(PUB,'pkcs8-public');
+			// key.importKey(PUB,'pkcs8-public');
 
 
-			var encnonce = key.encrypt(nonce,'base64');
-			console.log(encnonce)
+			// var encnonce = key.encrypt(nonce,'base64');
+			// console.log(encnonce)
 
 
 
@@ -234,7 +234,7 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1: encnonce
+					num1:"encnonce"
 				}
 			};
 			
@@ -252,7 +252,8 @@ var app = http.createServer((request, response) => {
 
 
 
-		checkIdAndName();		
+		checkIdAndName();	
+		console.log(userPublicKey)	
 		
 		setTimeout( sendmessage ,2000);
 	}
