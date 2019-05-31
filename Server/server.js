@@ -185,25 +185,26 @@ var app = http.createServer((request, response) => {
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
 			await console.log(valideUserIdAndName);
-
+			var pubkey;
 			if(valideUserIdAndName){
 				await readUserToken(userId);
 				getCommand = getCommand1 + userId + getCommand2 ;
 			
+				console.log(getCommand)
 				await exec2(getCommand, function (err, stdout, stderr) {
-					userPublicKey = stdout.toString();
+					pubkey = stdout.toString();
 						
 				})
-
-				await sendmessage();
+				console.log(publickey);
+				await sendmessage( pubkey);
 			}
 		}
 
-		function sendmessage(){
+		function sendmessage(pubkey){
 			
-			console.log(userPublicKey);
+			console.log(pubkey);
 
-			var buf = new Buffer(userPublicKey,'hex');
+			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 		
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
