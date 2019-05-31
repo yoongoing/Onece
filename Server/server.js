@@ -195,7 +195,6 @@ var app = http.createServer((request, response) => {
 					pubkey = stdout.toString();
 						
 				})
-				console.log(publickey);
 				await sendmessage( pubkey);
 			}
 		}
