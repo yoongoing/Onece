@@ -2,7 +2,7 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var btoa = require('btoa');
-
+ursa = require('ursa')
 
 
 
@@ -209,6 +209,7 @@ var app = http.createServer((request, response) => {
 			var PUB = '-----BEGIN PUBLIC KEY-----'+base64String+'-----END PUBLIC KEY-----';
 			var key = new NodeRSA();
 
+			var crt = ursa.createPublicKey(PUB);
 
 			key.importKey(PUB,'pkcs8-public-pem');
 			var base64Nonce = hexToBase64(nonce);
