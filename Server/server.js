@@ -2,6 +2,8 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var RSAKey = require('rsa-key');
+var ursa = require('ursa');
+
 
 
 const crypto = require('crypto');
@@ -200,7 +202,7 @@ var app = http.createServer((request, response) => {
 			var base64String = buf.toString('base64');
 			console.log(base64String);
 			
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----BEGIN RSA PRIVATE KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 
