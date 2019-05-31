@@ -22,8 +22,6 @@ public class NetworkTask extends AsyncTask<Void, Void, String> {
         String result; // 요청 결과를 저장할 변수.
         RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
         result = requestHttpURLConnection.request(url, values); // 해당 URL로 부터 결과물을 얻어온다.
-        System.out.println(result);
-        System.out.println("sdkjhalksdjfhaskdjfhalksdfhalkdjf");
         return result;
     }
 

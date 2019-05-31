@@ -141,7 +141,6 @@ public class Activity_SignUp extends AppCompatActivity {
 
 
                             NetworkTask networkTask = new NetworkTask(url,null);
-                            networkTask.execute();
                             try {
                                 String res =  networkTask.execute().get();
                                 if(res.equals("OK")) {

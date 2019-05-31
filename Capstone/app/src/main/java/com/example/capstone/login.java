@@ -27,6 +27,7 @@ public class login extends AppCompatActivity {
         //b2의 리스너
         b2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+
                 Intent intent = new Intent(getApplicationContext(),activeVerify.class);
                 startActivity(intent);
             }
