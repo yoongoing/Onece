@@ -215,7 +215,7 @@ var app = http.createServer((request, response) => {
 					title: "Hello Node",
 					body: "Node로 발송하는 Push 메시지 입니다.",
 					sound: "default",
-					click_action: "Mainactivity",
+					click_action: "MainActivity",
 				},
 				// 메시지 중요도
 				priority: "high",
