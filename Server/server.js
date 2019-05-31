@@ -80,6 +80,8 @@ var app = http.createServer((request, response) => {
 			if( result.toString().trim() === userPublicKey.toString() ){
 				response.writeHead(201, { 'Content-Type': 'text/plain' });
 				response.end("OK");
+				console.log("ok...!");
+
 				console.log("good it is resisterd");
 			}else{
 				response.writeHead(400, { 'Content-Type': 'text/plain' });
