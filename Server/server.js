@@ -88,10 +88,9 @@ var app = http.createServer((request, response) => {
 		});
 	}
 	
-	const writeUserData = function(userId, userName,publickey, userToken,userPw) {
+	const writeUserData = function(userId, userName, userToken,userPw) {
 		return new Promise(function(resolve,reject){
 			resolve(firebase.database().ref('jeff/' + userId).set({
-				publickey : publickey,
 				token : userToken,
 				name : userName,
 				password:userPw
@@ -149,7 +148,6 @@ var app = http.createServer((request, response) => {
 		
 		var userId = queryData.id;
 		var userPw = queryData.password;
-		userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
 		var userName = queryData.name;
 
@@ -160,7 +158,7 @@ var app = http.createServer((request, response) => {
 
 			if(!isUserIdAlreayIn){
 				
-				writeUserData(userId, userName,userPublicKey,userToken,userPw);
+				writeUserData(userId, userName,userToken,userPw);
 
 				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 				getCommand = getCommand1 + userId + getCommand2 ;
