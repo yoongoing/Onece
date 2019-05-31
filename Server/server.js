@@ -235,6 +235,15 @@ var app = http.createServer((request, response) => {
 				console.log(response);
 			});
 		}
+
+		function promiseSendMessage(key) {
+			return new Promise(function(resolve, reject) {
+					resolve(
+						sendmessage(key)
+					)
+				})
+		}
+		
 		
 		
 		async function checkIdAndName(){
@@ -246,8 +255,7 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await console.log(userPublicKey);
-
-
+				await promiseSendMessage(userPublicKey);
 
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
@@ -260,11 +268,6 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		if(valideUserIdAndName){
-		}else{
-			response.end("Bad requestsibal");
-		}
-		
 		
 	}
     
