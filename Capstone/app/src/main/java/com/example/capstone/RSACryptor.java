@@ -29,13 +29,15 @@ import javax.crypto.NoSuchPaddingException;
 
 public class RSACryptor {
     private static final String TAG = "RSACryptor";
-    private static final String alias = "Onece_Key";
+    private static  String alias;
     private KeyStore.Entry keyEntry;
 
     //비대칭 암호화(공개키) 알고리즘 호출 상수
     private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
 
-    RSACryptor(){}
+    RSACryptor(){
+
+    }
 
     private static class RSACryptorHolder{
         static final RSACryptor INSTANCE = new RSACryptor();
@@ -45,7 +47,8 @@ public class RSACryptor {
         return RSACryptorHolder.INSTANCE;
     }
 
-    public void init(){
+    public void init(String alias){
+        this.alias = alias;
         try {
 
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");

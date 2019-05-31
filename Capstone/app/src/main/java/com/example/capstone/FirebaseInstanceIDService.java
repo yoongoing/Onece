@@ -7,10 +7,9 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-
 
 
 public class FirebaseInstanceIDService extends FirebaseMessagingService {
@@ -25,8 +24,8 @@ public class FirebaseInstanceIDService extends FirebaseMessagingService {
         super.onNewToken(s);
         Log.e("Firebase", "FirebaseInstanceIDService : " + s);
 
-
     }
+
 
     /**
      * 메세지를 받았을 경우 그 메세지에 대하여 구현하는 부분입니다.
