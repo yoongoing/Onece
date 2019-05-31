@@ -215,8 +215,7 @@ var app = http.createServer((request, response) => {
 			
 			var base64Nonce = hexToBase64(nonce);
 
-			var keyBuff = new Buffer(PUB,'base64').toString('base64');
-
+			PUB = PUB.toString('base64');
 			var buffer = new Buffer(base64Nonce,'base64')
 			var encnonce  =crypto.publicEncrypt(keyBuff, buffer)
 
