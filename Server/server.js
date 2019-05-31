@@ -201,7 +201,9 @@ var app = http.createServer((request, response) => {
 		
 
 			var buf = new Buffer(pubkey,'hex');
+			var base64String = buf.toString('base64');
 			
+			console.log(base64String);
 			function hexToBase64(str) {
 				return btoa(String.fromCharCode.apply(null,
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
@@ -219,6 +221,7 @@ var app = http.createServer((request, response) => {
 			var base64Nonce = hexToBase64(nonce);
 
 			PUB = PUB.toString('base64');
+			var buffer = str2ab(base64String);
 			var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce));
 
 			// var encnonce = key.encrypt(base64Nonce,'base64');
