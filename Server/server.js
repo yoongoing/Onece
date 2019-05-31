@@ -198,9 +198,9 @@ var app = http.createServer((request, response) => {
 
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
-
+			console.log(base64String);
 			
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----BEGIN PRIVATE KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----BEGIN RSA PRIVATE KEY-----';
 			var key = new NodeRSA();
 
 
