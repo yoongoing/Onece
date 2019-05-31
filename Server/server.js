@@ -201,18 +201,23 @@ var app = http.createServer((request, response) => {
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 			console.log(base64String);
-			
+			function hexToBase64(str) {
+				return btoa(String.fromCharCode.apply(null,
+				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+				);
+			}
 			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'\n-----END PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 
 			key.importKey(PUB,'pkcs8-public-pem');
-
-			var encnonce = key.encrypt(nonce,'base64');
+			
+			var encnonce = key.encrypt(nonce,'hex');
 			var buf = new Buffer(nonce,'base64');
 
 			console.log("--------------------------------------------------")
 			console.log(nonce);
+			console.log(hexToBase64(nonce));
 			console.log("--------------------------------------------------")
 			console.log(encnonce);
 			console.log("--------------------------------------------------")
