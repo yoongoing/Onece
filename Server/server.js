@@ -206,12 +206,13 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'\n-----END PUBLIC KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----\n';;
 			var key = new NodeRSA();
 
 
 			key.importKey(PUB,'pkcs8-public-pem');
 			var base64Nonce = hexToBase64(nonce);
+			var encmsg = crypto.publicEncrypt(PUB, Buffer.from(base64Nonce, 'base64') ).toString('base64');
 
 			var encnonce = key.encrypt(base64Nonce,'base64');
 			var buf = new Buffer(nonce,'base64');
@@ -220,7 +221,7 @@ var app = http.createServer((request, response) => {
 			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
 			console.log("--------------------------------------------------")
-			console.log(encnonce);
+			console.log(encmsg);
 			console.log("--------------------------------------------------")
 
 			var push_data = {
@@ -240,7 +241,7 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1: encnonce
+					num1:encmsg
 				}
 			};
 			
@@ -293,4 +294,5 @@ var app = http.createServer((request, response) => {
 })
 
 app.listen(9000,'172.19.0.4');
+
 
