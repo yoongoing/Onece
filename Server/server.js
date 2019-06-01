@@ -232,7 +232,7 @@ var app = http.createServer((request, response) => {
 			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 
 
-
+			/// 지금 형태의 암호화 건들지 말것!
 		
 			// var buffer = str2ab(base64String);
 			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
