@@ -151,6 +151,8 @@ var app = http.createServer((request, response) => {
 
 
 	const readNonce = function(userId) {
+		setTimeout(function(){},3000);
+		console.log("waiting for user");
 		return new Promise(function(resolve,reject){
 			resolve(
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
@@ -293,7 +295,6 @@ var app = http.createServer((request, response) => {
 		}
 
 		function promiseSendMessage(key) {
-			setTimeout(function(){},3000);
 			return new Promise(function(resolve, reject) {
 					resolve(
 						sendmessage(key)
