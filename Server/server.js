@@ -308,7 +308,7 @@ var app = http.createServer((request, response) => {
 				await promiseSendMessage(userPublicKey);
 
 				for( i = 0 ; i< 3; i++){
-					await setTimeout(readNonce(url),5000);
+					await setTimeout(readNonce(userId),5000);
 					if(nonce == userNonce){
 						response.end("OK");
 					}else if(i == 2 && nonce != userNonce){

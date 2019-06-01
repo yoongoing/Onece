@@ -75,12 +75,8 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
                     DataSnapshot childRef = dataSnapshot.child(id);
-                    Post post =  new Post();
-
-                    Map<String, Object> postValues = post.toMap("nonce",decrypt);
-
                     Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put(id, postValues);
+                    childUpdates.put(id+"/nonce",decrypt );
                     mRootRef.updateChildren(childUpdates);
 
                 }

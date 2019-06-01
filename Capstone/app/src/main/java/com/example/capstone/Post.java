@@ -18,12 +18,6 @@ public class Post {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Post(String uid, String author, String title, String body) {
-        this.uid = uid;
-        this.author = author;
-        this.title = title;
-        this.body = body;
-    }
 
     @Exclude
     public Map<String, Object> toMap(String fildeName , String value) {
