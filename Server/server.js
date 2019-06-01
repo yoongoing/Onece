@@ -316,6 +316,11 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
+				setTimeout( 
+					async function(){ 
+						var usernonce = await readNonce(userId,nonce);
+						await console.log(usernonce);
+				},3000);
 				
 				
 			}else{
@@ -330,11 +335,7 @@ var app = http.createServer((request, response) => {
 
 		checkIdAndName();
 		
-		setTimeout( 
-			async function(){ 
-				var usernonce =await readNonce(userId,nonce);
-				await console.log(usernonce);
-		},3000);
+	
 		
 	}
     
