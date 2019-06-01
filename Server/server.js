@@ -5,7 +5,6 @@ var str2ab = require('string-to-arraybuffer')
 const arrayBufferToHex = require('array-buffer-to-hex')
 
 
-
 const constants = require('constants');
 
 
@@ -204,6 +203,7 @@ var app = http.createServer((request, response) => {
 		
 		function sendmessage(pubkey){
 			
+			er());
 
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
@@ -223,15 +223,18 @@ var app = http.createServer((request, response) => {
 
 		
 			
+			var base64Nonce = hexToBase64(nonce);
 
 			
 			// var buffer = str2ab(base64String);
 			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 
+			var encnonce = key.encrypt(base64Nonce,'base64');
 
-			const decodedKey = Buffer(pubkey, 'base64').toString();
 
 		
+			// var buffer = str2ab(base64String);
+			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 			// var buf = new Buffer(nonce,'base64');
 
 			const encryptedPassword = crypto.publicEncrypt({
@@ -241,6 +244,7 @@ var app = http.createServer((request, response) => {
 
 			encnonce = arrayBufferToHex(encryptedPassword);
 
+			encnonce = encryptedPassword;
 			console.log("--------------------------------------------------")
 			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
