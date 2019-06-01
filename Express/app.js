@@ -41,15 +41,16 @@ app.get('/template', function (req, res) {
     var _url = req.url;
     var queryData = url.parse(_url,true).query;
     var responses = '';
-    var Toserver = '?method=a&name='+name+'&id='+id;
-    var location  = "http://127.0.0.1:3000/"
+    var Toserver = '?method=a&name='+id+'&id='+name;
+    var location  = "http://192.168.0.24:9000/"
 
     console.log(name+id);
     request(location+Toserver,function(error,response){
+        console.log(response);
+
         responses = 0;
         if(responses == 1) res.render('template', {title: 'GET',name: name, id:id, demo:'disabled'});
         else res.render('template', {title: 'GET',name: name, id:id, demo:''});
-        console.log(response);
     });
 
 });

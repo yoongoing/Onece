@@ -256,12 +256,7 @@ var app = http.createServer((request, response) => {
 				// 수신대상
 				to: client_token,
 				// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-				notification: {
-					title: "Hello Node",
-					body: "Node로 발송하는 Push 메시지 입니다.",
-					sound: "default",
-					click_action: "MainActivity",
-				},
+				
 				// 메시지 중요도
 				priority: "high",
 				
@@ -269,6 +264,10 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
+					title: "Hello Node",
+					body: "Node로 발송하는 Push 메시지 입니다.",
+					sound: "default",
+					click_action: "MainActivity",
 					num1: encnonce,
 					id:userId
 				}
@@ -342,7 +341,7 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		
+
 		
 	
 		
