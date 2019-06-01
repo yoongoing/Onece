@@ -316,10 +316,14 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
+				
 				setTimeout( 
 					async function(){ 
 						var usernonce = await readNonce(userId,nonce);
 						await console.log(usernonce);
+						if(nonce == usernonce){
+							response.end("finish capstone")
+						}
 				},3000);
 				
 				
