@@ -33,7 +33,7 @@ public class RSACryptor {
     private KeyStore.Entry keyEntry;
 
     //비대칭 암호화(공개키) 알고리즘 호출 상수
-    private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
+    private static final String CIPHER_ALGORITHM = "RSA/NONE/OAEPwithSHA-1andMGF1Padding";
 
     RSACryptor(){
 
