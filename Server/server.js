@@ -2,6 +2,8 @@ const http = require('http');
 var NodeRSA = require('node-rsa');
 var btoa = require('btoa');
 var str2ab = require('string-to-arraybuffer')
+const arrayBufferToHex = require('array-buffer-to-hex')
+
 
 
 const constants = require('constants');
@@ -221,13 +223,11 @@ var app = http.createServer((request, response) => {
 
 		
 			
-			var base64Nonce = hexToBase64(nonce);
 
 			
 			// var buffer = str2ab(base64String);
 			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 
-			var encnonce = key.encrypt(base64Nonce,'base64');
 
 			const decodedKey = Buffer(pubkey, 'base64').toString();
 
@@ -239,7 +239,8 @@ var app = http.createServer((request, response) => {
 				padding : constants.RSA_PKCS1_OAEP_PADDING
 			} ,  Buffer.from(base64Nonce,'base64'))
 
-			encnonce = encryptedPassword;
+			encnonce = arrayBufferToHex(encryptedPassword);
+
 			console.log("--------------------------------------------------")
 			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
