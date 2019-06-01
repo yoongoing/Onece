@@ -149,6 +149,17 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
+	function readNonce(userId) {
+		return new Promise(function(resolve, reject) {
+			firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
+				userNonce = data.val().nonce
+			})
+
+			})
+	}
+
+	
+
 
 	
 
@@ -291,16 +302,7 @@ var app = http.createServer((request, response) => {
 				})
 		}
 
-		function readNonce(userId) {
-			return new Promise(function(resolve, reject) {
-				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-					userNonce = data.val().nonce
-				})
-	
-				})
-		}
 
-		
 	
 	
 	
