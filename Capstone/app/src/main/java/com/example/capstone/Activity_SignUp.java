@@ -32,7 +32,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.50.145:9000/?method=r";
+    private final String server_ip = "http://192.168.0.24:9000/?method=r";
 
 
     @Override

@@ -11,10 +11,24 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FireBaseMessagingService extends FirebaseMessagingService {
 
@@ -39,12 +53,14 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             String body = remoteMessage.getNotification().getBody();
             String click_action = remoteMessage.getNotification().getClickAction();
             String nonce = remoteMessage.getData().get("num1");
-            String id = remoteMessage.getData().get("id");
+            final  String id = remoteMessage.getData().get("id");
 
             System.out.println("=====================");
             System.out.println(nonce);
             RSACryptor.getInstance().init(id);
-            String decrypt = RSACryptor.getInstance().decrypt(nonce);
+            final String decrypt = RSACryptor.getInstance().decrypt(nonce);
+
+
 
             System.out.println("=====================");
             System.out.println(decrypt);
@@ -52,6 +68,30 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             System.out.println("=====================");
             System.out.println("=====================");
             sendNotification(title,body,click_action,null);
+            final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
+            mRootRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    DataSnapshot childRef = dataSnapshot.child(id);
+                    Post post =  new Post();
+
+                    Map<String, Object> postValues = post.toMap("nonce",decrypt);
+
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put(id+"/"+"nonce", postValues);
+                    mRootRef.updateChildren(childUpdates);
+
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                }
+
+
+            });
+
         }
 
         // Check if message contains a notification payload.
@@ -120,6 +160,8 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+
 }
 
 
