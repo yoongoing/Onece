@@ -149,12 +149,17 @@ var app = http.createServer((request, response) => {
 	}
 
 	function readNonce(userId) {
-		return new Promise(function(resolve, reject) {
-			firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-				userNonce = data.val().nonce
-			})
+		return new Promise(function promise(resolve, reject) {
 
-			})
+			resolve(
+				firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
+					userNonce = data.val().nonce
+					return userToken;
+				})
+			)
+			
+
+		})
 	}
 
 	
