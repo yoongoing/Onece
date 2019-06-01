@@ -218,7 +218,7 @@ var app = http.createServer((request, response) => {
 
 		
 			
-			// var base64Nonce = hexToBase64(nonce);
+			var base64Nonce = hexToBase64(nonce);
 
 			
 			// var buffer = str2ab(base64String);
