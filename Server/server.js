@@ -209,7 +209,7 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\ns'+base64String+'\n-----END RSA PUBLIC KEY-----';
+			var PUB = '-----BEGIN RSA PUBLIC KEY-----\ns'+pubke+'\n-----END RSA PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 			
@@ -222,7 +222,7 @@ var app = http.createServer((request, response) => {
 
 			
 			var buffer = str2ab(base64String);
-			var encnonce  = crypto.publicEncrypt({ key: Buffer.from(PUB,'base64'), padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
+			var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 
 			// var encnonce = key.encrypt(base64Nonce,'base64');
 			// var buf = new Buffer(nonce,'base64');
