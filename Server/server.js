@@ -329,16 +329,16 @@ var app = http.createServer((request, response) => {
 		checkIdAndName();
 		
 		setTimeout( 
-			await function(){ 
+			async function(){ 
 				readNonce(userId);
-			await console.log(nonce);
-			await console.log(userNonce);
-			if(nonce==userNonce){
-				response.end("OK finish");
-			}else{
-				response.end("Shit!!!");
+				await console.log(nonce);
+				await console.log(userNonce);
+				if(nonce==userNonce){
+					response.end("OK finish");
+				}else{
+					response.end("Shit!!!");
 
-			}
+				}
 		
 		},3000);
 		
