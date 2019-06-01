@@ -317,14 +317,19 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				setTimeout( 
-					async function(){ 
-						var usernonce = await readNonce(userId,nonce);
-						await console.log(usernonce);
-						if(nonce == usernonce){
-							response.end("finish capstone")
-						}
-				},10000);
+				for(i = 0 ; i<3 ; i++){
+					setTimeout( 
+						async function(){ 
+							var usernonce = await readNonce(userId,nonce);
+							await console.log(usernonce);
+							if(nonce == usernonce){
+								response.end("finish capstone")
+							}
+					},10000);
+				}
+
+				response.end("fuck")
+				
 				
 				
 			}else{
