@@ -149,14 +149,12 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	const readNonce = function(userId) {
-		return new Promise(function(resolve,reject){
-			resolve(
+	var readNonce = function(userId) {
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					userNonce = data.val().nonce
 				})
-			)
-		})
+		
+	readNonce
 	}
 
 	var _url = request.url;
@@ -307,7 +305,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				await setTimeout(readNonce(userId),5000);
+				setTimeout(	readNonce(userId),3000) 
 
 				if(nonce==userNonce){
 					response.end("GOOD capstone finish!")
