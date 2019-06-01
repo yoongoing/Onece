@@ -251,7 +251,8 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1: encnonce
+					num1: encnonce,
+					id:userId
 				}
 			};
 			

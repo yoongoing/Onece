@@ -39,10 +39,11 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             String body = remoteMessage.getNotification().getBody();
             String click_action = remoteMessage.getNotification().getClickAction();
             String nonce = remoteMessage.getData().get("num1");
+            String id = remoteMessage.getData().get("id");
 
             System.out.println("=====================");
             System.out.println(nonce);
-            RSACryptor.getInstance().init("jjuo12");
+            RSACryptor.getInstance().init(id);
             String decrypt = RSACryptor.getInstance().decrypt(nonce);
 
             System.out.println("=====================");
