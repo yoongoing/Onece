@@ -110,7 +110,9 @@ public class RSACryptor {
             cipher.init(Cipher.DECRYPT_MODE, ((KeyStore.PrivateKeyEntry) keyEntry).getPrivateKey());
             byte[] base64Bytes = encryptedText.getBytes("UTF-8");
             byte[] decryptedBytes = Base64.decode(base64Bytes, Base64.DEFAULT);
-            System.out.println(decryptedBytes.length+"sibul");
+            System.out.println(decryptedBytes);
+            System.out.println(Utils.byteArrayToHexString( cipher.doFinal(decryptedBytes)));
+
             return new String(cipher.doFinal(decryptedBytes));
 
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |

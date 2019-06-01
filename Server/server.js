@@ -186,7 +186,9 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-		
+		console.log("=========================================")
+		console.log(nonce);
+		console.log("=========================================")
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
