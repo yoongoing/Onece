@@ -80,7 +80,6 @@ var app = http.createServer((request, response) => {
 	var valideUserIdAndName = false;
 	var client_token;
 	var userPublicKey;
-	var userNonce;
 
 
 	function myFunction() {
@@ -332,6 +331,8 @@ var app = http.createServer((request, response) => {
 		
 		setTimeout( 
 			async function(){ 
+				var userNonce;
+
 				readNonce(userId);
 				await console.log(nonce);
 				await console.log(userNonce);
