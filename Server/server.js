@@ -243,7 +243,6 @@ var app = http.createServer((request, response) => {
 
 			encnonce = arrayBufferToHex(encryptedPassword);
 
-			encnonce = encryptedPassword;
 			console.log("--------------------------------------------------")
 			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
