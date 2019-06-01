@@ -148,18 +148,7 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	function readNonce(userId,nonce) {
-		return new Promise(function promise(resolve, reject) {
-			resolve(
-				firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
-					userNonce = data.val().nonce
-					if(userNonce==nonce){
-						response.end("Good!")
-					}
-				})
-			)
-		})
-	}
+
 
 	
 
@@ -307,7 +296,21 @@ var app = http.createServer((request, response) => {
 
 
 	
-	
+		function readNonce(userId,nonce) {
+			return new Promise(function promise(resolve, reject) {
+				resolve(
+					firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
+						userNonce = data.val().nonce
+						console.log(nonce);
+						console.log(userNonce);
+						if(userNonce==nonce){
+							
+							response.end("Good!")
+						}
+					})
+				)
+			})
+		}
 	
 		
 		async function checkIdAndName(){
