@@ -149,12 +149,10 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	var readNonce = function(userId) {
+	function readNonce(userId) {
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					userNonce = data.val().nonce
-				})
-		
-	readNonce
+				})		
 	}
 
 	var _url = request.url;
