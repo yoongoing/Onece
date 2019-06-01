@@ -150,18 +150,7 @@ var app = http.createServer((request, response) => {
 	}
 
 
-	const readNonce = function(userId) {
-		setTimeout(function(){},3000);
-		console.log("waiting for user");
-		return new Promise(function(resolve,reject){
-			resolve(
-				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
-					userNonce = data.val().nonce
-				})
-			)
-		})
-	}
-
+	
 
 
 
@@ -302,6 +291,17 @@ var app = http.createServer((request, response) => {
 				})
 		}
 
+		function readNonce(userId) {
+			return new Promise(function(resolve, reject) {
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
+					userNonce = data.val().nonce
+				})
+	
+				})
+		}
+
+		
+	
 	
 	
 		
@@ -313,14 +313,6 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
-				await readNonce(userId);
-				
-
-				await	console.log(nonce);
-				await console.log(userNonce);
-				if(nonce==userNonce){
-					response.end("OK");
-				}
 				
 			
 				
@@ -335,6 +327,20 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
+		
+		setTimeout( 
+			await function(){ 
+				readNonce(userId);
+			await console.log(nonce);
+			await console.log(userNonce);
+			if(nonce==userNonce){
+				response.end("OK finish");
+			}else{
+				response.end("Shit!!!");
+
+			}
+		
+		},3000);
 		
 	}
     
