@@ -80,6 +80,7 @@ var app = http.createServer((request, response) => {
 	var valideUserIdAndName = false;
 	var client_token;
 	var userPublicKey;
+	var userNonce;
 
 
 	function myFunction() {
@@ -148,6 +149,16 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
+	const readNonce = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(
+				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
+					userNonce = data.val().nonce
+				})
+			)
+		})
+	}
+
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
@@ -206,8 +217,7 @@ var app = http.createServer((request, response) => {
 
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
-			
-			console.log(base64String);
+		
 			function hexToBase64(str) {
 				return btoa(String.fromCharCode.apply(null,
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
@@ -225,18 +235,9 @@ var app = http.createServer((request, response) => {
 			var base64Nonce = hexToBase64(nonce);
 
 
-
-
-			
-			// var buffer = str2ab(base64String);
-			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
-
-
 			/// 지금 형태의 암호화 건들지 말것!
 		
-			// var buffer = str2ab(base64String);
-			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
-			// var buf = new Buffer(nonce,'base64');
+		
 
 			const encryptedPassword = crypto.publicEncrypt({
 				key: PUB,
@@ -306,6 +307,16 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 
+				for( i = 0 ; i< 3; i++){
+					await setTimeout(readNonce(url),5000);
+					if(nonce == userNonce){
+						response.end("OK");
+					}else if(i == 2 && nonce != userNonce){
+						response.end("Bad requsest!  invalid user!");
+					}
+				}
+
+				
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
 				return;

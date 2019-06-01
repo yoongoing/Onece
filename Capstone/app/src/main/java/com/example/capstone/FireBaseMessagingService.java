@@ -80,7 +80,7 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
                     Map<String, Object> postValues = post.toMap("nonce",decrypt);
 
                     Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put(id+"/"+"nonce", postValues);
+                    childUpdates.put(id, postValues);
                     mRootRef.updateChildren(childUpdates);
 
                 }
