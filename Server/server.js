@@ -331,8 +331,8 @@ var app = http.createServer((request, response) => {
 		checkIdAndName();
 		
 		setTimeout( 
-			function(){ 
-				var usernonce =readNonce(userId,nonce);
+			async function(){ 
+				var usernonce =await readNonce(userId,nonce);
 				await console.log(usernonce);
 		},3000);
 		
