@@ -222,6 +222,9 @@ var app = http.createServer((request, response) => {
 			
 			var base64Nonce = hexToBase64(nonce);
 
+
+
+
 			
 			// var buffer = str2ab(base64String);
 			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
