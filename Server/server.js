@@ -328,7 +328,6 @@ var app = http.createServer((request, response) => {
 					},10000);
 				}
 
-				response.end("fuck")
 				
 				
 				
@@ -343,6 +342,7 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
+		
 		
 	
 		
