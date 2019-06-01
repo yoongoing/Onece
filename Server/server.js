@@ -209,22 +209,22 @@ var app = http.createServer((request, response) => {
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
 				);
 			}
-			var PUB = '-----BEGIN RSA PUBLIC KEY-----\n'+pubkey+'\n-----END RSA PUBLIC KEY-----';
+			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'\n-----END PUBLIC KEY-----';
 			var key = new NodeRSA();
 
 			
-			// key.importKey(PUB,'pkcs8-public-pem');
+			key.importKey(PUB,'pkcs8-public-pem');
 
 
 		
 			
-			var base64Nonce = hexToBase64(nonce);
+			// var base64Nonce = hexToBase64(nonce);
 
 			
-			var buffer = str2ab(base64String);
-			var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
+			// var buffer = str2ab(base64String);
+			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
 
-			// var encnonce = key.encrypt(base64Nonce,'base64');
+			var encnonce = key.encrypt(base64Nonce,'base64');
 			// var buf = new Buffer(nonce,'base64');
 
 			console.log("--------------------------------------------------")

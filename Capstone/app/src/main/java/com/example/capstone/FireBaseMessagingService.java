@@ -42,7 +42,7 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
 
             System.out.println("=====================");
             System.out.println(nonce);
-            RSACryptor.getInstance().init("wedaehan");
+            RSACryptor.getInstance().init("jjuo12");
             String decrypt = RSACryptor.getInstance().decrypt(nonce);
 
             System.out.println("=====================");
