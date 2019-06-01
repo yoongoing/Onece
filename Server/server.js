@@ -335,7 +335,7 @@ var app = http.createServer((request, response) => {
 		
 		setTimeout( 
 			async function(){ 
-				readNonce(userId);
+				readNonce(userId,nonce);
 		},3000);
 		
 	}
