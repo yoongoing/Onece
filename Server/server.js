@@ -306,14 +306,11 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
+				
+				await setTimeout(readNonce(userId),5000);
 
-				for( i = 0 ; i< 3; i++){
-					await setTimeout(readNonce(userId),5000);
-					if(nonce == userNonce){
-						response.end("OK");
-					}else if(i == 2 && nonce != userNonce){
-						response.end("Bad requsest!  invalid user!");
-					}
+				if(nonce==userNonce){
+					response.end("GOOD capstone finish!")
 				}
 
 				
