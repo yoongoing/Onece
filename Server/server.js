@@ -150,15 +150,12 @@ var app = http.createServer((request, response) => {
 
 	function readNonce(userId) {
 		return new Promise(function promise(resolve, reject) {
-
 			resolve(
 				firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
 					userNonce = data.val().nonce
 					return userToken;
 				})
 			)
-			
-
 		})
 	}
 
@@ -336,9 +333,7 @@ var app = http.createServer((request, response) => {
 		
 		setTimeout( 
 			async function(){ 
-				var userNonce;
-
-				readNonce(userId);
+				var userNonce = readNonce(userId);
 				await console.log(nonce);
 				await console.log(userNonce);
 				if(nonce==userNonce){
