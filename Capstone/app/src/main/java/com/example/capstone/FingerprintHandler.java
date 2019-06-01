@@ -18,12 +18,21 @@ import android.os.CancellationSignal;
 @TargetApi(Build.VERSION_CODES.M)
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback{
-
+    private Boolean flag = false;
+    private String nonce;
+    private String id;
     CancellationSignal cancellationSignal;
     private Context context;
 
     public FingerprintHandler(Context context){
         this.context = context;
+
+    }
+    public FingerprintHandler(Context context,Boolean flag,String nonce,String id){
+        this.context = context;
+        this.flag = flag;
+        this.nonce = nonce;
+        this.id = id;
     }
 
     //메소드들 정의
@@ -73,9 +82,15 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             tv_message.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
             iv_fingerprint.setImageResource(R.mipmap.done);
             linearLayout.setVisibility(LinearLayout.VISIBLE);
-
-            Intent intent = new Intent(context.getApplicationContext(),login.class);
-            context.startActivity(intent);
+            if(flag){
+                Intent intent = new Intent(context.getApplicationContext(), activeVerify.class);
+                intent.putExtra("nonce",nonce);
+                intent.putExtra("id",id);
+                context.startActivity(intent);
+            }else {
+                Intent intent = new Intent(context.getApplicationContext(), login.class);
+                context.startActivity(intent);
+            }
         }
     }
 }

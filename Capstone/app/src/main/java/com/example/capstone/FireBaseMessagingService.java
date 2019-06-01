@@ -43,63 +43,34 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            String title = remoteMessage.getNotification().getTitle();
-            String body = remoteMessage.getNotification().getBody();
-            String click_action = remoteMessage.getNotification().getClickAction();
+            String title = remoteMessage.getData().get("title");
+            String body = remoteMessage.getData().get("body");
+            String click_action = remoteMessage.getData().get("click_action");
             String nonce = remoteMessage.getData().get("num1");
-            final  String id = remoteMessage.getData().get("id");
-
-            System.out.println("=====================");
-            System.out.println(nonce);
-            RSACryptor.getInstance().init(id);
-            final String decrypt = RSACryptor.getInstance().decrypt(nonce);
-
-
-
-            System.out.println("=====================");
-            System.out.println(decrypt);
-            System.out.println("=====================");
-            System.out.println("=====================");
-            System.out.println("=====================");
-            sendNotification(title,body,click_action,null);
-
-
-
-            final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
-            mRootRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    DataSnapshot childRef = dataSnapshot.child(id);
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put(id+"/nonce",decrypt );
-                    mRootRef.updateChildren(childUpdates);
-
-                }
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                }
-
-
-            });
-
+            String id = remoteMessage.getData().get("id");
+            System.out.println("=====================================");
+            System.out.println("=====================================");
+            System.out.println("=====================================");
+            System.out.println("최초 난수는 이거야!" +nonce);
+            System.out.println("=====================================");
+            System.out.println("=====================================");
+            System.out.println("=====================================");
+            sendNotification(title,body,click_action,nonce,id);
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            String title = remoteMessage.getNotification().getTitle();
-            String body = remoteMessage.getNotification().getBody();
-            String click_action = remoteMessage.getNotification().getClickAction();
-            sendNotification(title,body,click_action,null);
+            String title = remoteMessage.getData().get("title");
+            String body = remoteMessage.getData().get("body");
+            String click_action = remoteMessage.getData().get("click_action");
+            String nonce = remoteMessage.getData().get("num1");
+            String id = remoteMessage.getData().get("id");
+            sendNotification(title,body,click_action,nonce,id);
+        } else {
+
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -119,18 +90,20 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageTitle, String messageBody,String click_action,String nonce) {
+    private void sendNotification(String messageTitle, String messageBody,String click_action, String nonce, String id) {
         Intent intent;
         if(click_action.equals("MainActivity")){
             intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("nonce", nonce);
+            intent.putExtra("id",id);
+            intent.putExtra("flag",true);
+
         }else {
             intent = new Intent(this, login.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
-        if(nonce != null) {
-            intent.putExtra("nonce", nonce);
-        }
+
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_UPDATE_CURRENT);
         String channelId = getString(R.string.default_notification_channel_id);

@@ -4,6 +4,7 @@ package com.example.capstone;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -51,11 +52,29 @@ public class MainActivity extends AppCompatActivity {
     private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
-
+    private String id;
+    private String nonce;
+    private Boolean flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fingerprint);
+
+        Intent intent = getIntent();
+        flag = intent.getBooleanExtra("flag",false);
+
+        if(flag) {
+            nonce = intent.getExtras().getString("nonce");
+            id = intent.getExtras().getString("id");
+            flag = intent.getBooleanExtra("flag", false);
+
+            System.out.println("==============I`m in MainActivity===============");
+            System.out.println("==============I`m in MainActivity===============");
+            System.out.println(nonce);
+            System.out.println("==============I`m in MainActivity===============");
+            System.out.println("==============I`m in MainActivity===============");
+
+        }
 
         iv_fingerprint = findViewById(R.id.iv_fingerprint);
         tv_message = findViewById(R.id.tv_message);
@@ -83,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 if(cipherInit()){
                     cryptoObject = new FingerprintManager.CryptoObject(cipher);
                     //핸들러실행
-                    FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
+                    FingerprintHandler fingerprintHandler = new FingerprintHandler(this,flag,nonce,id);
                     fingerprintHandler.startAuthor(fingerprintManager, cryptoObject);
                 }
             }
