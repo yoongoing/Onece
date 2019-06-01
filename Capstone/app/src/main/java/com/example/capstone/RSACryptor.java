@@ -33,7 +33,7 @@ public class RSACryptor {
     private KeyStore.Entry keyEntry;
 
     //비대칭 암호화(공개키) 알고리즘 호출 상수
-    private static final String CIPHER_ALGORITHM = "RSA/ECB/OAEPPadding";
+    private static final String CIPHER_ALGORITHM = "RSA/NONE/PKCS1Padding";
 
     RSACryptor(){
 
@@ -71,7 +71,7 @@ public class RSACryptor {
                 KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
                 kpg.initialize(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                         .setAlgorithmParameterSpec(new RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4))
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP).setBlockModes(KeyProperties.BLOCK_MODE_ECB)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
                         .setDigests(KeyProperties.DIGEST_NONE)
                         .setUserAuthenticationRequired(false)
                         .build());

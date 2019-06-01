@@ -238,7 +238,7 @@ var app = http.createServer((request, response) => {
 
 			const encryptedPassword = crypto.publicEncrypt({
 				key: PUB,
-				padding : constants.RSA_PKCS1_OAEP_PADDING
+				padding : constants.RSA_PKCS1_PADDING
 			} ,  Buffer.from(base64Nonce,'base64'))
 
 			encnonce = arrayBufferToHex(encryptedPassword);
