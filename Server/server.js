@@ -303,7 +303,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				setTimeout(	readNonce(userId),3000) 
+				setTimeout(	function(){ readNonce(userId) },3000) 
 
 				if(nonce==userNonce){
 					response.end("GOOD capstone finish!")
