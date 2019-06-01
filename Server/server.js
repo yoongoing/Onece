@@ -203,7 +203,6 @@ var app = http.createServer((request, response) => {
 		
 		function sendmessage(pubkey){
 			
-			er());
 
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
