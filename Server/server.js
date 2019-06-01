@@ -149,11 +149,19 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
-	function readNonce(userId) {
+
+	const readNonce = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(
 				firebase.database().ref('jeff/' + userId).once('value').then(function(data) {
 					userNonce = data.val().nonce
-				})		
+				})
+			)
+		})
 	}
+
+
+
 
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
@@ -285,14 +293,16 @@ var app = http.createServer((request, response) => {
 		}
 
 		function promiseSendMessage(key) {
+			setTimeout(function(){},3000);
 			return new Promise(function(resolve, reject) {
 					resolve(
 						sendmessage(key)
 					)
 				})
 		}
-		
-		
+
+	
+	
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
@@ -302,15 +312,16 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
+				await readNonce(userId);
 				
-				setTimeout(	function(){ readNonce(userId) },3000) 
 
-				await console.log(nonce)
-				await console.log(userNonce)
+				await	console.log(nonce);
+				await console.log(userNonce);
 				if(nonce==userNonce){
-					response.end("GOOD capstone finish!")
+					response.end("OK");
 				}
-
+				
+			
 				
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
