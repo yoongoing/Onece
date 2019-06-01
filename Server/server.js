@@ -305,6 +305,8 @@ var app = http.createServer((request, response) => {
 				
 				setTimeout(	function(){ readNonce(userId) },3000) 
 
+				await console.log(nonce)
+				await console.log(userNonce)
 				if(nonce==userNonce){
 					response.end("GOOD capstone finish!")
 				}
