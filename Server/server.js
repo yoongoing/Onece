@@ -301,13 +301,8 @@ var app = http.createServer((request, response) => {
 				resolve(
 					firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
 						userNonce = data.val().nonce
-						console.log(nonce);
-						console.log(userNonce);
-						if(userNonce==nonce){
-							
-							response.end("Good!")
-						}
-					})
+						return userNonce;
+					}).then(value =>value)
 				)
 			})
 		}
@@ -322,7 +317,6 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-			
 				
 			}else{
 				response.end("Bad request!!!!!!!!!!!!!!");
@@ -337,8 +331,9 @@ var app = http.createServer((request, response) => {
 		checkIdAndName();
 		
 		setTimeout( 
-			async function(){ 
-				readNonce(userId,nonce);
+			function(){ 
+				var usernonce =readNonce(userId,nonce);
+				await console.log(usernonce);
 		},3000);
 		
 	}
