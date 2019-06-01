@@ -68,6 +68,9 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             System.out.println("=====================");
             System.out.println("=====================");
             sendNotification(title,body,click_action,null);
+
+
+
             final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
             mRootRef.addValueEventListener(new ValueEventListener() {
                 @Override
