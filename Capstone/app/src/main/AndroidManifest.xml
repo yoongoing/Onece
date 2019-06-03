@@ -23,7 +23,7 @@
         <activity android:name=".activeVerify"/>
         <activity android:name=".login"/>
         <activity android:name=".Activity_SignUp"/>
-
+        <activity android:name=".Activity_verify_com"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

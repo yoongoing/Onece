@@ -16,10 +16,7 @@ public class login extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            System.out.println("--------------------------");
-            Log.i("dd","Extra : " + extras.getString("num1"));
             nonce = getIntent().getExtras().getString("num1");
-            System.out.println("--------------------------");
         }
 
         Button b1 = findViewById(R.id.button);
@@ -38,11 +35,6 @@ public class login extends AppCompatActivity {
                 if(nonce != null) {
                     intent.putExtra("nonce", nonce);
                 }
-                System.out.println("----------------------------");
-                System.out.println("----------------------------");
-                System.out.println("i push nonce !!!!!!!!!!!!");
-                System.out.println("----------------------------");
-                System.out.println("----------------------------");
                 startActivity(intent);
             }
         });

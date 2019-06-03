@@ -50,13 +50,6 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
             String click_action = remoteMessage.getData().get("click_action");
             String nonce = remoteMessage.getData().get("num1");
             String id = remoteMessage.getData().get("id");
-            System.out.println("=====================================");
-            System.out.println("=====================================");
-            System.out.println("=====================================");
-            System.out.println("최초 난수는 이거야!" +nonce);
-            System.out.println("=====================================");
-            System.out.println("=====================================");
-            System.out.println("=====================================");
             sendNotification(title,body,click_action,nonce,id);
         }
 

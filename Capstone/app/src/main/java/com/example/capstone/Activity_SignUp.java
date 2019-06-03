@@ -32,7 +32,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.0.24:9000/?method=r";
+    private final String server_ip = "http://192.168.10.4:9000/?method=r";
 
 
     @Override
@@ -87,11 +87,37 @@ public class Activity_SignUp extends AppCompatActivity {
                 if(etPhone.getText().toString().length() == 0){
                     Toast.makeText(Activity_SignUp.this, "전화번호를 입력하세요!", Toast.LENGTH_SHORT).show();
                     etPhone.requestFocus();
+                    return;
                 }
                 if(etRealname.getText().toString().length() == 0){
                     Toast.makeText(Activity_SignUp.this, "이름을 입력하세요!", Toast.LENGTH_SHORT).show();
                     etRealname.requestFocus();
+                    return;
                 }
+
+
+
+//                입력정보 길이 확인 operator
+
+                if(etUsername.getText().toString().length() < 6){
+                    Toast.makeText(Activity_SignUp.this, "아이디는 최소 6글자 이상이여야 합니다.", Toast.LENGTH_SHORT).show();
+                    etUsername.requestFocus();
+                    return;
+                }
+
+                if(etPassword.getText().toString().length() < 8){
+                    Toast.makeText(Activity_SignUp.this, "8글자 이상의 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    etPassword.requestFocus();
+                    return;
+                }
+
+                if(etPhone.getText().toString().length() != 11){
+                    Toast.makeText(Activity_SignUp.this, "전화번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                    etPhone.requestFocus();
+                    return;
+                }
+
+
 
 
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
@@ -116,20 +142,10 @@ public class Activity_SignUp extends AppCompatActivity {
                             RSACryptor.getInstance().init(etUsername.getText().toString());
                             PublicKey publickey = RSACryptor.getInstance().getPublicKey();
                             byte[] byte_publickey = publickey.getEncoded();
-                            System.out.println("+++++++++++++++++++++++++++++++");
-                            System.out.println("+++++++++++++++++++++++++++++++");System.out.println("+++++++++++++++++++++++++++++++");
-                            System.out.println("+++++++++++++++++++++++++++++++");
 
-                            System.out.println(byte_publickey);
-                            System.out.println("+++++++++++++++++++++++++++++++");
-                            System.out.println("+++++++++++++++++++++++++++++++");
-                            System.out.println("+++++++++++++++++++++++++++++++");
 
-                            System.out.println(Base64.encodeToString(byte_publickey, Base64.DEFAULT));
                             String hexPub = Utils.getHex(byte_publickey);
-                            System.out.println("-----------------------------------------");
-                            System.out.println(hexPub);
-                            System.out.println("-----------------------------------------");
+
 
                             String data = "&id="+etUsername.getText()
                                     + "&password=" +etPassword.getText()

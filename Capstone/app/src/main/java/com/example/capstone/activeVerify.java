@@ -3,6 +3,8 @@ package com.example.capstone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,46 +14,55 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+//인증이 진행되는 class 로 차후 광고 삽임등의 동작을 이 class 에 추가하면 됨.
 
 public class activeVerify extends AppCompatActivity {
     private String nonce;
     private String id;
-
+    private Animation ani;
+    private TextView loadStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_active_verify);
+        Timer timer = new Timer();
+//        timer.schedule(addTask,1000);
+
 
         Intent intent = getIntent();
         nonce = intent.getExtras().getString("nonce");
         id = intent.getExtras().getString("id");
-        System.out.println("==============I`m in verification===============");
-        System.out.println("==============I`m in verification===============");
-        System.out.println(nonce);
-        System.out.println("==============I`m in verification===============");
-        System.out.println("==============I`m in verification===============");
+
 
         RSACryptor.getInstance().init(id);
         final String decrypt = RSACryptor.getInstance().decrypt(nonce);
 
 
 
-        System.out.println("=====================");
-        System.out.println(decrypt);
-        System.out.println("=====================");
-        System.out.println("=====================");
-        System.out.println("=====================");
         final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
         mRootRef.addValueEventListener(new ValueEventListener() {
+
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                DataSnapshot childRef = dataSnapshot.child(id);
-                Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put(id+"/nonce",decrypt);
-                mRootRef.updateChildren(childUpdates);
+                Boolean complete = dataSnapshot.child(id+"/complete").getValue(Boolean.class);
+                if(complete == null)    complete = false;
+                if(!complete) {
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put(id + "/nonce", decrypt);
+                    mRootRef.updateChildren(childUpdates);
+                } else {
+                    Map<String, Object> childUpdates = new HashMap<>();
+                    childUpdates.put(id+"/complete", false);
+                    mRootRef.updateChildren(childUpdates);
+//                    Intent intent = new Intent(getApplicationContext(),ActivityVerifyComp.class);
+//                    startActivity(intent);
+                }
 
             }
             @Override
@@ -66,4 +77,13 @@ public class activeVerify extends AppCompatActivity {
     public void onBackPressed(){
 //        super.onBackPressed();
     }
+
+//    TimerTask addTask = new TimerTask(){
+//
+//        @Override
+//        public void run() {
+////            String
+//        }
+//    }
+
 }
