@@ -148,6 +148,24 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
+
+	const writeResponse = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(firebase.database().ref('jeff/' + userId).set({
+				complete: true
+			  }));
+		})
+	}
+
+
+
+	
+
+
+	
+
+
+
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
@@ -186,9 +204,7 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-		console.log("=========================================")
-		console.log(nonce);
-		console.log("=========================================")
+	
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
@@ -206,8 +222,7 @@ var app = http.createServer((request, response) => {
 
 			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
-			
-			console.log(base64String);
+		
 			function hexToBase64(str) {
 				return btoa(String.fromCharCode.apply(null,
 				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
@@ -225,18 +240,9 @@ var app = http.createServer((request, response) => {
 			var base64Nonce = hexToBase64(nonce);
 
 
-
-
-			
-			// var buffer = str2ab(base64String);
-			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
-
-
 			/// 지금 형태의 암호화 건들지 말것!
 		
-			// var buffer = str2ab(base64String);
-			// var encnonce  = crypto.publicEncrypt({ key: PUB, padding: crypto.constants.RSA_PKCS1_PADDING }, Buffer.from(base64Nonce,'base64'));
-			// var buf = new Buffer(nonce,'base64');
+		
 
 			const encryptedPassword = crypto.publicEncrypt({
 				key: PUB,
@@ -247,22 +253,14 @@ var app = http.createServer((request, response) => {
 			encnonce =hexToBase64(encnonce)
 
 			console.log("--------------------------------------------------")
-			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
-			console.log("--------------------------------------------------")
-			console.log(encnonce);
 			console.log("--------------------------------------------------")
 
 			var push_data = {
 				// 수신대상
 				to: client_token,
 				// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-				notification: {
-					title: "Hello Node",
-					body: "Node로 발송하는 Push 메시지 입니다.",
-					sound: "default",
-					click_action: "MainActivity",
-				},
+				
 				// 메시지 중요도
 				priority: "high",
 				
@@ -270,6 +268,10 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
+					title: "Hello Node",
+					body: "Node로 발송하는 Push 메시지 입니다.",
+					sound: "default",
+					click_action: "MainActivity",
 					num1: encnonce,
 					id:userId
 				}
@@ -294,8 +296,20 @@ var app = http.createServer((request, response) => {
 					)
 				})
 		}
-		
-		
+
+
+	
+		function readNonce(userId,nonce) {
+			return new Promise(function promise(resolve, reject) {
+				resolve(
+					firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
+						userNonce = data.val().nonce
+						return userNonce;
+					}).then(value =>value)
+				)
+			})
+		}
+	
 		
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
@@ -305,9 +319,20 @@ var app = http.createServer((request, response) => {
 				getCommand = getCommand1 + userId + getCommand2 ;
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
-
+				
+				for(i = 0 ; i<3 ; i++){
+					setTimeout( 
+						async function(){ 
+							var usernonce = await readNonce(userId,nonce);
+							await console.log(usernonce);
+							if(nonce == usernonce){
+								response.end("OK")
+								writeResponse(userId);
+							}
+					},10000);
+				}
 			}else{
-				response.end("Bad request!!!!!!!!!!!!!!");
+				response.end("Bad request Invalid user Name or ID");
 				return;
 			}
 		}
@@ -317,6 +342,9 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
+		
+		
+	
 		
 	}
     

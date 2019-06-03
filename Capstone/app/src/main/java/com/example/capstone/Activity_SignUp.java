@@ -32,7 +32,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://192.168.10.4:9000/?method=r";
+    private final String server_ip = "http://172.17.69.82:9000/?method=r";
 
 
     @Override
@@ -130,6 +130,7 @@ public class Activity_SignUp extends AppCompatActivity {
 
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
+
                         while(flag) {
                             DataSnapshot childRef = dataSnapshot.child(etUsername.getText().toString());
                             if (childRef.exists()) {

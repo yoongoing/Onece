@@ -8,8 +8,7 @@
     <body> 
         <h1>Onece</h1>
         <% if(demo == 'disabled') { %> 
-            <p><%= name%>(<%= id%>)을 찾을 수 없습니다.</p>
-            <p>다시 입력해주시기 바랍니다.</p>
+            <p> 유효하지 않은 사용자 ID 또는 이름입니다.</p>
             <fieldset> 
                     <form action="/template" method="get"> 
                         <input name="name" type="text" class="ghost-input" placeholder="Enter Your Name" required> 

@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/logo"/>
 
         <RelativeLayout
-            android:id="@+id/login_id"
+            android:id="@+id/loadingStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/logo"
