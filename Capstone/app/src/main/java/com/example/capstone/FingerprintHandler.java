@@ -88,7 +88,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                 intent.putExtra("id",id);
                 context.startActivity(intent);
             }else {
-                Intent intent = new Intent(context.getApplicationContext(), login.class);
+                Intent intent = new Intent(context.getApplicationContext(), SplashActivity.class);
                 context.startActivity(intent);
             }
         }
