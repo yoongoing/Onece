@@ -15,8 +15,8 @@ public class login extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        Button b1 = findViewById(R.id.login_signUp);
-        Button b2 = findViewById(R.id.login);
+        Button b1 = findViewById(R.id.btn_signUp);
+        Button b2 = findViewById(R.id.btn_login);
         //b1의 리스너
         b1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
