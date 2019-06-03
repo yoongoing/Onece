@@ -331,10 +331,6 @@ var app = http.createServer((request, response) => {
 							}
 					},10000);
 				}
-
-				
-				
-				
 			}else{
 				response.end("Bad request Invalid user Name or ID");
 				return;
@@ -346,12 +342,7 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		setTimeout( 
-			function(){ 
-				response.end("connection fail");
-
-			}
-		,30000);
+		
 		
 	
 		
