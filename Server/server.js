@@ -328,7 +328,6 @@ var app = http.createServer((request, response) => {
 							if(nonce == usernonce){
 								response.end("finish capstone")
 								writeResponse(userId);
-								break;
 							}
 					},10000);
 				}
