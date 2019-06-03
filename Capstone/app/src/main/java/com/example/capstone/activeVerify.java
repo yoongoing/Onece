@@ -3,7 +3,6 @@ package com.example.capstone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +21,6 @@ import java.util.TimerTask;
 public class activeVerify extends AppCompatActivity {
     private String nonce;
     private String id;
-    private Animation ani;
     private TextView loadStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +43,33 @@ public class activeVerify extends AppCompatActivity {
         final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
         mRootRef.addValueEventListener(new ValueEventListener() {
 
-
+            Boolean complete = null;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Boolean complete = dataSnapshot.child(id+"/complete").getValue(Boolean.class);
-                if(complete == null)    complete = false;
-                if(!complete) {
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put(id + "/nonce", decrypt);
-                    mRootRef.updateChildren(childUpdates);
-                } else {
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put(id+"/complete", false);
-                    mRootRef.updateChildren(childUpdates);
-//                    Intent intent = new Intent(getApplicationContext(),ActivityVerifyComp.class);
-//                    startActivity(intent);
+                Map<String, Object> childUpdates = new HashMap<>();
+                childUpdates.put(id + "/nonce", decrypt);
+                mRootRef.updateChildren(childUpdates);
+
+
+                DataSnapshot childRef = dataSnapshot.child(id+"/complete";
+                if (childRef.exists()) {
+                    if(!complete) {
+                        Map<String, Object> childUpdates1 = new HashMap<>();
+                        childUpdates1.put(id + "/nonce", decrypt);
+                        mRootRef.updateChildren(childUpdates1);
+                        
+                    } else {
+                        Map<String, Object> childUpdates1 = new HashMap<>();
+                        childUpdates1.put(id+"/complete", false);
+                        mRootRef.updateChildren(childUpdates1);
+                        Intent intent = new Intent(getApplicationContext(),Activity_verify_com.class);
+                        startActivity(intent);
+                    }
                 }
+
 
             }
             @Override

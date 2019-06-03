@@ -120,61 +120,66 @@ public class Activity_SignUp extends AppCompatActivity {
 
 
 
+
+
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
                 mRootRef.addValueEventListener(new ValueEventListener() {
+                    Boolean flag = true;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
-                        DataSnapshot childRef = dataSnapshot.child(etUsername.getText().toString());
-                        if (childRef.exists()) {
-                            Toast.makeText(Activity_SignUp.this, "이미 등록되어있는 아이디 입니다.", Toast.LENGTH_SHORT).show();
+                        while(flag) {
+                            DataSnapshot childRef = dataSnapshot.child(etUsername.getText().toString());
+                            if (childRef.exists()) {
+                                Toast.makeText(Activity_SignUp.this, "이미 등록되어있는 아이디 입니다.", Toast.LENGTH_SHORT).show();
 
-                        }else{
-                            String str_pub;
-                            String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
-                                @Override
-                                public void onSuccess(InstanceIdResult instanceIdResult) {
-                                } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
-
-                            }).getResult().getToken();
-
-                            RSACryptor.getInstance().init(etUsername.getText().toString());
-                            PublicKey publickey = RSACryptor.getInstance().getPublicKey();
-                            byte[] byte_publickey = publickey.getEncoded();
+                            } else {
+                                flag = false;
+                                String token = getIntent().getExtras().getString("Token");
+                                System.out.println(token + "token that is");
+                                RSACryptor.getInstance().init(etUsername.getText().toString());
+                                PublicKey publickey = RSACryptor.getInstance().getPublicKey();
+                                byte[] byte_publickey = publickey.getEncoded();
 
 
-                            String hexPub = Utils.getHex(byte_publickey);
+                                System.out.println(Base64.encodeToString(byte_publickey, Base64.DEFAULT));
+                                String hexPub = Utils.getHex(byte_publickey);
+                                System.out.println("-----------------------------------------");
+                                System.out.println(hexPub);
+                                System.out.println("-----------------------------------------");
+
+                                String data = "&id=" + etUsername.getText()
+                                        + "&password=" + etPassword.getText()
+                                        + "&phone=" + etPhone.getText()
+                                        + "&name=" + etRealname.getText()
+                                        + "&publickey=" + hexPub
+                                        + "&token=" + token;
+
+                                url = server_ip + data;
 
 
-                            String data = "&id="+etUsername.getText()
-                                    + "&password=" +etPassword.getText()
-                                    + "&phone=" + etPhone.getText()
-                                    + "&name=" + etRealname.getText()
-                                   + "&publickey="+hexPub
-                                    +"&token="+token;
+                                NetworkTask networkTask = new NetworkTask(url, null);
+                                try {
+                                    String res = networkTask.execute().get();
+                                    System.out.println("-----------------------------");
+                                    System.out.println(res);
+                                    System.out.println("-----------------------------");
 
-                            url = server_ip + data;
-
-
-                            NetworkTask networkTask = new NetworkTask(url,null);
-                            try {
-                                String res =  networkTask.execute().get();
-                                System.out.println("-----------------------------");
-                                System.out.println(res);
-                                System.out.println("-----------------------------");
-
-                                if(res.equals("OK")) {
-                                    Intent intent = new Intent(getApplicationContext(),login.class);
-                                    startActivity(intent);
-                                } else {
+                                    if (res.equals("OK")) {
+                                        Intent intent = new Intent(getApplicationContext(), login.class);
+                                        startActivity(intent);
+                                        finish();
+                                        break;
+                                    } else {
+                                        Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
                                     Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                Toast.makeText(Activity_SignUp.this, "서버 연결 오류. 잠시후 재 시도해주세요", Toast.LENGTH_SHORT).show();
-                                e.printStackTrace();
                             }
-                            return;
                         }
                     }
                     @Override
@@ -194,4 +199,3 @@ public class Activity_SignUp extends AppCompatActivity {
     }
 
 }
-
