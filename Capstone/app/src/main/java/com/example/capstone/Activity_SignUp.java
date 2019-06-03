@@ -105,13 +105,9 @@ public class Activity_SignUp extends AppCompatActivity {
                             Toast.makeText(Activity_SignUp.this, "이미 등록되어있는 아이디 입니다.", Toast.LENGTH_SHORT).show();
 
                         }else{
-                            String str_pub;
-                            String token =FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( Activity_SignUp.this,  new OnSuccessListener<InstanceIdResult>() {
-                                @Override
-                                public void onSuccess(InstanceIdResult instanceIdResult) {
-                                } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
 
-                            }).getResult().getToken();
+                            String token = getIntent().getExtras().getString("Token") ;
+                            System.out.println(token+"token that is");
 
                             RSACryptor.getInstance().init(etUsername.getText().toString());
                             PublicKey publickey = RSACryptor.getInstance().getPublicKey();

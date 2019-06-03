@@ -7,10 +7,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class login extends AppCompatActivity {
     private String nonce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
+        final String token = FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( login.this,  new OnSuccessListener<InstanceIdResult>() {
+
+            @Override
+            public void onSuccess(InstanceIdResult InstanceIdResult) {
+            } //현재는 로그인 버튼을 눌렀을떄 토큰이 생성되고 그 토큰을 가지고 파이어 베이스에 등록 되게 해 놓았음
+
+        }).getResult().getToken();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,6 +43,7 @@ public class login extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 Intent intent = new Intent(getApplicationContext(),Activity_SignUp.class);
+                intent.putExtra("Token", token);
                 startActivity(intent);
             }
         });
