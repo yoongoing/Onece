@@ -149,6 +149,15 @@ var app = http.createServer((request, response) => {
 	}
 
 
+	const writeResponse = function(userId) {
+		return new Promise(function(resolve,reject){
+			resolve(firebase.database().ref('jeff/' + userId).set({
+				complete: true
+			  }));
+		})
+	}
+
+
 
 	
 
@@ -195,9 +204,7 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-		console.log("=========================================")
-		console.log(nonce);
-		console.log("=========================================")
+	
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
@@ -246,10 +253,7 @@ var app = http.createServer((request, response) => {
 			encnonce =hexToBase64(encnonce)
 
 			console.log("--------------------------------------------------")
-			console.log(hexToBase64(nonce));
 			console.log(base64Nonce);
-			console.log("--------------------------------------------------")
-			console.log(encnonce);
 			console.log("--------------------------------------------------")
 
 			var push_data = {
@@ -323,6 +327,8 @@ var app = http.createServer((request, response) => {
 							await console.log(usernonce);
 							if(nonce == usernonce){
 								response.end("finish capstone")
+								writeResponse(userId);
+								break;
 							}
 					},10000);
 				}
