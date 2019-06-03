@@ -326,7 +326,7 @@ var app = http.createServer((request, response) => {
 							var usernonce = await readNonce(userId,nonce);
 							await console.log(usernonce);
 							if(nonce == usernonce){
-								response.end("finish capstone")
+								response.end("OK")
 								writeResponse(userId);
 							}
 					},10000);
@@ -336,7 +336,7 @@ var app = http.createServer((request, response) => {
 				
 				
 			}else{
-				response.end("Bad request!!!!!!!!!!!!!!");
+				response.end("Bad request Invalid user Name or ID");
 				return;
 			}
 		}
@@ -346,6 +346,7 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
+		response.end("Connection failed");
 
 		
 	
