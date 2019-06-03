@@ -346,8 +346,12 @@ var app = http.createServer((request, response) => {
 
 
 		checkIdAndName();
-		response.end("Connection failed");
+		setTimeout( 
+			function(){ 
+				response.end("connection fail");
 
+			}
+		,30000);
 		
 	
 		
