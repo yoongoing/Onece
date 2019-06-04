@@ -1,5 +1,5 @@
+var r = require('request')
 var http = require('http');
-var request = require('request')
 var url = require('url');
 var express = require('express'); 
 var bodyParser = require('body-parser'); 
@@ -16,16 +16,9 @@ app.get('/', function (req, res) {
 
 
 
-function serverAction() {
-    return new Promise(function(resolve,reject){
-        resolve(
-            async function (error, response, body) {
-               
-            }
-            
-        ).then(value =>value)
-    })
-}
+
+
+
 
 app.get('/template', function (req, res) { 
     var _url = req.url;
@@ -35,21 +28,26 @@ app.get('/template', function (req, res) {
     
     console.log(userId);
     console.log(userName)
+
+
+
     
-    var location  = 'http://192.168.1.27:9000/'
-    var qs = '?method=a&name='+userName+'&id='+userId;
+      var location  = 'http://192.168.1.27:9000/'
+      var qs = '?method=a&name='+userName+'&id='+userId;
+  
+      console.log(location+qs);
+      var agent = new http.Agent({
+          keepAlive: true,
+          keepAliveMsecs: 10000
+        });
+    
+ 
+      r.get( location+qs,function(error,response,body){
+             console.log(response);
+             console.log(error);
+             res.end(body);
+     })
 
-
-
-    request.get({uri:location+qs},function(){
-
-        setTimeout(function(error,response,body){
-            console.log(response);
-        },10000);
-        
-    })
-
-    console.log(location+qs);
 
 
 
@@ -60,8 +58,11 @@ app.get('/template', function (req, res) {
 });
 
 
-app.listen(3030,'localhost', function(){ 
+app.listen(3030,'localhost', function(error,response,request){ 
      console.log('App Listening on port 3001'); 
+
+     
+  
 });
 
 
