@@ -151,7 +151,7 @@ var app = http.createServer((request, response) => {
 
 	const writeResponse = function(userId) {
 		return new Promise(function(resolve,reject){
-			resolve(firebase.database().ref('jeff/' + userId+"/compelte").set(true));
+			resolve(firebase.database().ref('jeff/' + userId+"/compelete").set(true));
 		})
 	}
 
@@ -327,19 +327,12 @@ var app = http.createServer((request, response) => {
 							if(nonce == usernonce){
 								response.end("OK")
 								isOk = true;
+								await writeResponse(userId);
+
 							}
 						},i*5000);
 				}
 
-				if(isOk){
-
-					await writeResponse(userId);
-					
-				}else{
-
-					response.end("Bad Connection Please Retry");
-
-				}
 
 
 			}else{

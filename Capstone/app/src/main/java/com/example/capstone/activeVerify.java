@@ -52,14 +52,15 @@ public class activeVerify extends AppCompatActivity {
                 childUpdates.put(id + "/nonce", decrypt);
                 mRootRef.updateChildren(childUpdates);
 
-
-
             }
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
             }
         });
+
+
+      
 
 
 
