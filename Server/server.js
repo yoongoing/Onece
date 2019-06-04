@@ -202,7 +202,7 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-	
+		response.writeContinue();
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
