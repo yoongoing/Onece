@@ -16,10 +16,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-        Button b1 = findViewById(R.id.btn_signUp);
-        Button b2 = findViewById(R.id.btn_login);
-=======
+
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             nonce = getIntent().getExtras().getString("num1");
@@ -28,7 +25,6 @@ public class login extends AppCompatActivity {
 
         Button b1 = findViewById(R.id.button);
         Button b2 = findViewById(R.id.button2);
->>>>>>> e3c6404355da03fa0540b4439d28ffdca7d601db
         //b1의 리스너
         b1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
