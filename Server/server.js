@@ -151,9 +151,7 @@ var app = http.createServer((request, response) => {
 
 	const writeResponse = function(userId) {
 		return new Promise(function(resolve,reject){
-			resolve(firebase.database().ref('jeff/' + userId+"/").set({
-				complete: true
-			  }));
+			resolve(firebase.database().ref('jeff/' + userId+"/compelte").set(true));
 		})
 	}
 
