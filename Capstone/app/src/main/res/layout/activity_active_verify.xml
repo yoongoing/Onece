@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/logo"/>
 
         <RelativeLayout
-            android:id="@+id/login_id"
+            android:id="@+id/loadingStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/logo"
@@ -35,9 +35,10 @@
             >
 
             <TextView
+                android:id="@+id/loading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loading"
+                android:text="인증 진행 중..."
                 android:textColor="@color/white"
                 android:typeface="sans"
                 android:gravity="center"
