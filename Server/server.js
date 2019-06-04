@@ -300,8 +300,8 @@ var app = http.createServer((request, response) => {
 		function readNonce(userId,nonce) {
 			return new Promise(function promise(resolve, reject) {
 				resolve(
-					firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
-						userNonce = data.val().nonce
+					firebase.database().ref('jeff/' + userId+"/nonce").once('value').then(function firebase(data) {
+						userNonce = data.val();
 						return userNonce;
 					}).then(value =>value)
 				)
@@ -328,7 +328,7 @@ var app = http.createServer((request, response) => {
 								response.end("OK")
 								isOk = true;
 							}
-						},i*1000);
+						},i*5000);
 				}
 
 				if(isOk){
