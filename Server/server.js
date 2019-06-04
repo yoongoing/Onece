@@ -1,6 +1,7 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var btoa = require('btoa');
+var str2ab = require('string-to-arraybuffer')
 const arrayBufferToHex = require('array-buffer-to-hex')
 const constants = require('constants');
 
@@ -11,6 +12,7 @@ const constants = require('constants');
 
 const crypto = require('crypto');
 const url = require('url');
+const fs = require('fs');
 const exec1  = require("child_process").execSync;
 const exec2 = require("child_process").exec;
 
@@ -22,6 +24,7 @@ var getCommand1 = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"";
 var getCommand2 = "\"]}' -C myc";
 var setCommand = "";
 var getCommand = "";
+var responseForResister = "";
 
 
 var FCM = require('fcm-node');
@@ -194,11 +197,12 @@ var app = http.createServer((request, response) => {
 		
 		readUserId();
 	
-	}else if(queryData.method == "a"){
+	}else if(queryData.method === "a"){
 		
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
+		response.writeContinue();
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
@@ -314,7 +318,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-			
+				for(i = 1 ; i<=4 ; i++){
 					setTimeout( 
 						async function(){ 
 							var usernonce = await readNonce(userId,nonce);
@@ -324,8 +328,8 @@ var app = http.createServer((request, response) => {
 								response.end("OK");
 
 							}
-						},5000);
-				
+						},i*2000);
+				}
 
 
 

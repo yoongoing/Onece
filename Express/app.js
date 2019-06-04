@@ -34,8 +34,9 @@ app.get('/template', function (req, res) {
     
       var location  = 'http://192.168.1.27:9000/'
       var qs = '?method=a&name='+userName+'&id='+userId;
+      const string = location+qs;
   
-      http.get(location+qs, (resp) => {
+      http.get(string, (resp) => {
         let data = '';
       
         // A chunk of data has been recieved.
@@ -47,6 +48,7 @@ app.get('/template', function (req, res) {
         console.log(data);
 
 
+            res.end("sdkhflaksdhflaksdjhflaksdjfhalksdjfhaslkdfjhz1 lkjh");
 
    
  
