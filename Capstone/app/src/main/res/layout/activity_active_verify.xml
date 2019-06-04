@@ -4,7 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_back"
+    android:background="@color/purple"
     tools:context=".activeVerify">
 
-</android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+            <!--logo-->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="200dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/logo"
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
+            app:srcCompat="@drawable/logo"/>
+
+        <RelativeLayout
+            android:id="@+id/login_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="120dp"
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading"
+                android:textColor="@color/white"
+                android:typeface="sans"
+                android:gravity="center"
+                android:textSize="34sp" />
+
+            </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>

@@ -93,6 +93,7 @@
                     android:layout_toRightOf="@+id/imgView_userIcon"
                     android:background="@color/editTextBG"
                     android:hint="ID"
+                    android:maxLines="1"
                     android:inputType="textPersonName"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -125,6 +126,7 @@
                     android:layout_alignBottom="@+id/imgView_passwordIcon"
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_passwordIcon"
+                    android:maxLines="1"
                     android:background="@color/editTextBG"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -195,6 +197,7 @@
                     android:layout_toRightOf="@+id/imgView_phoneIcon"
                     android:background="@color/editTextBG"
                     android:hint="Phone"
+                    android:maxLines="1"
                     android:inputType="phone"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -217,7 +220,6 @@
                     android:layout_height="40dp"
                     android:background="@color/purple"
                     android:padding="8dp"
-                    android:src="@drawable/img_email"
                     android:tint="@color/white" />
 
                 <EditText
@@ -228,8 +230,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_birthIcon"
                     android:background="@color/editTextBG"
-                    android:hint="name"
-                    android:inputType="datetime"
+                    android:hint="이름"
+                    android:maxLines="1"
+                    android:inputType="textPersonName"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
 
