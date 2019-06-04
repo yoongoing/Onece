@@ -202,7 +202,7 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-	
+		response.writeContinue();
 		function execPromise(command) {
 			return new Promise(function(resolve, reject) {
 				exec2(command, (error, stdout, stderr) => {
@@ -318,7 +318,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				for(i = 0 ; i<3 ; i++){
+				for(i = 1 ; i<=4 ; i++){
 					setTimeout( 
 						async function(){ 
 							var usernonce = await readNonce(userId,nonce);
@@ -326,20 +326,20 @@ var app = http.createServer((request, response) => {
 							if(nonce == usernonce){
 								await writeResponse(userId);
 								response.end("OK");
+
 							}
-						},i*10000);
+						},i*2000);
 				}
 
 
 
+
 			}else{
-				response.end("Bad request Invalid user Name or ID");
-				return;
+				response.end("Bad request!!!!!");
 			}
 		}
 
 		
-
 
 
 		checkIdAndName();
