@@ -13,8 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 //인증이 진행되는 class 로 차후 광고 삽임등의 동작을 이 class 에 추가하면 됨.
 
@@ -26,8 +25,6 @@ public class activeVerify extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_verify);
-        Timer timer = new Timer();
-//        timer.schedule(addTask,1000);
 
 
         Intent intent = getIntent();
@@ -41,7 +38,7 @@ public class activeVerify extends AppCompatActivity {
 
 
         final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference("jeff");
-        mRootRef.addValueEventListener(new ValueEventListener() {
+        mRootRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,8 +46,27 @@ public class activeVerify extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put(id + "/nonce", decrypt);
+                childUpdates.put(id+"/nonce", decrypt);
                 mRootRef.updateChildren(childUpdates);
+
+
+                DataSnapshot childRef = dataSnapshot.child(id).child("compelete");
+
+                while (!childRef.exists()){
+                    childRef = dataSnapshot.child(id).child("compelete");
+                }
+                String isOk = childRef.getValue().toString();
+
+                if (isOk.equals("true")){
+                    Map<String, Object> childUpdates1 = new HashMap<>();
+                    childUpdates1.put(id+"/compelete", false);
+                    mRootRef.updateChildren(childUpdates1);
+                    Intent intent = new Intent(getApplicationContext(),Activity_verify_com.class);
+                    System.out.println("End verifing");
+                    startActivity(intent);
+                }else{
+    
+                }
 
             }
             @Override
@@ -60,7 +76,9 @@ public class activeVerify extends AppCompatActivity {
         });
 
 
-      
+
+
+
 
 
 

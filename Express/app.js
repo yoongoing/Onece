@@ -1,27 +1,8 @@
 var http = require('http');
-var request = require('request');
-var fs = require('fs');
+var request = require('request')
 var url = require('url');
-var querystring = require('querystring');
 var express = require('express'); 
 var bodyParser = require('body-parser'); 
-//192.168.10.5:9000
-// var options = {
-//     host: '127.0.0.1',
-//     port: 3001,
-//     path: '/',
-//     method:'GET',
-// };
-function handleResponse(response,body){
-    var serverdata = '';
-    response.on('data', function (chunk) {//연결 서버로 부터 받아오는 데이터가 있다면 출력해주기!
-        serverdata+=chunk;
-    });
-    response.on('end',function(){
-        console.log(serverdata);
-    });
-    res
-}
 
 var app = express(); 
 
@@ -36,29 +17,27 @@ app.get('/', function (req, res) {
 });
 
 app.get('/template', function (req, res) { 
-    var id = req.query.id;
-    var name = req.query.name;
     var _url = req.url;
     var queryData = url.parse(_url,true).query;
-    var responses = '';
-    var Toserver = '?method=a&name='+name+'&id='+id;
-    var location  = "http://172.17.69.82:9000/"
-
-    console.log(name+id);
-    console.log(location+Toserver);
+    var userId =queryData.id;
+    var userName = queryData.name;
     
+    
+    var location  = "http://172.17.69.82:9000/"
+    var qs = "?method=a&name="+userName+"&id="+userId;
 
-    request(location+Toserver,function(error,response,body){
-        
-        console.log(response);
-        console.log(body);
 
-        
-        if(body != "OK") res.render('template', {title: 'GET',name: name, id:id, demo:'disabled'});
-        else res.render('template', {title: 'GET',name: name, id:id, demo:''});
+    console.log(location+qs);
+
+    request(location+qs,  {timeout: false},
+        function (error, response, body) {
+            console.log(error);
     });
-
+ 
+    
 });
+
+
 app.listen(3001, function(){ 
      console.log('App Listening on port 3001'); 
 });
