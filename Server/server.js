@@ -1,7 +1,6 @@
 const http = require('http');
 var NodeRSA = require('node-rsa');
 var btoa = require('btoa');
-var str2ab = require('string-to-arraybuffer')
 const arrayBufferToHex = require('array-buffer-to-hex')
 const constants = require('constants');
 
@@ -12,7 +11,6 @@ const constants = require('constants');
 
 const crypto = require('crypto');
 const url = require('url');
-const fs = require('fs');
 const exec1  = require("child_process").execSync;
 const exec2 = require("child_process").exec;
 
@@ -24,7 +22,6 @@ var getCommand1 = "peer chaincode query -n Onece -c '{\"Args\":[\"get\",\"";
 var getCommand2 = "\"]}' -C myc";
 var setCommand = "";
 var getCommand = "";
-var responseForResister = "";
 
 
 var FCM = require('fcm-node');
