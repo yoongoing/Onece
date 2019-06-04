@@ -31,24 +31,21 @@ function serverAction() {
 
 
 app.get('/template', function (req, res) { 
+   
     var _url = req.url;
     var queryData = url.parse(_url,true).query;
-    var userId =queryData.id.toString();
-    var userName = queryData.name.toString();
-    iconv =  new Ico('EUC-KR','UTF-8');
+
+
+    var userId =queryData.id.toString('UTF-8');
+    var userName = queryData.name.toString('UTF-8');
     
     console.log(userId);
-    console.log(userName)
 
     
-    var encodedName =  iconv.convert(userName).toString();
 
-
-    console.log(encodedId);
-    console.log(encodedName);
 
     var location  = 'http://192.168.1.27:9000/'
-    var qs = '?method=a&name='+encodedName+'&id='+userId;
+    var qs = '?method=a&name='+userName+'&id='+userId;
    
 
     request(location+qs,function(error,response,body){
