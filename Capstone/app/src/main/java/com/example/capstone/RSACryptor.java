@@ -15,6 +15,7 @@ import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.security.spec.RSAKeyGenParameterSpec;
@@ -28,13 +29,15 @@ import javax.crypto.NoSuchPaddingException;
 
 public class RSACryptor {
     private static final String TAG = "RSACryptor";
-    private static final String alias = "Onece_Key";
+    private static  String alias;
     private KeyStore.Entry keyEntry;
 
     //비대칭 암호화(공개키) 알고리즘 호출 상수
-    private static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding";
+    private static final String CIPHER_ALGORITHM = "RSA/NONE/PKCS1Padding";
 
-    RSACryptor(){}
+    RSACryptor(){
+
+    }
 
     private static class RSACryptorHolder{
         static final RSACryptor INSTANCE = new RSACryptor();
@@ -44,7 +47,8 @@ public class RSACryptor {
         return RSACryptorHolder.INSTANCE;
     }
 
-    public void init(){
+    public void init(String alias){
+        this.alias = alias;
         try {
 
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
@@ -67,9 +71,8 @@ public class RSACryptor {
                 KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
                 kpg.initialize(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                         .setAlgorithmParameterSpec(new RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4))
-                        .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
                         .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
-                        .setDigests(KeyProperties.DIGEST_SHA512, KeyProperties.DIGEST_SHA384, KeyProperties.DIGEST_SHA256)
+                        .setDigests(KeyProperties.DIGEST_NONE)
                         .setUserAuthenticationRequired(false)
                         .build());
 
@@ -107,14 +110,18 @@ public class RSACryptor {
             cipher.init(Cipher.DECRYPT_MODE, ((KeyStore.PrivateKeyEntry) keyEntry).getPrivateKey());
             byte[] base64Bytes = encryptedText.getBytes("UTF-8");
             byte[] decryptedBytes = Base64.decode(base64Bytes, Base64.DEFAULT);
+            String result = Utils.byteArrayToHexString( cipher.doFinal(decryptedBytes));
 
-            return new String(cipher.doFinal(decryptedBytes));
+            return result;
 
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
                 UnsupportedEncodingException | BadPaddingException | IllegalBlockSizeException e) {
             Log.e(TAG, "Decrypt fail",  e);
             return encryptedText;
         }
+    }
+    public PublicKey getPublicKey(){
+        return ((KeyStore.PrivateKeyEntry) keyEntry).getCertificate().getPublicKey();
     }
 }
 

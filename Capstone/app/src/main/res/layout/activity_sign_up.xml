@@ -92,7 +92,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_userIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Username"
+                    android:hint="ID"
                     android:inputType="textPersonName"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -160,7 +160,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/imgView_repasswordIcon"
                     android:background="@color/editTextBG"
-                    android:hint="Re-type Password"
+                    android:hint="Re-Password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
@@ -244,7 +244,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif"
-                android:text="I agree to the Terms of Service"
+                android:text="정보제공을 동의 합니다."
                 android:textColor="@color/textColor" />
 
             <!--sign up-->

@@ -1,6 +1,14 @@
-
 const http = require('http');
 var NodeRSA = require('node-rsa');
+var btoa = require('btoa');
+var str2ab = require('string-to-arraybuffer')
+const arrayBufferToHex = require('array-buffer-to-hex')
+const constants = require('constants');
+
+
+
+
+
 
 const crypto = require('crypto');
 const url = require('url');
@@ -78,24 +86,22 @@ var app = http.createServer((request, response) => {
 		exec2(getCommand, function (err, stdout, stderr) {
 			var result = stdout	
 			if( result.toString().trim() === userPublicKey.toString() ){
-				responseForResister="user publickey is resisterd";
-
-				response.end(responseForResister);
+				response.end("OK");
+				console.log("ok...!");
 				console.log("good it is resisterd");
 			}else{
-				responseForResister = "user publickey isn't resisterd";
-				response.end(responseForResister);
+				response.end("Bad request");
 				console.log("bad it isn't resisterd");
 			}
 		});
 	}
 	
-	const writeUserData = function(userId, userName,publickey, userToken) {
+	const writeUserData = function(userId, userName, userToken,userPw) {
 		return new Promise(function(resolve,reject){
 			resolve(firebase.database().ref('jeff/' + userId).set({
-				publickey : publickey,
 				token : userToken,
-				name : userName
+				name : userName,
+				password:userPw
 			  }));
 		})
 	}
@@ -142,6 +148,15 @@ var app = http.createServer((request, response) => {
 		})
 	}
 
+
+
+	
+
+
+	
+
+
+
 	var _url = request.url;
 	var queryData = url.parse(_url,true).query;
 
@@ -149,17 +164,19 @@ var app = http.createServer((request, response) => {
 	if (queryData.method==="r"){
 		
 		var userId = queryData.id;
+		var userPw = queryData.password;
 		userPublicKey =  queryData.publickey;
 		var userToken = queryData.token;
 		var userName = queryData.name;
+
 		
-		console.log(userPublicKey); 
+	
 		async function readUserId(){
 			await isUserIdIn(userId)
 
 			if(!isUserIdAlreayIn){
 				
-				writeUserData(userId, userName,userPublicKey,userToken);
+				writeUserData(userId, userName,userToken,userPw);
 
 				setCommand = setCommand1 + userId + setCommand2 + userPublicKey + setCommand3;
 				getCommand = getCommand1 + userId + getCommand2 ;
@@ -168,7 +185,6 @@ var app = http.createServer((request, response) => {
 
 				exec1(setCommand, function (err, stdout, stderr) {});
 				setTimeout( myFunction, 2000);	
-				console.log(queryData.token);
 			}
 		}
 		
@@ -179,51 +195,68 @@ var app = http.createServer((request, response) => {
 		var userId = queryData.id;
 		var userName = queryData.name;
 		var nonce = crypto.randomBytes(16).toString('hex');
-		
-		
-		
-		async function checkIdAndName(){
-			await readUserNameAndId(userId,userName);
-			await console.log(valideUserIdAndName);
-
-			if(valideUserIdAndName){
-				await readUserToken(userId);
-				getCommand = getCommand1 + userId + getCommand2 ;
-			
-				await exec2(getCommand, function (err, stdout, stderr) {
-					userPublicKey = stdout.toString();
-						
-				})
-			}
+		console.log("=========================================")
+		console.log(nonce);
+		console.log("=========================================")
+		function execPromise(command) {
+			return new Promise(function(resolve, reject) {
+				exec2(command, (error, stdout, stderr) => {
+					if (error) {
+						reject(error);
+						return;
+					}
+					resolve(userPublicKey=stdout.toString());
+				});
+			});
 		}
+		
+		function sendmessage(pubkey){
+			
 
-		function sendmessage(){
-			var buf = new Buffer(userPublicKey,'hex');
+			var buf = new Buffer(pubkey,'hex');
 			var base64String = buf.toString('base64');
 		
-			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'-----END RSA PUBLIC KEY-----';
+			function hexToBase64(str) {
+				return btoa(String.fromCharCode.apply(null,
+				  str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+				);
+			}
+			var PUB = '-----BEGIN PUBLIC KEY-----\n'+base64String+'\n-----END PUBLIC KEY-----';
 			var key = new NodeRSA();
+
 			
-			key.importKey(PUB,'pkcs8-public');
+			key.importKey(PUB,'pkcs8-public-pem');
 
 
-			var encnonce = key.encrypt(nonce,'base64');
-			console.log(encnonce)
+		
+			
+			var base64Nonce = hexToBase64(nonce);
 
 
+			/// 지금 형태의 암호화 건들지 말것!
+		
+		
 
-			console.log(client_token);
+			const encryptedPassword = crypto.publicEncrypt({
+				key: PUB,
+				padding : constants.RSA_PKCS1_PADDING
+			} ,  Buffer.from(base64Nonce,'base64'))
+
+			encnonce = arrayBufferToHex(encryptedPassword);
+			encnonce =hexToBase64(encnonce)
+
+			console.log("--------------------------------------------------")
+			console.log(hexToBase64(nonce));
+			console.log(base64Nonce);
+			console.log("--------------------------------------------------")
+			console.log(encnonce);
+			console.log("--------------------------------------------------")
+
 			var push_data = {
 				// 수신대상
 				to: client_token,
 				// App이 실행중이지 않을 때 상태바 알림으로 등록할 내용
-				notification: {
-					title: "Hello Node",
-					body: "Node로 발송하는 Push 메시지 입니다.",
-					sound: "default",
-					click_action: "FCM_PLUGIN_ACTIVITY",
-					icon: "fcm_push_icon"
-				},
+				
 				// 메시지 중요도
 				priority: "high",
 				
@@ -231,7 +264,12 @@ var app = http.createServer((request, response) => {
 				restricted_package_name: "com.example.capstone",
 				// App에게 전달할 데이터
 				data: {
-					num1: encnonce
+					title: "Hello Node",
+					body: "Node로 발송하는 Push 메시지 입니다.",
+					sound: "default",
+					click_action: "MainActivity",
+					num1: encnonce,
+					id:userId
 				}
 			};
 			
@@ -247,15 +285,72 @@ var app = http.createServer((request, response) => {
 			});
 		}
 
+		function promiseSendMessage(key) {
+			return new Promise(function(resolve, reject) {
+					resolve(
+						sendmessage(key)
+					)
+				})
+		}
 
 
-		checkIdAndName();		
+	
+		function readNonce(userId,nonce) {
+			return new Promise(function promise(resolve, reject) {
+				resolve(
+					firebase.database().ref('jeff/' + userId).once('value').then(function firebase(data) {
+						userNonce = data.val().nonce
+						return userNonce;
+					}).then(value =>value)
+				)
+			})
+		}
+	
 		
-		setTimeout( sendmessage ,2000);
+		async function checkIdAndName(){
+			await readUserNameAndId(userId,userName);
+			
+			if(valideUserIdAndName){
+				await readUserToken(userId);
+				getCommand = getCommand1 + userId + getCommand2 ;
+				var result = await execPromise(getCommand);
+				await promiseSendMessage(userPublicKey);
+				
+				for(i = 0 ; i<3 ; i++){
+					setTimeout( 
+						async function(){ 
+							var usernonce = await readNonce(userId,nonce);
+							await console.log(usernonce);
+							if(nonce == usernonce){
+								response.end("finish capstone")
+							}
+					},10000);
+				}
+
+				
+				
+				
+			}else{
+				response.end("Bad request!!!!!!!!!!!!!!");
+				return;
+			}
+		}
+
+		
+
+
+
+		checkIdAndName();
+
+		
+	
+		
 	}
     
 
 })
 
 app.listen(9000,'172.19.0.5');
+
+
 

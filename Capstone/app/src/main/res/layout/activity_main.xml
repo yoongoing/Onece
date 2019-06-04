@@ -78,6 +78,7 @@
                 android:tint="@color/white"/>
 
             <EditText
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imgView_passwordIcon"
