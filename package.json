@@ -1,0 +1,37 @@
+{
+  "name": "Onece",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "dependencies": {
+    "array-buffer-to-hex": "^1.0.0",
+    "await-exec": "^0.1.2",
+    "btoa": "^1.2.1",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "fcm-node": "^1.5.1",
+    "firebase": "^6.0.4",
+    "http-request-parser": "^2.0.0-alpha",
+    "i": "^0.3.6",
+    "loader": "^2.1.1",
+    "node-rsa": "^1.0.5",
+    "npm": "^6.9.0",
+    "request": "^2.88.0",
+    "string-to-arraybuffer": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yungoingFLY/Onece.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yungoingFLY/Onece/issues"
+  },
+  "homepage": "https://github.com/yungoingFLY/Onece#readme"
+}

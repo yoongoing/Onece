@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/purple"
-    android:layout_height="match_parent">
+    tools:context=".Activity_verify_com">
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--logo-->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="200dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/logo"
+            android:maxWidth="100dp"
+            android:maxHeight="100dp"
+            app:srcCompat="@drawable/logo"/>
+
+        <RelativeLayout
+            android:id="@+id/loadingStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="120dp">
+
+            <TextView
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="인증이 완료되었습니다"
+                android:textColor="@color/white"
+                android:typeface="sans"
+                android:gravity="center"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

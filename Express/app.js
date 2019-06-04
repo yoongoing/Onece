@@ -8,10 +8,19 @@ var app = express();
 
 app.use(express.static('public')); 
 app.use(bodyParser.urlencoded({extended : true})); 
-app.set('view engine', 'ejs');//ejs 템플릿 엔진  연동 
+app.set('view engine', 'ejs');//ejs 템플릿 엔진  연동
+
+
+
 
 app.get('/', function (req, res) { 
+<<<<<<< HEAD
+    var id = req.query.id;
+    var name = req.query.name;
+    res.render('get_index');//views디렉토리안에 있는 index.ejs 파일
+=======
     res.render('get_index');//views디렉토리안에 있는 index.ejs 파일 
+>>>>>>> 2da4af29b6cff1b1a15491e8c2a451c22514fdd3
 });
 
 
@@ -64,9 +73,21 @@ app.get('/template', function (req, res) {
 });
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> hyemin2
+app.listen(3001, function(){ 
+=======
 app.listen(3030,'localhost', function(error,response,request){ 
+>>>>>>> 2da4af29b6cff1b1a15491e8c2a451c22514fdd3
      console.log('App Listening on port 3001'); 
   
 });
+
+
+
+
 
 
