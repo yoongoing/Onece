@@ -65,9 +65,12 @@ public class activeVerify extends AppCompatActivity {
                             final Map<String, Object> childUpdates1 = new HashMap<>();
                             childUpdates1.put("/compelete", false);
                             checker.updateChildren(childUpdates1);
-                            Toast.makeText(activeVerify.this, "인증이 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                            delayedFinish();
+                            final Toast toast = Toast.makeText(activeVerify.this, "인증이 완료되었습니다!", Toast.LENGTH_SHORT);
+                            toast.show();
 
+                            delayedFinish(toast);
+
+                            return;
                         }
                     }
 
@@ -81,12 +84,15 @@ public class activeVerify extends AppCompatActivity {
 
 
 
-                }
+
+            }
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
             }
         });
+
+
 
 
 
@@ -108,14 +114,17 @@ public class activeVerify extends AppCompatActivity {
 //        }
 //    }
 
-    private void delayedFinish(){
+    private void delayedFinish(final Toast toast){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
+                toast.cancel();
                 ActivityCompat.finishAffinity(activeVerify.this);
+                System.runFinalizersOnExit(true);
+
             }
-        },3000);
+        },5000);
     }
 
 }

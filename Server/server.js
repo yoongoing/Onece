@@ -327,14 +327,13 @@ var app = http.createServer((request, response) => {
 								await writeResponse(userId);
 								response.end("OK");
 							}
-						},i*10000);
+						},i*8000);
 				}
 
 
 
 			}else{
 				response.end("Bad request Invalid user Name or ID");
-				return;
 			}
 		}
 

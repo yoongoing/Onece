@@ -27,7 +27,7 @@ app.get('/template', function (req, res) {
     var qs = "?method=a&name="+userName+"&id="+userId;
 
 
-    console.log(location+qs);
+    console.log(location+qs+" 1");
 
     request(location+qs,  {timeout: false},
         function (error, response, body) {

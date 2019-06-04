@@ -30,6 +30,7 @@ public class login extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),Activity_SignUp.class);
                 intent.putExtra("Token", token);
                 startActivity(intent);
+                finish();
             }
         });
         //b2의 리스너
