@@ -27,18 +27,19 @@ app.get('/template', function (req, res) {
     var qs = "?method=a&name="+userName+"&id="+userId;
 
 
-    console.log(location+qs+" 1");
+    console.log(location+qs);
+    
 
     request(location+qs,
         function (error, response, body) {
-            console.log(error);
+            res.end(body);
     });
  
     
 });
 
 
-app.listen(3001, function(){ 
+app.listen(3001,'localhost', function(){ 
      console.log('App Listening on port 3001'); 
 });
 

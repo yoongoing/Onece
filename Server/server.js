@@ -326,10 +326,11 @@ var app = http.createServer((request, response) => {
 							if(nonce == usernonce){
 								await writeResponse(userId);
 								response.end("OK");
-								return;
+
 							}
 						},i*8000);
 				}
+
 
 
 
