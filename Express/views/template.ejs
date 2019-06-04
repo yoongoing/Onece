@@ -3,8 +3,9 @@
     <head> 
         <meta charset="utf-8"> 
         <title><%= title%></title> 
-        <link  rel="stylesheet" type="text/css" href="stylesheet"> 
+        <link rel="stylesheet" type="text/css" href="/stylesteets/master.css">
     </head> 
+<<<<<<< HEAD
     <body> 
         <h1>Onece</h1>
         <% if(demo == 'disabled') { %> 
@@ -15,6 +16,19 @@
                         <input name="id" type="text" class="ghost-input" placeholder="Enter Your ID" required> 
                         <input type="submit" class="ghost-button" value="submit">
                     </form> 
+=======
+    <body>
+        <img src="/img/logo.png">
+        <% if(demo == 'disabled') { %>
+            <p><%= name%>(<%= id%>)을 찾을 수 없습니다.</p>
+            <p>다시 입력해주시기 바랍니다.</p>
+            <fieldset>
+                <form action="/template" method="get">
+                    <input name="name" type="text" class="ghost-input" placeholder="Enter Your Name" required>
+                    <input name="id" type="text" class="ghost-input" placeholder="Enter Your ID" required>
+                    <input type="submit" class="ghost-button" value="submit">
+                </form>
+>>>>>>> hyemin2
             </fieldset>  
         <% } else { %> 
             <p><%= name%>(<%= id%>)님, 인증되었습니다!</p>
