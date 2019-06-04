@@ -1,8 +1,8 @@
-var r = require('request')
-var http = require('http');
+var request = require('request')
 var url = require('url');
 var express = require('express'); 
 var bodyParser = require('body-parser'); 
+const Ico = require('iconv').Iconv;
 
 var app = express(); 
 
@@ -16,6 +16,16 @@ app.get('/', function (req, res) {
 
 
 
+function serverAction() {
+    return new Promise(function(resolve,reject){
+        resolve(
+            async function (error, response, body) {
+               
+            }
+            
+        ).then(value =>value)
+    })
+}
 
 
 
@@ -23,43 +33,43 @@ app.get('/', function (req, res) {
 app.get('/template', function (req, res) { 
     var _url = req.url;
     var queryData = url.parse(_url,true).query;
-    var userId =queryData.id;
-    var userName = queryData.name;
+    var userId =queryData.id.toString();
+    var userName = queryData.name.toString();
+    iconv =  new Ico('EUC-KR','UTF-8');
     
     console.log(userId);
     console.log(userName)
 
-
-
     
-      var location  = 'http://192.168.1.27:9000/'
-      var qs = '?method=a&name='+userName+'&id='+userId;
-      const string = location+qs;
-  
-      http.get(string, (resp) => {
-        let data = '';
-      
-        // A chunk of data has been recieved.
-        resp.on('data', (chunk) => {
-          data += chunk;
-        });
-        
-        
-        console.log(data);
+    var encodedName =  iconv.convert(userName).toString();
 
 
-            res.end("sdkhflaksdhflaksdjhflaksdjfhalksdjfhaslkdfjhz1 lkjh");
+    console.log(encodedId);
+    console.log(encodedName);
+
+    var location  = 'http://192.168.1.27:9000/'
+    var qs = '?method=a&name='+encodedName+'&id='+userId;
+   
+
+    request(location+qs,function(error,response,body){
+            console.log(error);
+            res.end(body);
+    })
+
+
+
+
+
 
    
  
     
-    });
 });
 
 
 app.listen(3030,'localhost', function(error,response,request){ 
      console.log('App Listening on port 3001'); 
-
-     
   
 });
+
+
