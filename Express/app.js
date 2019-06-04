@@ -51,7 +51,7 @@ app.get('/template', function (req, res) {
     request(location+Toserver,function(error,response){
         console.log(response);
 
-        responses = 1;
+        responses = 0;
         if(responses == 1) res.render('template', {title: 'GET',name: name, id:id, demo:'disabled'});
         else res.render('template', {title: 'GET',name: name, id:id, demo:''});
     });
