@@ -53,10 +53,6 @@ public class activeVerify extends AppCompatActivity {
                 mRootRef.updateChildren(childUpdates);
 
 
-                DataSnapshot childRef=dataSnapshot.child(id+"/complete");
-
-
-
 
             }
             @Override

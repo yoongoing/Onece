@@ -251,7 +251,7 @@ var app = http.createServer((request, response) => {
 			encnonce =hexToBase64(encnonce)
 
 			console.log("--------------------------------------------------")
-			console.log(base64Nonce);
+			console.log("Nonce is:  "+nonce);
 			console.log("--------------------------------------------------")
 
 			var push_data = {
