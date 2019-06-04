@@ -314,7 +314,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				for(i = 1 ; i<=10 ; i++){
+			
 					setTimeout( 
 						async function(){ 
 							var usernonce = await readNonce(userId,nonce);
@@ -324,8 +324,8 @@ var app = http.createServer((request, response) => {
 								response.end("OK");
 
 							}
-						},i*2000);
-				}
+						},5000);
+				
 
 
 

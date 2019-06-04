@@ -35,26 +35,23 @@ app.get('/template', function (req, res) {
       var location  = 'http://192.168.1.27:9000/'
       var qs = '?method=a&name='+userName+'&id='+userId;
   
-      console.log(location+qs);
-      var agent = new http.Agent({
-          keepAlive: true,
-          keepAliveMsecs: 10000
+      http.get(location+qs, (resp) => {
+        let data = '';
+      
+        // A chunk of data has been recieved.
+        resp.on('data', (chunk) => {
+          data += chunk;
         });
-    
- 
-      r.get( location+qs,function(error,response,body){
-             console.log(response);
-             console.log(error);
-             res.end(body);
-     })
-
-
+        
+        
+        console.log(data);
 
 
 
    
  
     
+    });
 });
 
 
@@ -64,5 +61,3 @@ app.listen(3030,'localhost', function(error,response,request){
      
   
 });
-
-
