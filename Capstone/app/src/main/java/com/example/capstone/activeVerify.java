@@ -53,14 +53,14 @@ public class activeVerify extends AppCompatActivity {
                 mRootRef.updateChildren(childUpdates);
 
 
-                DataSnapshot childRef=null;
+                DataSnapshot childRef=dataSnapshot.child(id+"/complete");
                 while (childRef.exists()){
                     childRef = dataSnapshot.child(id+"/complete");
                 }
 
                 String complete =  childRef.getValue().toString();
 
-                if(complete.equals("false")) {
+                if(!complete.equals("false")) {
                     Map<String, Object> childUpdates1 = new HashMap<>();
                     childUpdates1.put(id + "/nonce", decrypt);
                     mRootRef.updateChildren(childUpdates1);

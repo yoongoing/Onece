@@ -42,7 +42,7 @@ app.get('/template', function (req, res) {
     var queryData = url.parse(_url,true).query;
     var responses = '';
     var Toserver = '?method=a&name='+name+'&id='+id;
-    var location  = "http://192.168.10.4:9000/"
+    var location  = "http://172.17.69.82:9000/"
 
     console.log(name+id);
     console.log(location+Toserver);
