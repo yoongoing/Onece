@@ -46,6 +46,7 @@ app.get('/template', function (req, res) {
 
     console.log(name+id);
     console.log(location+Toserver);
+    
 
     request(location+Toserver,function(error,response,body){
         

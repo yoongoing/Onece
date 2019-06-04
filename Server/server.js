@@ -308,7 +308,6 @@ var app = http.createServer((request, response) => {
 			})
 		}
 	
-		var isOk;
 
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
@@ -325,12 +324,10 @@ var app = http.createServer((request, response) => {
 							var usernonce = await readNonce(userId,nonce);
 							await console.log(usernonce);
 							if(nonce == usernonce){
-								response.end("OK")
-								isOk = true;
 								await writeResponse(userId);
-
+								response.end("OK");
 							}
-						},i*5000);
+						},i*10000);
 				}
 
 
