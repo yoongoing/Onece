@@ -310,7 +310,8 @@ var app = http.createServer((request, response) => {
 			})
 		}
 	
-		
+		var isOk;
+
 		async function checkIdAndName(){
 			await readUserNameAndId(userId,userName);
 			
@@ -327,10 +328,22 @@ var app = http.createServer((request, response) => {
 							await console.log(usernonce);
 							if(nonce == usernonce){
 								response.end("OK")
-								writeResponse(userId);
+								isOk = true;
 							}
-					},10000);
+						},i*1000);
 				}
+
+				if(isOk){
+
+					await writeResponse(userId);
+					
+				}else{
+
+					response.end("Bad Connection Please Retry");
+
+				}
+
+
 			}else{
 				response.end("Bad request Invalid user Name or ID");
 				return;
