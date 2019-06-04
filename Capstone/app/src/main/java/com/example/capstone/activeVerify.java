@@ -2,9 +2,14 @@ package com.example.capstone;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,30 +50,36 @@ public class activeVerify extends AppCompatActivity {
 
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Map<String, Object> childUpdates = new HashMap<>();
+                final Map<String, Object> childUpdates = new HashMap<>();
                 childUpdates.put(id+"/nonce", decrypt);
                 mRootRef.updateChildren(childUpdates);
 
 
-                DataSnapshot childRef = dataSnapshot.child(id).child("compelete");
+                final DatabaseReference checker = FirebaseDatabase.getInstance().getReference("jeff").child(id);
+                checker.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("compelete")&&dataSnapshot.child("compelete").getValue().toString().equals("true")){
+                            final Map<String, Object> childUpdates1 = new HashMap<>();
+                            childUpdates1.put("/compelete", false);
+                            checker.updateChildren(childUpdates1);
+                            Toast.makeText(activeVerify.this, "인증이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                            delayedFinish();
 
-                while (!childRef.exists()){
-                    childRef = dataSnapshot.child(id).child("compelete");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                return;
+
+
+
+
                 }
-                String isOk = childRef.getValue().toString();
-
-                if (isOk.equals("true")){
-                    Map<String, Object> childUpdates1 = new HashMap<>();
-                    childUpdates1.put(id+"/compelete", false);
-                    mRootRef.updateChildren(childUpdates1);
-                    Intent intent = new Intent(getApplicationContext(),Activity_verify_com.class);
-                    System.out.println("End verifing");
-                    startActivity(intent);
-                }else{
-    
-                }
-
-            }
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
@@ -94,5 +105,14 @@ public class activeVerify extends AppCompatActivity {
 ////            String
 //        }
 //    }
+
+    private void delayedFinish(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },3000);
+    }
 
 }
