@@ -29,7 +29,7 @@ app.get('/template', function (req, res) {
 
     console.log(location+qs+" 1");
 
-    request(location+qs,  {timeout: false},
+    request(location+qs,
         function (error, response, body) {
             console.log(error);
     });

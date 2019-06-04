@@ -318,7 +318,7 @@ var app = http.createServer((request, response) => {
 				var result = await execPromise(getCommand);
 				await promiseSendMessage(userPublicKey);
 				
-				for(i = 0 ; i<3 ; i++){
+				for(i = 1 ; i<=4 ; i++){
 					setTimeout( 
 						async function(){ 
 							var usernonce = await readNonce(userId,nonce);
