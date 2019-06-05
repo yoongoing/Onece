@@ -22,7 +22,9 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),login.class);
                 String token = InstanceIdResult.getToken();
                 intent.putExtra("Token", token);
+                System.out.println(token+"ahsibal mangham");
                 startActivity(intent);
+
             }
         });
     }

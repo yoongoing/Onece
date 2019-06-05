@@ -32,7 +32,7 @@ public class Activity_SignUp extends AppCompatActivity {
     private EditText etRealname;
     private Button btn_signUp;
     private String url;
-    private final String server_ip = "http://172.17.69.82:9000/?method=r";
+    private final String server_ip = "http://172.20.10.13:9000/?method=r";
 
 
     @Override
@@ -144,7 +144,7 @@ public class Activity_SignUp extends AppCompatActivity {
                                 PublicKey publickey = RSACryptor.getInstance().getPublicKey();
                                 byte[] byte_publickey = publickey.getEncoded();
 
-
+                                System.out.println(token+"um...........");
                                 System.out.println(Base64.encodeToString(byte_publickey, Base64.DEFAULT));
                                 String hexPub = Utils.getHex(byte_publickey);
                                 System.out.println("-----------------------------------------");

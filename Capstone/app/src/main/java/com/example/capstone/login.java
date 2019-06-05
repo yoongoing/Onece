@@ -25,6 +25,8 @@ public class login extends AppCompatActivity {
 
         Button b1 = findViewById(R.id.button);
         Button b2 = findViewById(R.id.button2);
+
+        System.out.println(token+"112233");
         //b1의 리스너
         b1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){

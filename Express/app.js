@@ -40,30 +40,25 @@ app.get('/template', function (req, res) {
     var queryData = url.parse(_url,true).query;
 
 
-    var userId =queryData.id.toString('UTF-8');
-    var userName = queryData.name.toString('UTF-8');
+    var userId =queryData.id
+    var userName = queryData.name
     
     console.log(userId);
 
     
-
-
-    var location  = 'http://172.17.69.82:9000/'
+    var location  = 'http://172.20.10.13:9000/'
     var qs = '?method=a&name='+userName+'&id='+userId;
    
 
     request(location+qs,function(error,response,body){
-            console.log(error);
-            res.end(body);
+        if(body!="OK") res.render('template', {title: 'GET',name: userName, id:userId, demo:'disabled'});
+        else res.render('template', {title: 'GET',name: userName, id:userId, demo:''});
     })
 
 
 
 
 
-
-   
- 
     
 });
 
