@@ -39,9 +39,8 @@ _🚀 Version 1.0.0 Released_
 - Push massage가 오면, 사용자의 생체정보인증을 통한 본인인증 기능
 - 생체정보를 기반으로 복호화 및 결과 블록체인 서버에 반환
 
-![image](./README_image/nst_example.jpeg)
-![image](./README_image/nst_example.jpeg)
-![image](./README_image/nst_example.jpeg)
+<img src="./image/logit1.png" alt="logic 1" weight="800" height="600">
+<img src="./image/logit2.png" alt="logic 2" weight="800" height="600">
 
 ---
 
