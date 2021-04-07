@@ -40,6 +40,7 @@ _🚀 Version 1.0.0 Released_
 - 생체정보를 기반으로 복호화 및 결과 블록체인 서버에 반환
 
 <img src="./image/logic_case1.png" alt="logic 1" weight="800" height="600">
+
 <img src="./image/logic_case2.png" alt="logic 2" weight="800" height="600">
 
 ---
