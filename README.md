@@ -18,7 +18,7 @@ _🚀 Version 1.0.0 Released_
 
 - Hyperledger Fabric
 - Go
-- Android Studio
+- Android
 - Node.js
 - Firebase
 
