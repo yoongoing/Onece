@@ -65,7 +65,7 @@ All of source codes under our project are using [MIT License](http://opensource.
 
 ## Bletcher Team
 
-- 남혜민 - [@hyemni](https://github.com/hyemni)
-- 윤가영 - [@yoongoing](https://github.com/yoongoing)
-- 위대한 - [@k2pGoing](https://github.com/k2pGoing)
-- 최연욱 - [@yeonwook1993](https://github.com/eonwook1993)
+- [Front-end] 남혜민 - [@hyemni](https://github.com/hyemni)
+- [Back-end] 윤가영 - [@yoongoing](https://github.com/yoongoing)
+- [Block Chain] 위대한 - [@k2pGoing](https://github.com/k2pGoing)
+- [Android] 최연욱 - [@yeonwook1993](https://github.com/eonwook1993)
