@@ -52,40 +52,6 @@ _🚀 Version 1.0.0 Released_
 
 ---
 
-## Run
-[Block Chain]
-
-```bash
-
-....?
-
-```
-
-
-[Web]
-
-```bash
-
-npm install
-npm start
-
-```
-
-> Block Chain 서버와 Web, App 어플리케이션은 같은 wifi를 공유해야합니다.
-
-## Getting Started
-
-
-
-### Prerequisites
-
-
-
-### Installation
-
-
----
-
 ## Reference
 
 - [Hyperledger Fabric document](https://www.hyperledger.org/use/fabric)
