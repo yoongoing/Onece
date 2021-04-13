@@ -63,9 +63,9 @@ All of source codes under our project are using [MIT License](http://opensource.
 
 ---
 
-## Bletcher Team
+## Onece Team
 
-- [Front-end] 남혜민 - [@hyemni](https://github.com/hyemni)
-- [Back-end] 윤가영 - [@yoongoing](https://github.com/yoongoing)
-- [Block Chain] 위대한 - [@k2pGoing](https://github.com/k2pGoing)
-- [Android] 최연욱 - [@yeonwook1993](https://github.com/eonwook1993)
+- __[Front-end]__ 남혜민 - [@hyemni](https://github.com/hyemni)
+- __[Back-end]__ 윤가영 - [@yoongoing](https://github.com/yoongoing)
+- __[Block Chain]__ 위대한 - [@k2pGoing](https://github.com/k2pGoing)
+- __[Android]__ 최연욱 - [@yeonwook1993](https://github.com/eonwook1993)
