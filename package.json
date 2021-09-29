@@ -12,7 +12,7 @@
     "fcm-node": "^1.5.1",
     "firebase": "^6.0.4",
     "http-request-parser": "^2.0.0-alpha",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "loader": "^2.1.1",
     "node-rsa": "^1.0.5",
     "npm": "^6.9.0",
